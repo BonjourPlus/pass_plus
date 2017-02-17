@@ -2,9 +2,12 @@
 
 namespace PassPlusBundle\Form;
 
+use PassPlusBundle\Entity\Vat;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CatalogType extends AbstractType
 {
@@ -13,9 +16,20 @@ class CatalogType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('description')->add('pretaxPrice')->add('activated')->add('vat')        ;
+        $builder->add('name')
+            ->add('description')
+            ->add('pretaxPrice')
+            ->add('activated', ChoiceType::class, array(
+                'choices' =>
+                    ['Activé' => 1,
+                        'Désactivé' => 0],
+            ))
+            ->add('vat', EntityType::class, array(
+                'class' => Vat::class,
+                'choice_label' => 'rate',
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

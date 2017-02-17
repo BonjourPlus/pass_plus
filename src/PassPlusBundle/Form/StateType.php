@@ -23,7 +23,6 @@ class StateType extends AbstractType
                 'choices' =>
                     ['Activé' => 1,
                     'Désactivé' => 0],
-                'choices_as_values' => true,
             ));
     }
 

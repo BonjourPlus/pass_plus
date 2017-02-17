@@ -10,6 +10,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Pretaxprice</th>
+                <th>Vat rate</th>
                 <th>Activated</th>
                 <th>Actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ catalog.name }}</td>
                 <td>{{ catalog.description }}</td>
                 <td>{{ catalog.pretaxPrice }}</td>
+                <td>{{ catalog.vat.rate}}</td>
                 <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
