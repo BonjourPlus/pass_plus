@@ -1,0 +1,45 @@
+{% extends '@PassPlus/Admin/adminLayout.html.twig' %}
+
+{% block content %}
+    <h1>Catalogs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Pretaxprice</th>
+                <th>Activated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for catalog in catalogs %}
+            <tr>
+                <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}">{{ catalog.id }}</a></td>
+                <td>{{ catalog.name }}</td>
+                <td>{{ catalog.description }}</td>
+                <td>{{ catalog.pretaxPrice }}</td>
+                <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('catalog_show', { 'id': catalog.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('catalog_new') }}">Create a new catalog</a>
+        </li>
+    </ul>
+{% endblock %}

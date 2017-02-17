@@ -1,0 +1,4 @@
+services:
+#    pass_plus.example:
+#        class: PassPlusBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

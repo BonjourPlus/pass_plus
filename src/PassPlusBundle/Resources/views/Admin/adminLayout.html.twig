@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    <nav>
+        <div class="nav-wrapper">
+            <a href="{{ path('fos_user_security_logout') }}" class="brand-logo">Logout</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{ path('orders_index') }}">Orders</a></li>
+                <li><a href="{{ path('catalog_index') }}">Catalog</a></li>
+                <li><a href="{{ path('product_index') }}">Products</a></li>
+                <li><a href="{{ path('state_index') }}">Statuses</a></li>
+                <li><a href="{{ path('vat_index') }}">Vat</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}

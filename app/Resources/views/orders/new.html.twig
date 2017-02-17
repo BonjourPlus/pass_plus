@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1 class="center-align">Commander</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col s6 offset-s3">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Commander"/>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <ul>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li>
+                <a href="{{ path('orders_index') }}">Back to the list</a>
+            </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('home') }}">Back to home</a>
+                </li>
+        {% endif %}
+
+    </ul>
+{% endblock %}

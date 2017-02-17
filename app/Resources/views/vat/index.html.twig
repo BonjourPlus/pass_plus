@@ -1,0 +1,39 @@
+{% extends '@PassPlus/Admin/adminLayout.html.twig' %}
+
+{% block content %}
+    <h1>Vats list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vat in vats %}
+            <tr>
+                <td><a href="{{ path('vat_show', { 'id': vat.id }) }}">{{ vat.id }}</a></td>
+                <td>{{ vat.rate }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('vat_show', { 'id': vat.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('vat_edit', { 'id': vat.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vat_new') }}">Create a new vat</a>
+        </li>
+    </ul>
+{% endblock %}
