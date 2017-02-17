@@ -46,14 +46,14 @@
 
         <ul>
             <li>
-                <a href="{{ path('orders_index') }}">Back to the list</a>
+                <a href="{{ path('orders_index') }}" class="btn">Back to the list</a>
             </li>
             <li>
-                <a href="{{ path('orders_edit', { 'id': order.id }) }}">Edit</a>
+                <a href="{{ path('orders_edit', { 'id': order.id }) }}" class="btn indigo">Edit</a>
             </li>
             <li>
                 {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Delete" class="btn red">
                 {{ form_end(delete_form) }}
             </li>
         </ul>

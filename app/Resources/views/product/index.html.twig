@@ -1,41 +1,41 @@
 {% extends '@PassPlus/Admin/adminLayout.html.twig' %}
 
 {% block content %}
-    <h1>Products list</h1>
+    <h2 class="center-align">Products list</h2>
+    <div class="container">
+        <div class="row">
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Pretaxprice</th>
+                    <th>Vatrate</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
+                        <td>{{ product.pretaxPrice }}</td>
+                        <td>{{ product.vatRate }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn indigo">edit</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Pretaxprice</th>
-                <th>Vatrate</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.pretaxPrice }}</td>
-                <td>{{ product.vatRate }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('product_new') }}">Create a new product</a>
-        </li>
-    </ul>
+            <ul>
+                <li>
+                    <a href="{{ path('product_new') }}" class="btn">Create a new product</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

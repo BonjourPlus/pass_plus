@@ -1,47 +1,51 @@
 {% extends '@PassPlus/Admin/adminLayout.html.twig' %}
 
 {% block content %}
-    <h1>Catalogs list</h1>
+    <h2 class="center-align">Catalogs list</h2>
+    <div class="container">
+        <div class="row">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Pretaxprice</th>
-                <th>Vat rate</th>
-                <th>Activated</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for catalog in catalogs %}
-            <tr>
-                <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}">{{ catalog.id }}</a></td>
-                <td>{{ catalog.name }}</td>
-                <td>{{ catalog.description }}</td>
-                <td>{{ catalog.pretaxPrice }}</td>
-                <td>{{ catalog.vat.rate}}</td>
-                <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('catalog_show', { 'id': catalog.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('catalog_new') }}">Create a new catalog</a>
-        </li>
-    </ul>
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Pretaxprice</th>
+                    <th>Vat rate</th>
+                    <th>Activated</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for catalog in catalogs %}
+                    <tr>
+                        <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}"
+                               class="waves-effect waves-light btn">{{ catalog.id }}</a></td>
+                        <td>{{ catalog.name }}</td>
+                        <td>{{ catalog.description }}</td>
+                        <td>{{ catalog.pretaxPrice }}</td>
+                        <td>{{ catalog.vat.rate }}</td>
+                        <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}"
+                                       class="waves-effect waves-light btn indigo">edit</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <ul>
+                <li>
+                    <a href="{{ path('catalog_new') }}" class="waves-effect waves-light btn">Create a new catalog</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

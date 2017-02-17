@@ -58,7 +58,7 @@ class State
     private $activated;
 
     /**
-     * @ORM\OneToMany(targetEntity="Orders", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="Orders", mappedBy="state")
      */
     private $orders;
 

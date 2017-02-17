@@ -1,47 +1,49 @@
 {% extends '@PassPlus/Admin/adminLayout.html.twig' %}
 
 {% block content %}
-    <h1>Statuses list</h1>
+    <h2 class="center-align">Statuses list</h2>
+    <div class="container">
+        <div class="row">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Weight</th>
-                <th>Color</th>
-                <th>Activated</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for state in states %}
-            <tr>
-                <td><a href="{{ path('state_show', { 'id': state.id }) }}">{{ state.id }}</a></td>
-                <td>{{ state.name }}</td>
-                <td>{{ state.description }}</td>
-                <td>{{ state.weight }}</td>
-                <td>{{ state.color }}</td>
-                <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('state_show', { 'id': state.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('state_edit', { 'id': state.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('state_new') }}">Create a new state</a>
-        </li>
-    </ul>
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Color</th>
+                    <th>Activated</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for state in states %}
+                    <tr>
+                        <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
+                        <td>{{ state.name }}</td>
+                        <td>{{ state.description }}</td>
+                        <td>{{ state.weight }}</td>
+                        <td>{{ state.color }}</td>
+                        <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('state_edit', { 'id': state.id }) }}" class="btn indigo">edit</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <ul>
+                <li>
+                    <a href="{{ path('state_new') }}" class="btn">Create a new status</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

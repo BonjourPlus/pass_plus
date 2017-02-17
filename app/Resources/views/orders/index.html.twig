@@ -16,12 +16,15 @@
                 <tbody>
                 {% for order in orders %}
                     <tr>
-                        <td class="center-align" style="background-color: {{ order.state.color }}"><a href="{{ path('orders_show', { 'id': order.id }) }}"
-                               title="see detail"><h3>{{ order.id }}</h3></a></td>
+                        <td class="center-align" style="background-color: {{ order.state.color }}"><a
+                                    href="{{ path('orders_show', { 'id': order.id }) }}"
+                                    title="see detail"><h3>{{ order.id }}</h3></a>
+                        </td>
                         <td>
                             <ul>
                                 {% for product in products if product.orders.id == order.id %}
-                                    <li><a href="{{ path('product_show', {'id':product.id}) }}"
+                                    <li>
+                                        <a href="{{ path('product_show', {'id':product.id}) }}"
                                            title="see detail">{{ product.id }}</a>
                                     </li>
                                     <hr>
@@ -51,7 +54,7 @@
         </div>
         <ul>
             <li>
-                <a href="{{ path('orders_new') }}">Create a new order</a>
+                <a href="{{ path('orders_new') }}" class="btn">Create a new order</a>
             </li>
         </ul>
     </div>
