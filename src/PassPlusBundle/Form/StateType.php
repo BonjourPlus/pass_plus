@@ -18,7 +18,23 @@ class StateType extends AbstractType
         $builder->add('name')
             ->add('description')
             ->add('weight')
-            ->add('color')
+            ->add('color', ChoiceType::class, array(
+                'choices'=>
+                    ['Blue' => 'blue',
+                    'Red' => 'red',
+                    'Purple'=>'purple',
+                    'Indigo'=>'indigo',
+                    'Teal'=>'teal',
+                    'Green'=>'green',
+                    'Amber'=>'amber',
+                    'Deep-orange'=>'deep-orange',
+                    'Brown'=>'brown',
+                    'Grey'=>'grey'],
+                'choice_attr' => function($val, $key, $index) {
+                    return ['class'=> 'btn-flat '.$val,
+                            'style'=>'display : block'];
+                }
+            ))
             ->add('activated', ChoiceType::class, array(
                 'choices' =>
                     ['Activé' => 1,
