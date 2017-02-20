@@ -16,9 +16,9 @@
                 <tbody>
                 {% for order in orders %}
                     <tr>
-                        <td class="center-align" style="background-color: {{ order.state.color }}"><a
+                        <td class="center-align {{ order.state.color }}"><a
                                     href="{{ path('orders_show', { 'id': order.id }) }}"
-                                    title="see detail"><h3>{{ order.id }}</h3></a>
+                                    title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
                         </td>
                         <td>
                             <ul>
@@ -42,7 +42,7 @@
                         <td>
                             <ul>
                                 {% for product in products if product.orders.id == order.id %}
-                                    <li style="background-color: {{ product.state.color }}">{{ product.state.name }}</li>
+                                    <li class="{{ product.state.color }}">{{ product.state.name }}</li>
                                     <hr>
                                 {% endfor %}
                             </ul>
