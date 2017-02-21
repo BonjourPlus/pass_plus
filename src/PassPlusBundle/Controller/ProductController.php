@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Product controller.
  *
- * @Route("product")
+ * @Route("admin/product")
  */
 class ProductController extends Controller
 {
@@ -91,7 +91,7 @@ class ProductController extends Controller
             //updating order status
             $this->get('orderstatus')->orderStatusAction($product->getOrders());
 
-            return $this->redirectToRoute('product_edit', array('id' => $product->getId()));
+            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
         return $this->render('product/edit.html.twig', array(

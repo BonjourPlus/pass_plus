@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * State controller.
  *
- * @Route("state")
+ * @Route("admin/state")
  */
 class StateController extends Controller
 {
@@ -88,7 +88,7 @@ class StateController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('state_edit', array('id' => $state->getId()));
+            return $this->redirectToRoute('state_show', array('id' => $state->getId()));
         }
 
         return $this->render('state/edit.html.twig', array(

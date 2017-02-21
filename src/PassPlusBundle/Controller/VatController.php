@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Vat controller.
  *
- * @Route("vat")
+ * @Route("admin/vat")
  */
 class VatController extends Controller
 {
@@ -88,7 +88,7 @@ class VatController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('vat_edit', array('id' => $vat->getId()));
+            return $this->redirectToRoute('vat_show', array('id' => $vat->getId()));
         }
 
         return $this->render('vat/edit.html.twig', array(

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Catalog controller.
  *
- * @Route("catalog")
+ * @Route("admin/catalog")
  */
 class CatalogController extends Controller
 {
@@ -88,7 +88,7 @@ class CatalogController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('catalog_edit', array('id' => $catalog->getId()));
+            return $this->redirectToRoute('catalog_show', array('id' => $catalog->getId()));
         }
 
         return $this->render('catalog/edit.html.twig', array(

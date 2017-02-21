@@ -12,14 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Order controller.
  *
- * @Route("orders")
  */
 class OrdersController extends Controller
 {
     /**
      * Lists all order entities.
      *
-     * @Route("/admin/", name="orders_index")
+     * @Route("/admin/orders/", name="orders_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class OrdersController extends Controller
     /**
      * Creates a new order entity.
      *
-     * @Route("/new", name="orders_new")
+     * @Route("orders/new", name="orders_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -91,7 +90,7 @@ class OrdersController extends Controller
     /**
      * Finds and displays a order entity.
      *
-     * @Route("/admin/{id}", name="orders_show")
+     * @Route("/admin/orders/{id}", name="orders_show")
      * @Method("GET")
      */
     public function showAction(Orders $order)
@@ -112,7 +111,7 @@ class OrdersController extends Controller
     /**
      * Displays a form to edit an existing order entity.
      *
-     * @Route("/admin/{id}/edit", name="orders_edit")
+     * @Route("/admin/orders/{id}/edit", name="orders_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Orders $order)
@@ -124,7 +123,7 @@ class OrdersController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('orders_edit', array('id' => $order->getId()));
+            return $this->redirectToRoute('orders_show', array('id' => $order->getId()));
         }
 
         return $this->render('orders/edit.html.twig', array(
@@ -137,7 +136,7 @@ class OrdersController extends Controller
     /**
      * Deletes a order entity.
      *
-     * @Route("/admin/{id}", name="orders_delete")
+     * @Route("/admin/orders/{id}", name="orders_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Orders $order)
