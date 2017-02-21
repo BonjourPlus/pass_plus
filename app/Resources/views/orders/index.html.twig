@@ -4,53 +4,50 @@
     <div class="container">
         <h2>Orders list</h2>
         <div class="row">
-            <table class="bordered">
-                <thead>
-                <tr>
-                    <th>Id order</th>
-                    <th>Id products</th>
-                    <th>Products</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="col s12">
                 {% for order in orders %}
-                    <tr>
-                        <td class="center-align {{ order.state.color }}"><a
-                                    href="{{ path('orders_show', { 'id': order.id }) }}"
-                                    title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
-                        </td>
-                        <td>
-                            <ul>
-                                {% for product in products if product.orders.id == order.id %}
-                                    <li>
-                                        <a href="{{ path('product_show', {'id':product.id}) }}"
-                                           title="see detail">{{ product.id }}</a>
-                                    </li>
-                                    <hr>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                {% for product in products if product.orders.id == order.id %}
-                                    <li>{{ product.catalog.name }}</li>
-                                    <hr>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                {% for product in products if product.orders.id == order.id %}
-                                    <li class="{{ product.state.color }}">{{ product.state.name }}</li>
-                                    <hr>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                    </tr>
+                    <table class="bordered vertical-align">
+                        <thead>
+                        <tr>
+                            <th>Id order</th>
+                            <th>Created on</th>
+                            <th>Last update</th>
+                            <th>Product Id</th>
+                            <th>Product</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td rowspan="0" class="center-align {{ order.state.color }}"><a
+                                        href="{{ path('orders_show', { 'id': order.id }) }}"
+                                        title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
+                            </td>
+                            <td rowspan="0">
+                                {{ order.dateCreation|date('d-m-Y H:i') }}
+                            </td>
+                            <td rowspan="0">
+                                {{ order.lastUpdate|date('d-m-Y H:i') }}
+                            </td>
+                        </tr>
+                        {% for product in products if product.orders.id == order.id %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('product_show', {'id':product.id}) }}"
+                                       title="see detail">{{ product.id }}</a>
+                                </td>
+                                <td>
+                                    {{ product.catalog.name }}
+                                </td>
+                                <td class="{{ product.state.color }}">
+                                    {{ product.state.name }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 {% endfor %}
-                </tbody>
-            </table>
+            </div>
         </div>
         <ul>
             <li>
