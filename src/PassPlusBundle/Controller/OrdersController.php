@@ -55,7 +55,6 @@ class OrdersController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             //setting orders data
             $order->setDateCreation(new \DateTime());
-            $order->setLastUpdate(new \DateTime());
             $order->setUser($this->getUser());
 
             $em->persist($order);

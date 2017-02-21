@@ -3,12 +3,14 @@
 namespace PassPlusBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 /**
  * Orders
  *
  * @ORM\Table(name="orders", indexes={@ORM\Index(name="IDX_E52FFDEEA76ED395", columns={"user_id"})})
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity
  */
 class Orders
@@ -24,8 +26,7 @@ class Orders
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="last_update", type="datetime", nullable=false)
+     * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
     private $lastUpdate;
 
@@ -63,6 +64,15 @@ class Orders
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+
+    public function UpdateDate()
+    {
+        $this->setLastUpdate(new \DateTime());
     }
 
     /**

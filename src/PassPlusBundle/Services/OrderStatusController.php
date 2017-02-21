@@ -33,8 +33,7 @@ class OrderStatusController extends Controller
         //Finding correspnding status
         $status = $this->em->getRepository('PassPlusBundle:State')->findOneBy(['weight'=>$maxWeight]);
 
-        //Setting order status and updating timestamp
-        $order->setLastUpdate(new \DateTime());
+        //Setting order status
         $order->setState($status);
         $this->em->persist($order);
         $this->em->flush();
