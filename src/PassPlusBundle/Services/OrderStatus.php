@@ -3,10 +3,9 @@
 namespace PassPlusBundle\Services;
 
 use PassPlusBundle\Entity\Orders;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
 
-class OrderStatusController extends Controller
+class OrderStatus
 {
 
 
