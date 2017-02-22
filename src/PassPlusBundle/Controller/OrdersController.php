@@ -40,13 +40,16 @@ class OrdersController extends Controller
      * @Route("orders/new", name="orders_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+
+    //currently  using next method to create orders during dev
+
+   /* public function newAction(Request $request)
     {
         $order = new Orders();
 
         //getting basic state to set products : part to improve
         $em = $this->getDoctrine()->getManager();
-        $state = $em->getRepository('PassPlusBundle:State')->findOneBy(['id'=>1]);
+        $state = $em->getRepository('PassPlusBundle:State')->findOneBy(['id' => 1]);
 
         //generating form for customers
         $form = $this->createForm('PassPlusBundle\Form\OrdersType', $order);
@@ -62,8 +65,7 @@ class OrdersController extends Controller
 
             //creating each product line
             $products = $form->get('catalogs')->getData();
-            foreach ($products as $product)
-            {
+            foreach ($products as $product) {
                 $newProductLine = new Product();
                 $newProductLine->setState($state);
                 $newProductLine->setOrders($order);
@@ -84,6 +86,56 @@ class OrdersController extends Controller
             'order' => $order,
             'form' => $form->createView(),
         ));
+    }*/
+
+    //Create multiple orders only for dev needs
+
+    /**
+     * Creates a new order entity.
+     * @Route("orders/creator/{number}", name="orders_creator")
+     * @Method({"GET", "POST"})
+     */
+
+    public function ordersCreatorAction($number = 0)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //choosing a default state, part to improve
+        $state = $em->getRepository('PassPlusBundle:State')->findOneBy(['id' => 1]);
+
+        for ($i = 1; $i <= $number; $i++) {
+
+            $products = [];
+            for ($j = 1; $j <= random_int(1, 5); $j++) {
+                $products[] = $em->getRepository('PassPlusBundle:Catalog')->findOneBy(['id' => random_int(1, 5)]);
+            }
+
+            $order = new Orders();
+
+            $order->setDateCreation(new \DateTime());
+            $order->setUser($this->getUser());
+
+            foreach ($products as $product) {
+
+
+                $em->persist($order);
+                $em->flush();
+
+                $newProductLine = new Product();
+                $newProductLine->setState($state);
+                $newProductLine->setOrders($order);
+                $newProductLine->setCatalog($product);
+                $newProductLine->setPretaxPrice($product->getPretaxPrice());
+                $newProductLine->setVatRate($product->getVat()->getRate());
+                $em->persist($newProductLine);
+                $em->flush();
+            }
+
+            $this->get('orderStatus')->orderStatusAction($order);
+
+
+        }
+        return $this->render('orders/new.html.twig');
     }
 
     /**
@@ -98,11 +150,11 @@ class OrdersController extends Controller
 
         //getting products contained inside the order
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('PassPlusBundle:Product')->findBy(['orders'=>$order->getId()]);
+        $products = $em->getRepository('PassPlusBundle:Product')->findBy(['orders' => $order->getId()]);
 
         return $this->render('orders/show.html.twig', array(
             'order' => $order,
-            'products'=>$products,
+            'products' => $products,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -146,7 +198,7 @@ class OrdersController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($order);
-            $em->flush($order);
+            $em->flush();
         }
 
         return $this->redirectToRoute('orders_index');
@@ -164,7 +216,6 @@ class OrdersController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('orders_delete', array('id' => $order->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
