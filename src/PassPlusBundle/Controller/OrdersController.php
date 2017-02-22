@@ -35,8 +35,6 @@ class OrdersController extends Controller
             $request->query->getInt('limit', 10)/*limit per page*/
         );
 
-
-
         $products = $em->getRepository('PassPlusBundle:Product')->findAll();
 
         return $this->render('orders/index.html.twig', array(

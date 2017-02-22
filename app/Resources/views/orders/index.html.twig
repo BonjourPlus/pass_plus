@@ -5,20 +5,20 @@
         <h2>Orders list</h2>
         <div class="row">
             <div class="col s12">
+                <table class="bordered vertical-align">
+                    <thead>
+                    <tr>
+                        <th>Id order</th>
+                        <th>Created on</th>
+                        <th>Last update</th>
+                        <th>Product Id</th>
+                        <th>Product</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
                 {% for order in orders %}
-                    <table class="bordered vertical-align">
-                        <thead>
-                        <tr>
-                            <th>Id order</th>
-                            <th>Created on</th>
-                            <th>Last update</th>
-                            <th>Product Id</th>
-                            <th>Product</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
+                    <tbody>
+                    <tr>
                             <td rowspan="0" class="center-align {{ order.state.color }}"><a
                                         href="{{ path('orders_show', { 'id': order.id }) }}"
                                         title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
@@ -45,8 +45,8 @@
                             </tr>
                         {% endfor %}
                         </tbody>
-                    </table>
                 {% endfor %}
+                </table>
             </div>
             <div class="center-align">
                <h3>{{ knp_pagination_render(orders) }}</h3>

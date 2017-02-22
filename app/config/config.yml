@@ -79,7 +79,7 @@ fos_user:
         sender_name: "%mailer_user%"
 
 knp_paginator:
-    page_range:                 5          # default page range used in pagination control
+    page_range:                 10          # default page range used in pagination control
     default_options:
         page_name:              page       # page query parameter name
         sort_field_name:        sort       # sort field query parameter name

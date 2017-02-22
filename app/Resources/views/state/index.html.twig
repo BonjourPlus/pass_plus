@@ -6,7 +6,7 @@
         <div class="row">
 
 
-            <table>
+            <table id="table-status">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -21,8 +21,8 @@
                 <tbody>
                 {% for state in states %}
                     <tr>
-                        <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
-                        <td>{{ state.name }}</td>
+                        <td class="sorter"><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
+                        <td class="sorter">{{ state.name }}</td>
                         <td>{{ state.description }}</td>
                         <td>{{ state.weight }}</td>
                         <td class="{{ state.color }}">{{ state.color }}</td>
@@ -46,4 +46,13 @@
             </ul>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function () {
+            $("#table-status").rowSorter({
+                handler: "td.sorter"
+            });
+        })
+    </script>
 {% endblock %}
