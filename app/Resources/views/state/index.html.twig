@@ -5,14 +5,13 @@
     <div class="container">
         <div class="row">
 
-
-            <table id="table-status">
+            <h4>Use your mouse to sort statuses by order of importance</h4>
+            <table id="table-status" class="bordered">
                 <thead>
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Weight</th>
                     <th>Color</th>
                     <th>Activated</th>
                     <th>Actions</th>
@@ -20,11 +19,10 @@
                 </thead>
                 <tbody>
                 {% for state in states %}
-                    <tr>
-                        <td class="sorter"><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
+                    <tr id="{{ state.id }}">
+                        <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
                         <td class="sorter">{{ state.name }}</td>
                         <td>{{ state.description }}</td>
-                        <td>{{ state.weight }}</td>
                         <td class="{{ state.color }}">{{ state.color }}</td>
                         <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
                         <td>
@@ -38,7 +36,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-
             <ul>
                 <li>
                     <a href="{{ path('state_new') }}" class="btn">Create a new status</a>
@@ -50,9 +47,25 @@
 {% block javascripts %}
     <script>
         $(function () {
-            $("#table-status").rowSorter({
-                handler: "td.sorter"
-            });
+            $.ajaxSetup(
+                {
+                    url: "{{ path('weight_change') }}",
+                    type: "POST"
+                }
+            ),
+                $('#table-status').rowSorter({
+                    onDrop: function () {
+                        var order = []
+                        $('#table-status').find("tr").each(function () {
+                            order.push($(this).attr('id'));
+                        });
+                        $.ajax({
+                            data: {request: order}, success: function (rep) {
+                                console.log(rep);
+                            }
+                        });
+                    }
+                })
         })
     </script>
 {% endblock %}

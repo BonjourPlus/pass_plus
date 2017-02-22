@@ -39,7 +39,7 @@ class State
     /**
      * @var integer
      *
-     * @ORM\Column(name="weight", type="integer", nullable=false)
+     * @ORM\Column(name="weight", type="integer", nullable=true)
      */
     private $weight;
 

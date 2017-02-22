@@ -5,7 +5,9 @@ namespace PassPlusBundle\Controller;
 use PassPlusBundle\Entity\State;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * State controller.
@@ -24,7 +26,7 @@ class StateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $states = $em->getRepository('PassPlusBundle:State')->findAll();
+        $states = $em->getRepository('PassPlusBundle:State')->findBy([],['weight'=>'DESC']);
 
         return $this->render('state/index.html.twig', array(
             'states' => $states,
@@ -116,6 +118,37 @@ class StateController extends Controller
         }
 
         return $this->redirectToRoute('state_index');
+    }
+
+    //attempt to change statuses weights from Ajax call
+    /**
+     *
+     * @Route("/dynamicChange", name="weight_change")
+     * @Method({"POST"})
+     */
+
+    public function weightChange(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //retrieving new table order
+        $newOrder = $request->request->get('request');
+        array_shift($newOrder);
+
+        //setting statuses weights
+        foreach ($newOrder as $key=>$stateId) {
+            $state = $em->getRepository('PassPlusBundle:State')->findOneBy(['id'=>$stateId]);
+            $state->setWeight(1000-($key*100));
+            $em->persist($state);
+            $em->flush();
+        }
+
+        //updating orders statuses
+        $orders = $em->getRepository('PassPlusBundle:Orders')->findAll();
+        foreach ($orders as $order) {
+            $this->get('orderstatus')->orderStatusAction($order);
+        }
+        return new Response();
     }
 
     /**

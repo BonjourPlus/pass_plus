@@ -102,11 +102,11 @@ class Address
     /**
      * Set user
      *
-     * @param \PassPlusBundle\Entity\FosUser $user
+     * @param \PassPlusBundle\Entity\User $user
      *
      * @return Address
      */
-    public function setUser(\PassPlusBundle\Entity\FosUser $user = null)
+    public function setUser(\PassPlusBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -116,7 +116,7 @@ class Address
     /**
      * Get user
      *
-     * @return \PassPlusBundle\Entity\FosUser
+     * @return \PassPlusBundle\Entity\User
      */
     public function getUser()
     {

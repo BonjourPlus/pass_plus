@@ -17,7 +17,6 @@ class StateType extends AbstractType
     {
         $builder->add('name')
             ->add('description')
-            ->add('weight')
             ->add('color', ChoiceType::class, array(
                 'choices'=>
                     ['Blue' => 'blue',
