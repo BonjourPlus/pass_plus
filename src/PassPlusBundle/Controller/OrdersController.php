@@ -21,11 +21,22 @@ class OrdersController extends Controller
      * @Route("/admin/orders/", name="orders_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator  = $this->get('knp_paginator');
 
-        $orders = $em->getRepository('PassPlusBundle:Orders')->findAll();
+        $queryBuilder = $em->getRepository('PassPlusBundle:Orders')->createQueryBuilder('o');
+        $query = $queryBuilder->getQuery();
+
+        $orders = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $request->query->getInt('limit', 10)/*limit per page*/
+        );
+
+
+
         $products = $em->getRepository('PassPlusBundle:Product')->findAll();
 
         return $this->render('orders/index.html.twig', array(
