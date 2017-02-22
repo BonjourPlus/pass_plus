@@ -9,6 +9,11 @@
         </div>
     </div>
     <ul>
+        <li>
+            <a href="{{ path('orders_creator', {'number': 1}) }}" class="btn red">generate 1 order</a>
+            <a href="{{ path('orders_creator', {'number': 10}) }}" class="btn red">generate 10 orders</a>
+            <a href="{{ path('orders_creator', {'number': 100}) }}" class="btn red">generate 100 orders</a>
+        </li>
         {% if is_granted('ROLE_ADMIN') %}
             <li>
                 <a href="{{ path('orders_index') }}" class="btn blue">Back to the list</a>
@@ -16,11 +21,6 @@
             {% else %}
                 <li>
                     <a href="{{ path('home') }}" class="btn blue">Back to home</a>
-                </li>
-                <li>
-                    <a href="{{ path('orders_creator', {'number': 1}) }}" class="btn red">generate 1 order</a>
-                    <a href="{{ path('orders_creator', {'number': 10}) }}" class="btn red">generate 10 orders</a>
-                    <a href="{{ path('orders_creator', {'number': 100}) }}" class="btn red">generate 100 orders</a>
                 </li>
         {% endif %}
 
