@@ -1,7 +1,8 @@
-pass_plus:
-    resource: "@PassPlusBundle/Controller/"
+jasdero_passe_plat:
+    resource: "@JasderoPassePlatBundle/Controller/"
     type:     annotation
     prefix:   /
+
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
