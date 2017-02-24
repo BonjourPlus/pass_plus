@@ -12,6 +12,8 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Nb of products</th>
+                    <th>Nb of orders</th>
                     <th>Color</th>
                     <th>Activated</th>
                     <th>Actions</th>
@@ -23,6 +25,22 @@
                         <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
                         <td class="sorter">{{ state.name }}</td>
                         <td>{{ state.description }}</td>
+                        <td>
+                            {# counting  products affected by this state#}
+                            {% set NbProducts = 0 %}
+                            {% for product in products if product.state.id == state.id %}
+                                {% set NbProducts = NbProducts+1 %}
+                            {% endfor %}
+                            {{ NbProducts }}
+                        </td>
+                        <td>
+                            {# counting  orders affected by this state#}
+                            {% set NbOrders = 0 %}
+                            {% for order in orders if order.state.id == state.id %}
+                                {% set NbOrders = NbOrders+1 %}
+                            {% endfor %}
+                            <a href="{{ path('orders_by_status', {'id':  state.id}) }}">{{ NbOrders }}</a>
+                        </td>
                         <td class="{{ state.color }}">{{ state.color }}</td>
                         <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
                         <td>
@@ -56,13 +74,13 @@
                 $('#table-status').rowSorter({
                     onDrop: function () {
                         var order = [];
-                        var token ='{{ token }}';
+                        var token = '{{ token }}';
                         $('#table-status').find("tr").each(function () {
                             order.push($(this).attr('id'));
                         });
                         $.ajax({
-                            data: {request: order, token:token}, success: function (rep) {
-                                console.log(rep);
+                            data: {request: order, token: token}, success: function () {
+                                location.reload(true);
                             }
                         });
                     }

@@ -213,6 +213,22 @@ class OrdersController extends Controller
         return $this->redirectToRoute('orders_index');
     }
 
+    //orders sorted by status from the statuses page
+    /**
+     * @Route("/admin/orders/status/{id}", name="orders_by_status")
+     */
+    public function ordersByStatusAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['state'=>$id]);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+
+        return $this->render(':orders:ordersByStatus.html.twig', array(
+            'orders' => $orders,
+            'products'=>$products,
+        ));
+    }
+
     /**
      * Creates a form to delete a order entity.
      *

@@ -3,6 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\State;
+use Jasdero\PassePlatBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -55,9 +56,13 @@ class StateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
 
         return $this->render('state/index.html.twig', array(
             'states' => $states,
+            'products' => $products,
+            'orders' => $orders,
             'token' => $this->get('session')->get('bjp_token'),
         ));
     }
@@ -161,7 +166,6 @@ class StateController extends Controller
         $em = $this->getDoctrine()->getManager();
         $responseText = '';
 
-        dump($request);
         //checking Ajax
         if (!$request->isXmlHttpRequest()) {
             $responseText = 'ERROR';
