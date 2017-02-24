@@ -37,7 +37,9 @@
                         <td><a href="{{ path('product_show', {id : product.id}) }}">{{ product.id }}</a></td>
                         <td>{{ product.catalog.name }}</td>
                         <td>{{ product.catalog.description }}</td>
-                        <td class="{{ product.state.color }}">{{ product.state.name }}</td>
+                        {% if product.state %}
+                            <td class="{{ product.state.color }}">{{ product.state.name }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

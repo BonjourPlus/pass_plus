@@ -55,12 +55,13 @@
             ),
                 $('#table-status').rowSorter({
                     onDrop: function () {
-                        var order = []
+                        var order = [];
+                        var token ='{{ token }}';
                         $('#table-status').find("tr").each(function () {
                             order.push($(this).attr('id'));
                         });
                         $.ajax({
-                            data: {request: order}, success: function (rep) {
+                            data: {request: order, token:token}, success: function (rep) {
                                 console.log(rep);
                             }
                         });
