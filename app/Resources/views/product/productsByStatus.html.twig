@@ -1,10 +1,12 @@
 {% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 {% block content %}
     <h2 class="center-align">Products list</h2>
     <div class="container">
         <div class="row">
-            <table>
+            <table class="bordered tablesorter" id="productstable">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -19,7 +21,7 @@
                 {% for product in products %}
                     <tr>
                         <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
-                        <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id}}</a></td>
+                        <td>{{ product.orders.id}}</td>
                         <td>{{ product.pretaxPrice }}</td>
                         <td>{{ product.vatRate }}</td>
                         <td class="{{ product.state.color }}">{{ product.state.name }}</td>
@@ -34,9 +36,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <div class="center-align">
-                <h3>{{ knp_pagination_render(products) }}</h3>
-            </div>
+
             <ul>
                 <li>
                     <a href="{{ path('product_new') }}" class="btn">Create a new product</a>
@@ -44,4 +44,11 @@
             </ul>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function () {
+            $("#productstable").tablesorter();
+        })
+    </script>
 {% endblock %}

@@ -21,11 +21,18 @@ class ProductController extends Controller
      * @Route("/", name="product_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Product')->createQueryBuilder('q');
+        $query = $queryBuilder->getQuery();
 
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+        $products = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $request->query->getInt('limit', 10)/*limit per page*/
+        );
 
         return $this->render('product/index.html.twig', array(
             'products' => $products,
@@ -133,7 +140,7 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state'=>$id]);
 
-        return $this->render(':product:index.html.twig', array(
+        return $this->render(':product:productsByStatus.html.twig', array(
             'products'=>$products,
         ));
     }
