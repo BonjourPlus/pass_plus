@@ -116,10 +116,26 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($product);
-            $em->flush($product);
+            $em->flush();
         }
 
         return $this->redirectToRoute('product_index');
+    }
+
+    //products sorted by statuses
+    /**
+     * @Route("/products/status/{id}", name="products_by_status")
+     *
+     */
+
+    public function productsByStatusAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state'=>$id]);
+
+        return $this->render(':product:index.html.twig', array(
+            'products'=>$products,
+        ));
     }
 
     /**

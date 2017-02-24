@@ -8,8 +8,10 @@
                 <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Order</th>
                     <th>Pretaxprice</th>
                     <th>Vatrate</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -17,8 +19,10 @@
                 {% for product in products %}
                     <tr>
                         <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
+                        <td>{{ product.orders.id}}</td>
                         <td>{{ product.pretaxPrice }}</td>
                         <td>{{ product.vatRate }}</td>
+                        <td class="{{ product.state.color }}">{{ product.state.name }}</td>
                         <td>
                             <ul>
                                 <li>

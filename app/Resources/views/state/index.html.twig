@@ -31,7 +31,7 @@
                             {% for product in products if product.state.id == state.id %}
                                 {% set NbProducts = NbProducts+1 %}
                             {% endfor %}
-                            {{ NbProducts }}
+                            <a href="{{ path('products_by_status', {'id': state.id}) }}">{{ NbProducts }}</a>
                         </td>
                         <td>
                             {# counting  orders affected by this state#}

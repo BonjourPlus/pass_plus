@@ -9,6 +9,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Order</th>
                     <th>Description</th>
                     <th>Pretax Price</th>
                     <th>Vat Rate</th>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ product.id }}</td>
                     <td>{{ product.catalog.name }}</td>
+                    <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id }}</a></td>
                     <td>{{ product.catalog.description }}</td>
                     <td>{{ product.pretaxPrice }}</td>
                     <td>{{ product.vatRate }}</td>
