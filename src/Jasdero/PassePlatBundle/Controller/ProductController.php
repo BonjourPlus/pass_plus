@@ -2,7 +2,9 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
+use Jasdero\PassePlatBundle\Entity\Catalog;
 use Jasdero\PassePlatBundle\Entity\Product;
+use Jasdero\PassePlatBundle\Entity\State;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -135,12 +137,27 @@ class ProductController extends Controller
      *
      */
 
-    public function productsByStatusAction($id)
+    public function productsByStatusAction(State $state)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state'=>$id]);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state'=>$state->getId()]);
 
-        return $this->render(':product:productsByStatus.html.twig', array(
+        return $this->render(':product:productsFiltered.html.twig', array(
+            'products'=>$products,
+        ));
+    }
+
+    //products sorted by catalog
+    /**
+     * @Route("/products/catalog/{id}", name="products_by_catalog")
+     *
+     */
+    public function productsByCatalogAction(Catalog $catalog)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['catalog'=>$catalog->getId()]);
+
+        return $this->render('product/productsFiltered.html.twig', array(
             'products'=>$products,
         ));
     }

@@ -2,8 +2,10 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
+use Jasdero\PassePlatBundle\Entity\Catalog;
 use Jasdero\PassePlatBundle\Entity\Orders;
 use Jasdero\PassePlatBundle\Entity\Product;
+use Jasdero\PassePlatBundle\Entity\State;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -217,13 +219,13 @@ class OrdersController extends Controller
     /**
      * @Route("/admin/orders/status/{id}", name="orders_by_status")
      */
-    public function ordersByStatusAction($id)
+    public function ordersByStatusAction(State $state)
     {
         $em = $this->getDoctrine()->getManager();
-        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['state'=>$id]);
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['state'=>$state->getId()]);
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
 
-        return $this->render(':orders:ordersByStatus.html.twig', array(
+        return $this->render(':orders:ordersFiltered.html.twig', array(
             'orders' => $orders,
             'products'=>$products,
         ));

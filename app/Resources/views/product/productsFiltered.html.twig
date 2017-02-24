@@ -21,7 +21,7 @@
                 {% for product in products %}
                     <tr>
                         <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
-                        <td>{{ product.orders.id}}</td>
+                        <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id}}</a></td>
                         <td>{{ product.pretaxPrice }}</td>
                         <td>{{ product.vatRate }}</td>
                         <td class="{{ product.state.color }}">{{ product.state.name }}</td>

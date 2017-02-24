@@ -1,12 +1,14 @@
 {% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    {% endblock %}
 {% block content %}
     <h2 class="center-align">Catalogs list</h2>
     <div class="container">
         <div class="row">
 
 
-            <table class="striped">
+            <table class="striped tablesorter" id="catalogstable">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -34,6 +36,9 @@
                                     <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}"
                                        class="waves-effect waves-light btn indigo">edit</a>
                                 </li>
+                                <li>
+                                    <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn teal">View products</a>
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -48,4 +53,11 @@
             </ul>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('#catalogstable').tablesorter();
+        })
+    </script>
 {% endblock %}

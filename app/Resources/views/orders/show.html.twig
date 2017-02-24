@@ -10,6 +10,7 @@
                     <th>Last update</th>
                     <th>Date creation</th>
                     <th>Ordered By</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -17,6 +18,7 @@
                     <td>{% if order.lastUpdate %}{{ order.lastUpdate|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>{% if order.dateCreation %}{{ order.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>{{ order.user.username }}</td>
+                    <td class="{{ order.state.color }}">{{ order.state.name}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -29,6 +31,7 @@
                     <th>Product Name</th>
                     <th>Product description</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,6 +43,9 @@
                         {% if product.state %}
                             <td class="{{ product.state.color }}">{{ product.state.name }}</td>
                         {% endif %}
+                        <td>
+                            <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn blue">Edit</a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
