@@ -114,26 +114,25 @@ class OrdersController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $email = json_decode($request->getContent());
-        var_dump($email);
         //choosing a default state, part to improve
         $state = $em->getRepository('JasderoPassePlatBundle:State')->findOneBy(['id' => 1]);
-        $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=> $email['FromAddress']]);
+/*        $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=> $email['FromAddress']]);
 
         if(!$user){
             return $this->redirectToRoute('home');
-        }
+        }*/
 
         for ($i = 1; $i <= $number; $i++) {
 
             $products = [];
             for ($j = 1; $j <= random_int(1, 5); $j++) {
-                $products[] = $em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id' => random_int(1, 5)]);
+                $products[] = $em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id' => random_int(1, 6)]);
             }
 
             $order = new Orders();
 
             $order->setDateCreation(new \DateTime());
-            $order->setUser($user);
+            $order->setUser($this->getUser());
 
             foreach ($products as $product) {
 
@@ -224,6 +223,21 @@ class OrdersController extends Controller
         return $this->redirectToRoute('orders_index');
     }
 
+    /**
+     * Creates a form to delete a order entity.
+     *
+     * @param Orders $order The order entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Orders $order)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('orders_delete', array('id' => $order->getId())))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+
     //orders sorted by status from the statuses page
     /**
      * @Route("/admin/orders/status/{id}", name="orders_by_status")
@@ -240,18 +254,30 @@ class OrdersController extends Controller
         ));
     }
 
+    //orders filtered by catalog
     /**
-     * Creates a form to delete a order entity.
      *
-     * @param Orders $order The order entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @Route("/admin/orders/catalog/{id}", name="orders_by_catalog")
+     * @param Catalog $catalog
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function createDeleteForm(Orders $order)
+    public function ordersByCatalogAction(Catalog $catalog)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('orders_delete', array('id' => $order->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+
+        //getting Orders Id
+        $ordersId = $em->getRepository('JasderoPassePlatBundle:Product')->findOrderByCatalog($catalog);
+        //getting Orders
+        $orders = [];
+        foreach ($ordersId as $order) {
+            $orders[] = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneBy(['id'=>$order]);
+        }
+
+        return $this->render('orders/ordersFiltered.html.twig', array(
+            'orders' => $orders,
+            'products'=>$products,
+        ));
     }
+
 }

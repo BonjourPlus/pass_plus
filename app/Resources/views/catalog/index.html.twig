@@ -1,7 +1,7 @@
 {% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-    {% endblock %}
+{% endblock %}
 {% block content %}
     <h2 class="center-align">Catalogs list</h2>
     <div class="container">
@@ -17,6 +17,8 @@
                     <th>Pretaxprice</th>
                     <th>Vat rate</th>
                     <th>Activated</th>
+                    <th>Products</th>
+                    <th>Nb of Orders</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -31,13 +33,23 @@
                         <td>{{ catalog.vat.rate }}</td>
                         <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
                         <td>
+                            {# counting  products with this catalog entry#}
+                            {% set nbProducts = 0 %}
+                            {% for product in products if product.catalog.id == catalog.id %}
+                                {% set nbProducts = nbProducts+1 %}
+                            {% endfor %}
+                            <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}">{{ ((nbProducts/totalProducts)*100)|round(1, 'floor') }}%</a>
+                        </td>
+                        <td>
+                            {# counting  orders with this catalog entry#}
+                            <a href="{{ path('orders_by_catalog', {'id': catalog.id}) }}">
+                                {{ render(controller('JasderoPassePlatBundle:Catalog:catalogInOrders', {'catalog': catalog.id})) }}</a>
+                        </td>
+                        <td>
                             <ul>
                                 <li>
                                     <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}"
                                        class="waves-effect waves-light btn indigo">edit</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn teal">View products</a>
                                 </li>
                             </ul>
                         </td>

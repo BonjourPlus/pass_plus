@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Catalog controller.
@@ -15,8 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CatalogController extends Controller
 {
+
+    //function to display how many orders include given catalog
+    public function catalogInOrdersAction(Catalog $catalog)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Product')->findOrderByCatalog($catalog);
+
+        return New Response(count($orders));
+    }
+
     /**
-     * Lists all catalog entities.
+     * Lists all catalog entities with stats
      *
      * @Route("/", name="catalog_index")
      * @Method("GET")
@@ -26,11 +37,21 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $catalogs = $em->getRepository('JasderoPassePlatBundle:Catalog')->findAll();
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
+        $totalProducts = count($products);
+        $totalOrders = count($orders);
 
         return $this->render('catalog/index.html.twig', array(
             'catalogs' => $catalogs,
+            'products' => $products,
+            'orders' => $orders,
+            'totalOrders' => $totalOrders,
+            'totalProducts' => $totalProducts,
         ));
     }
+
+
 
     /**
      * Creates a new catalog entity.
@@ -134,4 +155,6 @@ class CatalogController extends Controller
             ->getForm()
         ;
     }
+
+
 }

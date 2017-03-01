@@ -148,6 +148,22 @@ class ProductController extends Controller
         return $this->redirectToRoute('product_index');
     }
 
+    /**
+     * Creates a form to delete a product entity.
+     *
+     * @param Product $product The product entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Product $product)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
+
     //products sorted by statuses
     /**
      * @Route("/products/status/{id}", name="products_by_status")
@@ -171,7 +187,7 @@ class ProductController extends Controller
      */
     public function productsByCatalogAction(Catalog $catalog)
     {
-        $em= $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['catalog'=>$catalog->getId()]);
 
         return $this->render('product/productsFiltered.html.twig', array(
@@ -179,19 +195,5 @@ class ProductController extends Controller
         ));
     }
 
-    /**
-     * Creates a form to delete a product entity.
-     *
-     * @param Product $product The product entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Product $product)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+
 }
