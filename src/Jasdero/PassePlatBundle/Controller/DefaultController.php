@@ -21,7 +21,6 @@ class DefaultController extends Controller
      */
     public function adminIndexAction()
     {
-/*		var_dump(get_browser($_SERVER['HTTP_USER_AGENT'], false)->device_type);*/
         return $this->render('JasderoPassePlatBundle:Admin:indexAdmin.html.twig');
     }
 

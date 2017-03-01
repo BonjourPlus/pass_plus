@@ -6,6 +6,7 @@ use Jasdero\PassePlatBundle\Entity\Catalog;
 use Jasdero\PassePlatBundle\Entity\Orders;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
+use Jasdero\PassePlatBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,6 +28,7 @@ class OrdersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $paginator  = $this->get('knp_paginator');
+
 
         $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Orders')->createQueryBuilder('o');
         $query = $queryBuilder->getQuery();
@@ -99,20 +101,27 @@ class OrdersController extends Controller
         ));
     }*/
 
-    //Create multiple orders only for dev needs
+    //Create multiple orders only for dev needs : callable through IFTTT
 
     /**
      * Creates a new order entity.
      * @Route("orders/creator/{number}", name="orders_creator")
-     * @Method({"GET", "POST"})
+     * @Method({"POST", "GET"})
      */
 
-    public function ordersCreatorAction($number = 0)
+    public function ordersCreatorAction($number = 0, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
+        $email = json_decode($request->getContent());
+        var_dump($email);
         //choosing a default state, part to improve
         $state = $em->getRepository('JasderoPassePlatBundle:State')->findOneBy(['id' => 1]);
+        $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=> $email['FromAddress']]);
+
+        if(!$user){
+            return $this->redirectToRoute('home');
+        }
 
         for ($i = 1; $i <= $number; $i++) {
 
@@ -124,7 +133,7 @@ class OrdersController extends Controller
             $order = new Orders();
 
             $order->setDateCreation(new \DateTime());
-            $order->setUser($this->getUser());
+            $order->setUser($user);
 
             foreach ($products as $product) {
 

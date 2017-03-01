@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * Product controller.
@@ -100,6 +101,22 @@ class ProductController extends Controller
 
             //updating order status
             $this->get('orderstatus')->orderStatusAction($product->getOrders());
+
+            //call to IFTTT with values in mail
+            $data = array(
+                "value1"=> 'Product name : '.$product->getCatalog()->getName(),
+                "value2"=> $product->getOrders()->getUser()->getEmail(),
+                "value3" => 'New status is : '.$product->getState()->getName()
+            );
+            $extra = json_encode($data);
+            $iftttRequest = "https://maker.ifttt.com/trigger/status_changed/with/key/euPd2g_2nhYbypuqOE76CL8uHVYlGO1ZBSj2tsSHJ4Z";
+            $ch = curl_init($iftttRequest);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$extra);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_exec($ch);
+            curl_close($ch);
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
