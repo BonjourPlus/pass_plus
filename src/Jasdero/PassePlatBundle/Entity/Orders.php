@@ -54,6 +54,12 @@ class Orders
      */
     private $state;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Source", inversedBy="orders")
+     * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
+     */
+    private $source;
+
 
 
     /**
@@ -169,5 +175,29 @@ class Orders
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * Set source
+     *
+     * @param \Jasdero\PassePlatBundle\Entity\Source $source
+     *
+     * @return Orders
+     */
+    public function setSource(\Jasdero\PassePlatBundle\Entity\Source $source = null)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return \Jasdero\PassePlatBundle\Entity\Source
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }
