@@ -3,7 +3,7 @@
 {% block content %}
     <h2 class="center-align">Statuses list</h2>
     <div class="container">
-        <div class="row">
+        <div class="row center-align">
 
             <h4>Use your mouse to sort statuses by order of importance</h4>
             <table id="table-status" class="bordered">
@@ -27,19 +27,19 @@
                         <td>{{ state.description }}</td>
                         <td>
                             {# counting  products affected by this state#}
-                            {% set NbProducts = 0 %}
+                            {% set nbProducts = 0 %}
                             {% for product in products if product.state.id == state.id %}
-                                {% set NbProducts = NbProducts+1 %}
+                                {% set nbProducts = nbProducts+1 %}
                             {% endfor %}
-                            <a href="{{ path('products_by_status', {'id': state.id}) }}">{{ NbProducts }}</a>
+                            <a href="{{ path('products_by_status', {'id': state.id}) }}">{{ nbProducts }} / {{ totalProducts }}</a>
                         </td>
                         <td>
                             {# counting  orders affected by this state#}
-                            {% set NbOrders = 0 %}
+                            {% set nbOrders = 0 %}
                             {% for order in orders if order.state.id == state.id %}
-                                {% set NbOrders = NbOrders+1 %}
+                                {% set nbOrders = nbOrders+1 %}
                             {% endfor %}
-                            <a href="{{ path('orders_by_status', {'id':  state.id}) }}">{{ NbOrders }}</a>
+                            <a href="{{ path('orders_by_status', {'id':  state.id}) }}">{{ nbOrders }} / {{ totalOrders }}</a>
                         </td>
                         <td class="{{ state.color }}">{{ state.color }}</td>
                         <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>

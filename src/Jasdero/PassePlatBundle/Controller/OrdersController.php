@@ -135,10 +135,10 @@ class OrdersController extends Controller
 
         //method to get user from ifttt mail
 /*          $email = $request->getContent();
-          $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=> $email]);*/
+          $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=> $email]);
 
           //not registered ? Back to home
-/*          if(!$user){
+          if(!$user){
               return $this->redirectToRoute('home');
           }*/
 

@@ -58,11 +58,15 @@ class StateController extends Controller
         $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
+        $totalOrders = count($orders);
+        $totalProducts = count($products);
 
         return $this->render('state/index.html.twig', array(
             'states' => $states,
             'products' => $products,
             'orders' => $orders,
+            'totalOrders' => $totalOrders,
+            'totalProducts' => $totalProducts,
             'token' => $this->get('session')->get('bjp_token'),
         ));
     }
