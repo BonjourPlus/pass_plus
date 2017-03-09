@@ -2,7 +2,16 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <h3>Welcome to the admin section</h3>
+            <h3 class="center-align">Manage orders in Google Drive</h3>
         </div>
+        <a href="{{ path('checking', {'number' : 1}) }}" class="btn">Scan folder for new orders</a>
+        {% if newOrders %}
+            <p><strong>Number of new orders created : {{ newOrders }}</strong></p>
+        {% endif %}
+        {% if errors %}
+            {% for error in errors %}
+            <p>{{ error }}</p><br>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

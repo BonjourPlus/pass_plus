@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-abstract  class CheckingController extends Controller
+abstract class CheckingController extends Controller
 {
 
 
@@ -19,19 +19,28 @@ abstract  class CheckingController extends Controller
     public function validateUser($email)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email'=>$email]);
-
-        if(!$user){
-            throw New AccessDeniedException('Access Denied');
+        $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email' => $email]);
+        $response = $user;
+        if (!$user) {
+            $response = false;
         }
 
-        return ($user);
+        return ($response);
     }
-    
+
     //create a function to check that an order is valid : must have at least one product
 
-    public function validateOrder()
+    public function validateOrder(array $products)
     {
+        $em = $this->getDoctrine()->getManager();
+        $response = true;
+
+        foreach ($products as $product) {
+            if(!$match=$em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id'=>$product]) ){
+                $response = false;
+            }
+        }
+        return ($response);
 
     }
 }

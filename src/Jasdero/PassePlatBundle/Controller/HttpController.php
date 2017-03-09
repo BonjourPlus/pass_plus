@@ -15,54 +15,51 @@ class HttpController extends CheckingController
     //try to read from google drive sheet
     /**
      *
-     * @Route("/checking", name="checking")
+     * @Route("/admin/checking/{number}", name="checking")
      * @Method({"GET", "POST"})
      */
 
-    public function driveSheetAction()
+    public function driveSheetAction($number = null)
     {
         //initializing Client
-        $client = new Google_Client();
-        $client->setAuthConfig('C:\wamp64\www\order_manager\vendor\client_secret.json');
-        $client->addScope(Google_Service_Drive::DRIVE);
-
+        $drive = $this->get('driveconnection')->connectToDriveApi();
         // getting the files if the OAuth flow has been validated
-       /* if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-            $client->setAccessToken($_SESSION['access_token']);*/
-            $drive = $this->get('driveconnection')->connectToDriveApi();
-            if($drive){
-            $pageToken = null;
 
-            //scanning the new orders folder to create new orders, then moving it to the In progress folder
-            //options to get the new Orders folder on the drive
-            $optParamsForFolder = array(
-                'pageToken' => $pageToken,
-                'q' => "name contains 'NewOrders'",
-                'fields' => 'nextPageToken, files(id)'
-            );
+        $numberOfNewOrders = null;
+        $errorsOnOrders = [];
+        if ($drive) {
+            if ($number) {
+                $pageToken = null;
 
-            //recovering the folder
-            $results = $drive->files->listFiles($optParamsForFolder);
+                //scanning the new orders folder to create new orders, then moving it to the In progress folder
+                //options to get the new Orders folder on the drive
+                $optParamsForFolder = array(
+                    'pageToken' => $pageToken,
+                    'q' => "name contains 'NewOrders'",
+                    'fields' => 'nextPageToken, files(id)'
+                );
 
-            $folderId = '';
-            foreach ($results->getFiles() as $file) {
-                $folderId = ($file->getId());
-            }
+                //recovering the folder
+                $results = $drive->files->listFiles($optParamsForFolder);
 
-            //options to get the Orders inside the folder
-            $optParamsForFiles = array(
-                'pageToken' => $pageToken,
-                'q' => "'$folderId' in parents",
-                'fields' => 'nextPageToken, files(id)'
-            );
+                $folderId = '';
+                foreach ($results->getFiles() as $file) {
+                    $folderId = ($file->getId());
+                }
 
-            //recovering the files
-            $results = $drive->files->listFiles($optParamsForFiles);
+                //options to get the Orders inside the folder
+                $optParamsForFiles = array(
+                    'pageToken' => $pageToken,
+                    'q' => "'$folderId' in parents",
+                    'fields' => 'nextPageToken, files(id)'
+                );
 
-            $files = [];
-            foreach ($results->getFiles() as $file) {
-                $files[] = ($file->getId());
-
+                //recovering the files
+                $results = $drive->files->listFiles($optParamsForFiles);
+                $files = [];
+                foreach ($results->getFiles() as $file) {
+                    $files[] = ($file->getId());
+                }
                 if ($files) {
                     //downloading files in a csv format and turning it into associative arrays
                     $csvFiles = [];
@@ -86,32 +83,52 @@ class HttpController extends CheckingController
                     //formatting csv files to proper order format
                     $newOrders = $this->csvToOrders($csvFiles);
 
-                    //array to store custom Ids which will be added to files later
+                    //array to store custom Ids and errors which will be added to files later
                     $ordersIds = [];
                     //creating new orders
                     foreach ($newOrders as $newOrder) {
-                        if ($user = $this->validateUser($newOrder['user'])) {
+                        //checking order integrity and format
+                        if ($user = $this->validateUser($newOrder['user']) AND $this->validateOrder($newOrder['products'])) {
+                            $numberOfNewOrders++;
                             $ordersIds[] = $this->forward('JasderoPassePlatBundle:Orders:new', array(
                                 'user' => $user,
                                 'products' => $newOrder['products'],
+                                //catching the response with ids
                             ))->getContent();
+                        } else {
+                            //catching and marking invalid orders
+                            $ordersIds[] = 'error';
+                            $errorsOnOrders[] = 'Something wrong with order by ' . $newOrder['user'];
+
                         }
                     }
 
-                    //moving to 'in progress folder'
+                    //moving to 'in progress folder' or 'errors' folder
+
                     //options to get the In Progress folder on the drive
                     $optParamsForFolder = array(
                         'pageToken' => $pageToken,
                         'q' => "name contains 'InProgress'",
                         'fields' => 'nextPageToken, files(id)'
                     );
-
                     //recovering the folder id
                     $results = $drive->files->listFiles($optParamsForFolder);
-
-                    $folderId = '';
+                    $inProgressFolderId = '';
                     foreach ($results->getFiles() as $file) {
-                        $folderId = ($file->getId());
+                        $inProgressFolderId = ($file->getId());
+                    }
+
+                    //options to get the Errors folder on the drive
+                    $optParamsForFolder = array(
+                        'pageToken' => $pageToken,
+                        'q' => "name contains 'Errors'",
+                        'fields' => 'nextPageToken, files(id)'
+                    );
+                    //recovering the folder id
+                    $results = $drive->files->listFiles($optParamsForFolder);
+                    $errorsFolderId = '';
+                    foreach ($results->getFiles() as $file) {
+                        $errorsFolderId = ($file->getId());
                     }
 
                     //moving files
@@ -122,21 +139,31 @@ class HttpController extends CheckingController
                                 "customID" => $ordersIds[$key],
                             ]
                         ));
-
                         // Retrieve the existing parents to remove
                         $file = $drive->files->get($fileId, array('fields' => 'parents'));
                         $previousParents = join(',', $file->parents);
+                        //if order has an error
+                        if ($ordersIds[$key] == 'error') {
+                            $drive->files->update($fileId, $extraFileMetadata, array(
+                                'addParents' => $errorsFolderId,
+                                'removeParents' => $previousParents,
+                                'fields' => 'id, parents, appProperties'));
+                        } else {
 
-                        // Move the file to the new folder
-                        $file = $drive->files->update($fileId, $extraFileMetadata, array(
-                            'addParents' => $folderId,
-                            'removeParents' => $previousParents,
-                            'fields' => 'id, parents, appProperties'));
+                            // Move the file to the in Progress folder
+                            $file = $drive->files->update($fileId, $extraFileMetadata, array(
+                                'addParents' => $inProgressFolderId,
+                                'removeParents' => $previousParents,
+                                'fields' => 'id, parents, appProperties'));
+                        }
                     }
                 }
             }
 
-            return New Response();
+            return $this->render('@JasderoPassePlat/Admin/indexAdmin.html.twig', array(
+                'newOrders' => $numberOfNewOrders,
+                'errors' => $errorsOnOrders
+            ));
         } else {
 
             //if not authenticated restart for token
@@ -145,12 +172,13 @@ class HttpController extends CheckingController
         }
     }
 
-    //redirection page, used in the OAuth2 authentication Flow
+//redirection page, used in the OAuth2 authentication Flow
     /**
      * @Route("/checked", name="auth_checked")
      *
      */
-    public function authCheckedAction()
+    public
+    function authCheckedAction()
     {
         return $this->get('driveconnection')->authCheckedAction();
 
@@ -162,7 +190,8 @@ class HttpController extends CheckingController
      * @param array $orders
      * @return array
      */
-    private function csvToOrders(array $orders)
+    private
+    function csvToOrders(array $orders)
     {
         $formattedOrders = [];
 
