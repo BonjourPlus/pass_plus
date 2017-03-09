@@ -3,6 +3,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    orderStatus:
+    orderstatus:
         class:      Jasdero\PassePlatBundle\Services\OrderStatus
         arguments: ['@doctrine.orm.entity_manager']
+    drivefolderasstatus:
+        class:    Jasdero\PassePlatBundle\Services\DriveFolderAsStatus
+    driveconnection:
+        class:    Jasdero\PassePlatBundle\Services\DriveConnection

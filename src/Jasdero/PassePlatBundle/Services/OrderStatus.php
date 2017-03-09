@@ -29,12 +29,14 @@ class OrderStatus
         }
         $maxWeight = max($weights);
 
-        //Finding correspnding status
+        //Finding corresponding status
         $status = $this->em->getRepository('JasderoPassePlatBundle:State')->findOneBy(['weight'=>$maxWeight]);
 
         //Setting order status
         $order->setState($status);
         $this->em->persist($order);
         $this->em->flush();
+
+
     }
 }

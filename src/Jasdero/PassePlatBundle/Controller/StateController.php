@@ -212,10 +212,11 @@ class StateController extends Controller
                 $em->flush();
             }
 
-            //updating orders statuses
+            //updating orders statuses and drive folders
             $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
             foreach ($orders as $order) {
                 $this->get('orderstatus')->orderStatusAction($order);
+                $this->get('drivefolderasstatus')->driveFolder($order->getState()->getName(), $order->getId());
             }
             return new Response();
         }

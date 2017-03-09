@@ -101,6 +101,7 @@ class ProductController extends Controller
 
             //updating order status
             $this->get('orderstatus')->orderStatusAction($product->getOrders());
+            $this->get('drivefolderasstatus')->driveFolder($product->getState()->getName(), $product->getOrders()->getId());
 
             //call to IFTTT with values in mail
             $data = array(
