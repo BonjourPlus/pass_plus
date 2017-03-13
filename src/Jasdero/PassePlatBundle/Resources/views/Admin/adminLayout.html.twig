@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block header %}
     <nav>
-        <div class="nav-wrapper blue">
+        <div class="nav-wrapper indigo lighten-1">
             <a href="{{ path('fos_user_security_logout') }}" class="brand-logo">Logout</a>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="{{ path('checking') }}">Drive</a></li>
+                <li><a href="{{ path('checking') }}">Entries</a></li>
                 <li><a href="{{ path('orders_index') }}">Orders</a></li>
                 <li><a href="{{ path('catalog_index') }}">Catalog</a></li>
                 <li><a href="{{ path('product_index') }}">Products</a></li>
