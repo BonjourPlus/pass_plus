@@ -49,9 +49,8 @@ class OrdersController extends Controller
     }
 
     /**
-     * Creates a new order entity.
+     * Creates a new order entity. 2 possible ways : through scanning the drive folder or through the site form
      *
-     * @Route("orders/new", name="orders_new")
      * @Method({"GET", "POST"})
      * @param User $user an authenticated user
      * @param array $products an array of ordered products

@@ -9,17 +9,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
-class HttpController extends CheckingController
+class OrderFromDriveController extends CheckingController
 {
 
-    //try to read from google drive sheet
+
     /**
-     *
+     * Reading the drive folder sheets and turning it into new orders
      * @Route("/admin/checking/{action}", name="checking")
      * @Method({"GET", "POST"})
      */
 
-    public function driveSheetAction($action = false)
+    public function scanDriveFolderAction($action = false)
     {
         //initializing Client
         $drive = $this->get('driveconnection')->connectToDriveApi();
@@ -171,8 +171,9 @@ class HttpController extends CheckingController
         }
     }
 
-//redirection page, used in the OAuth2 authentication Flow
+
     /**
+     * redirection page, used in the OAuth2 authentication Flow
      * @Route("/checked", name="auth_checked")
      *
      */
@@ -188,8 +189,7 @@ class HttpController extends CheckingController
      * @param array $orders
      * @return array
      */
-    private
-    function csvToOrders(array $orders)
+    private function csvToOrders(array $orders)
     {
         $formattedOrders = [];
 

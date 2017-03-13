@@ -12,29 +12,36 @@ use Doctrine\ORM\EntityRepository;
 class OrdersType extends AbstractType
 {
     /**
+     * Type used create an order; only displays catalog entries which are activated and user associated with order
      * {@inheritdoc}
      */
 
-    //Type used by the customer to create an order; only displays catalog entries which are activated
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('catalogs', EntityType::class, array(
-            'class'=>'Jasdero\PassePlatBundle\Entity\Catalog',
+        $builder
+            ->add('catalogs', EntityType::class, array(
+            'class' => 'Jasdero\PassePlatBundle\Entity\Catalog',
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->where('u.activated = true');
             },
             'choice_label' => function ($product) {
-                return $product->getDescription().' Prix HT : '.$product->getPretaxPrice().'€';
+                return $product->getDescription() . ' Pre-tax price : ' . $product->getPretaxPrice() . '€';
             },
-            'label'=>'Produits',
-            'expanded'=>true,
-            'multiple'=>true,
-            'mapped'=>false,
+            'label' => 'Products',
+            'expanded' => true,
+            'multiple' => true,
+            'mapped' => false,
         ))
-        ;
+            ->add('user', EntityType::class, array(
+                'class' => 'Jasdero\PassePlatBundle\Entity\User',
+                'choice_label' => 'username',
+                'label' => 'Order owner',
+                'mapped' => 'false'
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */
