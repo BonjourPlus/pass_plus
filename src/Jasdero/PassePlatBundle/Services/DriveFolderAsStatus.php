@@ -14,14 +14,11 @@ class DriveFolderAsStatus extends Controller
     public function driveFolder($statusName, $orderId)
     {
         //initializing Client
-        $client = new Google_Client();
-        $client->setAuthConfig('C:\wamp64\www\order_manager\vendor\client_secret.json');
-        $client->addScope(Google_Service_Drive::DRIVE);
+        $drive = $this->get('driveconnection')->connectToDriveApi();
+
 
         // getting to work if the OAuth flow has been validated
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-            $client->setAccessToken($_SESSION['access_token']);
-            $drive = new Google_Service_Drive($client);
+        if ($drive) {
 
             //getting the id of root folder
             $pageToken = null;
@@ -97,8 +94,7 @@ class DriveFolderAsStatus extends Controller
 
         } else {
             //if not authenticated restart for token
-            $auth_url = $client->createAuthUrl();
-            return $this->redirect(filter_var($auth_url, FILTER_SANITIZE_URL));
+            return $this->get('driveconnection')->authCheckedAction();
         }
     }
 }

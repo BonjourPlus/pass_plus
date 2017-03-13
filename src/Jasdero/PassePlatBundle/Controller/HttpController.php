@@ -15,20 +15,19 @@ class HttpController extends CheckingController
     //try to read from google drive sheet
     /**
      *
-     * @Route("/admin/checking/{number}", name="checking")
+     * @Route("/admin/checking/{action}", name="checking")
      * @Method({"GET", "POST"})
      */
 
-    public function driveSheetAction($number = null)
+    public function driveSheetAction($action = false)
     {
         //initializing Client
         $drive = $this->get('driveconnection')->connectToDriveApi();
         // getting the files if the OAuth flow has been validated
-
         $numberOfNewOrders = null;
         $errorsOnOrders = [];
         if ($drive) {
-            if ($number) {
+            if ($action) {
                 $pageToken = null;
 
                 //scanning the new orders folder to create new orders, then moving it to the In progress folder
@@ -177,8 +176,7 @@ class HttpController extends CheckingController
      * @Route("/checked", name="auth_checked")
      *
      */
-    public
-    function authCheckedAction()
+    public function authCheckedAction()
     {
         return $this->get('driveconnection')->authCheckedAction();
 

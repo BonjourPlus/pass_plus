@@ -4,7 +4,7 @@
         <div class="row">
             <h3 class="center-align">Manage orders in Google Drive</h3>
         </div>
-        <a href="{{ path('checking', {'number' : 1}) }}" class="btn">Scan folder for new orders</a>
+        <a href="{{ path('checking', {'action' : true}) }}" class="btn">Scan folder for new orders</a>
         {% if newOrders %}
             <p><strong>Number of new orders created : {{ newOrders }}</strong></p>
         {% endif %}
