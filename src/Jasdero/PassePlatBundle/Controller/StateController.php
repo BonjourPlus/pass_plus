@@ -224,9 +224,7 @@ class StateController extends Controller
 
     /**
      * Creates a form to delete a state entity.
-     *
      * @param State $state The state entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(State $state)

@@ -36,6 +36,8 @@ class VatController extends Controller
      *
      * @Route("/new", name="vat_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -62,6 +64,8 @@ class VatController extends Controller
      *
      * @Route("/{id}", name="vat_show")
      * @Method("GET")
+     * @param Vat $vat
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Vat $vat)
     {
@@ -78,6 +82,9 @@ class VatController extends Controller
      *
      * @Route("/{id}/edit", name="vat_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Vat $vat
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Vat $vat)
     {
@@ -103,6 +110,9 @@ class VatController extends Controller
      *
      * @Route("/{id}", name="vat_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param Vat $vat
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Vat $vat)
     {

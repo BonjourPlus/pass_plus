@@ -17,7 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 class CatalogController extends Controller
 {
 
-    //function to display how many orders include given catalog
+
+    /**
+     * function to display how many orders include given catalog
+     * @param Catalog $catalog
+     * @return Response
+     */
     public function catalogInOrdersAction(Catalog $catalog)
     {
         $em = $this->getDoctrine()->getManager();

@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrdersController extends Controller
 {
     /**
-     * Lists all order entities.
+     * Lists all order entities. Uses pagination
      *
      * @Route("/admin/orders/", name="orders_index")
      * @Method("GET")
@@ -49,15 +49,13 @@ class OrdersController extends Controller
     }
 
     /**
-     * Creates a new order entity. 2 possible ways : through scanning the drive folder or through the site form
+     * Creates a new order entity. 2 possible ways : through scanning the drive folder or through the site
      *
      * @Method({"GET", "POST"})
      * @param User $user an authenticated user
      * @param array $products an array of ordered products
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-
-    //currently  using next method to create orders during dev
 
     public function newAction(User $user, array $products)
     {
@@ -77,7 +75,7 @@ class OrdersController extends Controller
         //creating each product line
 
         foreach ($products as $product) {
-            $catalog = $em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id'=>$product]);
+            $catalog = $em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id' => $product]);
 
             $newProductLine = new Product();
             $newProductLine->setState($state);
@@ -93,13 +91,13 @@ class OrdersController extends Controller
         $this->get('orderstatus')->orderStatusAction($order);
 
 
-        //give back the new order id to update on the file
+        //give back the new order id
         return New Response ($order->getId());
 
     }
 
     /**
-     * Finds and displays a order entity.
+     * Finds and displays a order entity with its associated products
      *
      * @Route("/admin/orders/{id}", name="orders_show")
      * @Method("GET")
@@ -179,8 +177,9 @@ class OrdersController extends Controller
             ->getForm();
     }
 
-    //orders sorted by status from the statuses page
     /**
+     * orders sorted by status from the status page
+     *
      * @Route("/admin/orders/status/{id}", name="orders_by_status")
      */
     public function ordersByStatusAction(State $state)
@@ -195,9 +194,8 @@ class OrdersController extends Controller
         ));
     }
 
-    //orders filtered by catalog
     /**
-     *
+     * orders filtered by catalog
      * @Route("/admin/orders/catalog/{id}", name="orders_by_catalog")
      * @param Catalog $catalog
      * @return \Symfony\Component\HttpFoundation\Response

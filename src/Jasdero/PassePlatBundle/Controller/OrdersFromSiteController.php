@@ -2,7 +2,6 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
-use Jasdero\PassePlatBundle\Entity\Orders;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -24,18 +23,20 @@ class OrdersFromSiteController extends Controller
         $form->handleRequest($request);
         $products = [];
         if ($form->isSubmitted() && $form->isValid()) {
+            //retrieving user
             $user = $form->get('user')->getData();
+            //retrieving catalogs
             $catalogs = $form->get('catalogs')->getData();
             foreach ($catalogs as $catalog) {
                 $products[] = $catalog->getId();
             }
-
+            //creating order and recovering its id
             $orderId = $this->forward('JasderoPassePlatBundle:Orders:new', array(
                 'user' => $user,
                 'products' => $products
             ))->getContent();
 
-
+            //displaying the new order
             return $this->redirectToRoute('orders_show', array('id' => $orderId));
         }
 

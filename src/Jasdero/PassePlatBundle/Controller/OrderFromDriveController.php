@@ -141,7 +141,8 @@ class OrderFromDriveController extends CheckingController
                         // Retrieve the existing parents to remove
                         $file = $drive->files->get($fileId, array('fields' => 'parents'));
                         $previousParents = join(',', $file->parents);
-                        //if order has an error
+
+                        //if order has an error move it to errors folder
                         if ($ordersIds[$key] == 'error') {
                             $drive->files->update($fileId, $extraFileMetadata, array(
                                 'addParents' => $errorsFolderId,
