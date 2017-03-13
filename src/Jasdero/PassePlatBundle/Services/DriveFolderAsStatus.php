@@ -4,13 +4,21 @@
 namespace Jasdero\PassePlatBundle\Services;
 
 
-use Google_Client;
-use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class DriveFolderAsStatus
+ * @package Jasdero\PassePlatBundle\Services
+ * Used to move files to a drive folder named after the order's status
+ */
 class DriveFolderAsStatus extends Controller
 {
+    /**
+     * @param $statusName
+     * @param $orderId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function driveFolder($statusName, $orderId)
     {
         //initializing Client
@@ -22,7 +30,6 @@ class DriveFolderAsStatus extends Controller
 
             //getting the id of root folder
             $pageToken = null;
-
             $optParamsForFolder = array(
                 'pageToken' => $pageToken,
                 'q' => "name contains 'b+'",
@@ -32,12 +39,12 @@ class DriveFolderAsStatus extends Controller
             //recovering the folder
             $results = $drive->files->listFiles($optParamsForFolder);
 
-            $rootId = '';
+            $rootFolderId = '';
             foreach ($results->getFiles() as $file) {
-                $rootId = ($file->getId());
+                $rootFolderId = ($file->getId());
             }
 
-            //checking if the folder already exists
+            //checking if the folder with status name already exists
             $optParamsForFolder = array(
                 'pageToken' => $pageToken,
                 'q' => "name contains '$statusName'",
@@ -49,11 +56,11 @@ class DriveFolderAsStatus extends Controller
             foreach ($results->getFiles() as $file) {
                 $folderId = ($file->getId());
             }
-            //creating folder if doesn't exist
+            //creating folder if it doesn't exist
             if (!$folderId) {
                 $fileMetadata = new Google_Service_Drive_DriveFile(array(
                     'name' => $statusName,
-                    'parents' => array($rootId),
+                    'parents' => array($rootFolderId),
                     'mimeType' => 'application/vnd.google-apps.folder'));
                 $file = $drive->files->create($fileMetadata, array(
                     'uploadType' => 'multipart',
@@ -66,7 +73,7 @@ class DriveFolderAsStatus extends Controller
                 }
             }
 
-            //retrieving file
+            //retrieving file corresponding to order
             $optParamsForFile = array(
                 'pageToken' => $pageToken,
                 'q' => "appProperties has { key = 'customID' and value = '$orderId'}",
@@ -87,7 +94,7 @@ class DriveFolderAsStatus extends Controller
             $previousParents = join(',', $file->parents);
 
             // Move the file to the new folder
-            $file = $drive->files->update($fileId, $emptyFileMetadata, array(
+            $drive->files->update($fileId, $emptyFileMetadata, array(
                 'addParents' => $folderId,
                 'removeParents' => $previousParents,
                 'fields' => 'id, parents'));

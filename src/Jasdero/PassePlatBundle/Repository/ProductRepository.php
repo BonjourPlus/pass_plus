@@ -1,11 +1,5 @@
 <?php
-/**
- * ProductRepository
- * Created by PhpStorm.
- * User: apside
- * Date: 01/03/2017
- * Time: 10:22
- */
+
 
 namespace Jasdero\PassePlatBundle\Repository;
 

@@ -3,7 +3,6 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\State;
-use Jasdero\PassePlatBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,6 +19,9 @@ class StateController extends Controller
 
 
     //token management
+    /**
+     * @return mixed
+     */
     protected function csrfProtect()
     {
         // store token into session
@@ -37,6 +39,12 @@ class StateController extends Controller
     }
 
     //override render method to send token
+    /**
+     * @param string $view
+     * @param array $parameters
+     * @param Response|null $response
+     * @return Response
+     */
     public function render($view, array $parameters = array(), Response $response = null)
     {
         // generate token
@@ -76,6 +84,8 @@ class StateController extends Controller
      *
      * @Route("/new", name="state_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -86,7 +96,7 @@ class StateController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($state);
-            $em->flush($state);
+            $em->flush();
 
             return $this->redirectToRoute('state_show', array('id' => $state->getId()));
         }
@@ -102,6 +112,8 @@ class StateController extends Controller
      *
      * @Route("/{id}", name="state_show")
      * @Method("GET")
+     * @param State $state
+     * @return Response
      */
     public function showAction(State $state)
     {
@@ -118,6 +130,9 @@ class StateController extends Controller
      *
      * @Route("/{id}/edit", name="state_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param State $state
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, State $state)
     {
@@ -143,6 +158,9 @@ class StateController extends Controller
      *
      * @Route("/{id}", name="state_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param State $state
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, State $state)
     {
@@ -163,6 +181,8 @@ class StateController extends Controller
      *
      * @Route("/dynamicChange", name="weight_change")
      * @Method({"POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
 
     public function weightChange(Request $request)

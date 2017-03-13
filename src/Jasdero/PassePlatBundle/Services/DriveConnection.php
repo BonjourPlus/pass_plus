@@ -1,20 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: apside
- * Date: 08/03/2017
- * Time: 15:08
- */
+
 
 namespace Jasdero\PassePlatBundle\Services;
-
 
 use Google_Client;
 use Google_Service_Drive;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class DriveConnection
+ * @package Jasdero\PassePlatBundle\Services
+ * This class was written following the principles of :
+ * https://developers.google.com/api-client-library/php/auth/web-app
+ */
 class DriveConnection extends Controller
 {
+    /**
+     * @return Google_Service_Drive|null
+     */
     public function connectToDriveApi()
     {
         //initializing Client
@@ -42,6 +45,9 @@ class DriveConnection extends Controller
         return $response;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function authCheckedAction()
     {
         $client = new Google_Client();

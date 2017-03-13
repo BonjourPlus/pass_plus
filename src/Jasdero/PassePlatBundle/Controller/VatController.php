@@ -5,7 +5,8 @@ namespace Jasdero\PassePlatBundle\Controller;
 use Jasdero\PassePlatBundle\Entity\Vat;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Vat controller.
@@ -48,7 +49,7 @@ class VatController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($vat);
-            $em->flush($vat);
+            $em->flush();
 
             return $this->redirectToRoute('vat_show', array('id' => $vat->getId()));
         }
@@ -122,7 +123,7 @@ class VatController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($vat);
-            $em->flush($vat);
+            $em->flush();
         }
 
         return $this->redirectToRoute('vat_index');
