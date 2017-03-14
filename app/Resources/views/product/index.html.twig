@@ -1,41 +1,41 @@
 {% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
 
 {% block content %}
-    <h2 class="center-align">Products list</h2>
+    <h3 class="center-align">Products list</h3>
     <div class="container">
         <div class="row">
-            <table class="tablesorter" id="productstable">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Order</th>
-                    <th>Pretaxprice</th>
-                    <th>Vatrate</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for product in products %}
+            <div class="col s12">
+                <table class="tablesorter responsive-table bordered" id="productstable">
+                    <thead>
                     <tr>
-                        <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
-                        <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id}}</a></td>
-                        <td>{{ product.pretaxPrice }}</td>
-                        <td>{{ product.vatRate }}</td>
-                        <td class="{{ product.state.color }}">{{ product.state.name }}</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn indigo">edit</a>
-                                </li>
-                            </ul>
-                        </td>
+                        <th>Id</th>
+                        <th>Order</th>
+                        <th>Pretax-price</th>
+                        <th>Vat rate</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <div class="center-align">
-                <h3>{{ knp_pagination_render(products) }}</h3>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn-floating center-align blue-grey darken-1">{{ product.id }}</a></td>
+                            <td>
+                                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn blue-grey darken-3">{{ product.orders.id }}</a>
+                            </td>
+                            <td>{{ product.pretaxPrice }}</td>
+                            <td>{{ product.vatRate }}</td>
+                            <td class="{{ product.state.color }}">{{ product.state.name }}</td>
+                            <td>
+                                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn grey darken-3" title="edit"><i class="material-icons">edit</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="center-align">
+                    <h3>{{ knp_pagination_render(products) }}</h3>
+                </div>
             </div>
         </div>
     </div>

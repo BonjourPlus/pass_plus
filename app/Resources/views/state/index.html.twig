@@ -4,61 +4,63 @@
     <h2 class="center-align">Statuses list</h2>
     <div class="container">
         <div class="row center-align">
-
-            <h4>Use your mouse to sort statuses by order of importance</h4>
-            <table id="table-status" class="bordered">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Nb of products</th>
-                    <th>Nb of orders</th>
-                    <th>Color</th>
-                    <th>Activated</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for state in states %}
-                    <tr id="{{ state.id }}">
-                        <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn">{{ state.id }}</a></td>
-                        <td class="sorter">{{ state.name }}</td>
-                        <td>{{ state.description }}</td>
-                        <td>
-                            {# counting  products affected by this state#}
-                            {% set nbProducts = 0 %}
-                            {% for product in products if product.state.id == state.id %}
-                                {% set nbProducts = nbProducts+1 %}
-                            {% endfor %}
-                            <a href="{{ path('products_by_status', {'id': state.id}) }}">{{ nbProducts }} / {{ totalProducts }}</a>
-                        </td>
-                        <td>
-                            {# counting  orders affected by this state#}
-                            {% set nbOrders = 0 %}
-                            {% for order in orders if order.state.id == state.id %}
-                                {% set nbOrders = nbOrders+1 %}
-                            {% endfor %}
-                            <a href="{{ path('orders_by_status', {'id':  state.id}) }}">{{ nbOrders }} / {{ totalOrders }}</a>
-                        </td>
-                        <td class="{{ state.color }}">{{ state.color }}</td>
-                        <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('state_edit', { 'id': state.id }) }}" class="btn indigo">edit</a>
-                                </li>
-                            </ul>
-                        </td>
+            <div class="col s12">
+                <h4>Use your mouse to sort statuses by order of importance</h4>
+                <table id="table-status" class="bordered tablesorter">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Nb of products</th>
+                        <th>Nb of orders</th>
+                        <th>Color</th>
+                        <th>Activated</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <ul>
-                <li>
-                    <a href="{{ path('state_new') }}" class="iconAsLink" title="create a new status"><i class="medium material-icons">add_circle</i></a>
-                </li>
-            </ul>
+                    </thead>
+                    <tbody>
+                    {% for state in states %}
+                        <tr id="{{ state.id }}">
+                            <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn grey darken-3">{{ state.id }}</a>
+                            </td>
+                            <td class="sorter">{{ state.name }}</td>
+                            <td>{{ state.description }}</td>
+                            <td class="center-align">
+                                {# counting  products affected by this state#}
+                                {% set nbProducts = 0 %}
+                                {% for product in products if product.state.id == state.id %}
+                                    {% set nbProducts = nbProducts+1 %}
+                                {% endfor %}
+                                <a href="{{ path('products_by_status', {'id': state.id}) }}"
+                                   class="btn-floating center-align blue-grey darken-1">{{ nbProducts }}
+                                    / {{ totalProducts }}</a>
+                            </td>
+                            <td>
+                                {# counting  orders affected by this state#}
+                                {% set nbOrders = 0 %}
+                                {% for order in orders if order.state.id == state.id %}
+                                    {% set nbOrders = nbOrders+1 %}
+                                {% endfor %}
+                                <a href="{{ path('orders_by_status', {'id':  state.id}) }}"
+                                   class="btn blue-grey darken-3">{{ nbOrders }} / {{ totalOrders }}</a>
+                            </td>
+                            <td class="{{ state.color }}">{{ state.color }}</td>
+                            <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
+                            <td>
+                                <a href="{{ path('state_edit', { 'id': state.id }) }}" class="btn grey darken-3"
+                                   title="edit"><i class="material-icons">edit</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="iconsBlock center-align">
+                    <a href="{{ path('state_new') }}" class="iconAsLink" title="create a new status"><i
+                                    class="medium material-icons">add_circle</i></a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

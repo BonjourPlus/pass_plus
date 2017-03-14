@@ -6,7 +6,7 @@
         <div class="row">
 
 
-            <table class="striped tablesorter" id="catalogstable">
+            <table class="striped tablesorter bordered" id="catalogstable">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -23,44 +23,35 @@
                 <tbody>
                 {% for catalog in catalogs %}
                     <tr>
-                        <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}"
-                               class="waves-effect waves-light btn">{{ catalog.id }}</a></td>
+                        <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}" class="btn grey darken-3">{{ catalog.id }}</a></td>
                         <td>{{ catalog.name }}</td>
                         <td>{{ catalog.description }}</td>
                         <td>{{ catalog.pretaxPrice }}</td>
                         <td>{{ catalog.vat.rate }}</td>
                         <td>{% if catalog.activated %}Yes{% else %}No{% endif %}</td>
-                        <td>
+                        <td class="center-align">
                             {# counting  products with this catalog entry#}
                             {% set nbProducts = 0 %}
                             {% for product in products if product.catalog.id == catalog.id %}
                                 {% set nbProducts = nbProducts+1 %}
                             {% endfor %}
-                            <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}">{{ nbProducts }}</a>
+                            <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn-floating center-align blue-grey darken-1">{{ nbProducts }}/{{ totalProducts }}</a>
                         </td>
                         <td>
-                            {# counting  orders with this catalog entry#}
-                            <a href="{{ path('orders_by_catalog', {'id': catalog.id}) }}">
-                                {{ render(controller('JasderoPassePlatBundle:Catalog:catalogInOrders', {'catalog': catalog.id})) }}</a>
+                            <a href="{{ path('orders_by_catalog', {'id': catalog.id}) }}" class="btn blue-grey darken-3">
+                                {{ render(controller('JasderoPassePlatBundle:Catalog:catalogInOrders', {'catalog': catalog.id})) }}/{{ totalOrders }}</a>
                         </td>
                         <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}"
-                                       class="waves-effect waves-light btn indigo">edit</a>
-                                </li>
-                            </ul>
+                            <a href="{{ path('catalog_edit', { 'id': catalog.id }) }}" class="btn grey darken-3" title="edit"><i class="material-icons">edit</i></a>
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
 
-            <ul class="center-align">
-                <li>
-                    <a href="{{ path('catalog_new') }}" class="iconAsLink" title="create a new catalog"><i class="medium material-icons">add_circle</i></a>
-                </li>
-            </ul>
+            <div class="iconsBlock center-align">
+                <a href="{{ path('catalog_new') }}" class="iconAsLink" title="create a new catalog"><i class="medium material-icons">add_circle</i></a>
+            </div>
         </div>
     </div>
 {% endblock %}
