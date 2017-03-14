@@ -12,13 +12,13 @@
             {{ form_row(edit_form.color, {'attr':{'class':'browser-default'}}) }}
             {{ form_row(edit_form.activated) }}
             <div class="col s12 iconsBlock center-align">
-                <a href="{{ path('state_index') }}" class="iconAsLink" title="back to the list">
-                    <button><i class="medium material-icons">skip_previous</i></button>
+                <a href="{{ path('state_index') }}" class="iconAsLink" title="back">
+                    <button class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
                 </a>
-                <button type="submit" class="confirmIcon" title="confirm"><i class="medium material-icons">done</i></button>
+                <button type="submit" class="confirmIcon grey darken-3" title="confirm"><i class="medium material-icons">done</i></button>
                 {{ form_end(edit_form) }}
                 {{ form_start(delete_form) }}
-                <button type="submit" title="delete" class="deleteIcon"><i class="medium material-icons">delete_forever</i></button>
+                <button type="submit" title="delete" class="deleteIcon grey darken-3"><i class="medium material-icons">delete_forever</i></button>
                 {{ form_end(delete_form) }}
             </div>
         </div>

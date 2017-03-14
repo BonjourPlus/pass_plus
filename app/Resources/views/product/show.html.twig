@@ -29,22 +29,21 @@
                 </tbody>
             </table>
 
-            <ul>
-                <li>
-                    <a href="{{ path('orders_index') }}" class="btn blue">Back to the orders list</a>
-                </li>
-                <li>
-                    <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn indigo">Back to this order</a>
-                </li>
-                <li>
-                    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn blue">Edit</a>
-                </li>
-                <li>
-                    {{ form_start(delete_form) }}
-                    <input type="submit" value="Delete" class="btn red">
-                    {{ form_end(delete_form) }}
-                </li>
-            </ul>
+            <div class="iconsBlock col s12 center-align">
+                <a href="{{ path('orders_index') }}" class="iconAsLink" title="back to the list of products">
+                    <button class="grey darken-3"><i class="medium material-icons">fast_rewind</i></button>
+                </a>
+                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="iconAsLink"
+                   title="back to this order">
+                    <button class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                </a>
+                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="iconAsLink">
+                    <button class="grey darken-3"><i class="medium material-icons">edit</i></button>
+                </a>
+                {{ form_start(delete_form) }}
+                <button type="submit" title="delete" class="deleteIcon grey darken-3"><i class="medium material-icons">delete_forever</i></button>
+                {{ form_end(delete_form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
