@@ -10,15 +10,14 @@
             {{ form_row(form.description) }}
             {{ form_row(form.color, {'attr':{'class':'browser-default'}}) }}
             {{ form_row(form.activated) }}
-            <button class="btn waves-effect waves-light" type="submit" name="action">Create
-                <i class="material-icons right">send</i>
-            </button>
+            <div class="col s12 center-align iconsBlock">
+                <a href="{{ path('state_index') }}" title="back">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                </a>
+                <button type="submit" class="confirmIcon grey darken-3" title="confirm"><i class="medium material-icons">done</i></button>
+
+            </div>
             {{ form_end(form) }}
-            <ul>
-                <li>
-                    <a href="{{ path('state_index') }}" class="btn">Back to the list</a>
-                </li>
-            </ul>
         </div>
     </div>
 {% endblock %}

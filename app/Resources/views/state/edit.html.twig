@@ -12,8 +12,8 @@
             {{ form_row(edit_form.color, {'attr':{'class':'browser-default'}}) }}
             {{ form_row(edit_form.activated) }}
             <div class="col s12 iconsBlock center-align">
-                <a href="{{ path('state_index') }}" class="iconAsLink" title="back">
-                    <button class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                <a href="{{ path('state_index') }}" title="back">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
                 </a>
                 <button type="submit" class="confirmIcon grey darken-3" title="confirm"><i class="medium material-icons">done</i></button>
                 {{ form_end(edit_form) }}
