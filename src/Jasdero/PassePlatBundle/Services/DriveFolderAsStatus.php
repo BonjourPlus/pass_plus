@@ -14,6 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class DriveFolderAsStatus extends Controller
 {
+    private $drive;
+
+    public function __construct(DriveConnection $drive)
+    {
+        $this->drive = $drive;
+    }
     /**
      * @param $statusName
      * @param $orderId
@@ -22,7 +28,7 @@ class DriveFolderAsStatus extends Controller
     public function driveFolder($statusName, $orderId)
     {
         //initializing Client
-        $drive = $this->get('driveconnection')->connectToDriveApi();
+        $drive = $this->drive->connectToDriveApi();
 
 
         // getting to work if the OAuth flow has been validated
@@ -101,7 +107,7 @@ class DriveFolderAsStatus extends Controller
 
         } else {
             //if not authenticated restart for token
-            return $this->get('driveconnection')->authCheckedAction();
+            return $this->drive->authCheckedAction();
         }
     }
 }
