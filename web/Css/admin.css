@@ -31,10 +31,22 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
     background-color: #8dbdd8;
 }
 
+body{
+    background-color: #eeeeee;
+}
+
 .iconAsLink{
     color: #424242;
 }
 
-body{
-    background-color: #eeeeee;
+.deleteIcon{
+    color : #e53935;
+}
+
+.confirmIcon{
+    color: #81c784;
+}
+
+.iconsBlock{
+    margin-top: 20px;
 }

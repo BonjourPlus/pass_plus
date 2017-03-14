@@ -2,24 +2,20 @@
 
 {% block content %}
     <h2 class="center-align">Vat edit</h2>
-<div class="container">
-    <div class="row">
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <button class="btn waves-effect waves-light" type="submit" name="action">Edit
-            <i class="material-icons right">send</i>
-        </button>
-        {{ form_end(edit_form) }}
-    <ul>
-        <li>
-            <a href="{{ path('vat_index') }}" class="btn">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete" class="btn red">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="container">
+        <div class="row">
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <div class="col s12 iconsBlock center-align">
+                <a href="{{ path('vat_index') }}" class="iconAsLink" title="back to the list">
+                    <button><i class="medium material-icons">skip_previous</i></button>
+                </a>
+                <button type="submit" class="confirmIcon" title="confirm"><i class="medium material-icons">done</i></button>
+                {{ form_end(edit_form) }}
+                {{ form_start(delete_form) }}
+                <button type="submit" title="delete" class="deleteIcon"><i class="medium material-icons">delete_forever</i></button>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}
