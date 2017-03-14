@@ -20,13 +20,13 @@
                     {% for product in products %}
                         <tr>
                             <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn-floating center-align blue-grey darken-1">{{ product.id }}</a></td>
-                            <td>
+                            <td class="center-align">
                                 <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn blue-grey darken-3">{{ product.orders.id }}</a>
                             </td>
                             <td>{{ product.pretaxPrice }}</td>
                             <td>{{ product.vatRate }}</td>
                             <td class="{{ product.state.color }}">{{ product.state.name }}</td>
-                            <td>
+                            <td class="center-align">
                                 <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn grey darken-3" title="edit"><i class="material-icons">edit</i></a>
                             </td>
                         </tr>

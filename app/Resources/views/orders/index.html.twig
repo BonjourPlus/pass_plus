@@ -24,17 +24,17 @@
                                         title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
                             </td>
                             <td rowspan="0">
-                                {{ order.dateCreation|date('d-m-Y H:i') }}
+                                {{ order.dateCreation|date('d-m-Y') }}
                             </td>
                             <td rowspan="0">
-                                {{ order.lastUpdate|date('d-m-Y H:i') }}
+                                {{ order.lastUpdate|date('d-m-Y') }}
                             </td>
                         </tr>
                         {% for product in products if product.orders.id == order.id %}
                             <tr>
                                 <td>
                                     <a href="{{ path('product_show', {'id':product.id}) }}"
-                                       title="see detail">{{ product.id }}</a>
+                                       title="see detail" >{{ product.id }}</a>
                                 </td>
                                 <td>
                                     {{ product.catalog.name }}
@@ -47,15 +47,15 @@
                         </tbody>
                     {% endfor %}
                 </table>
-            </div>
-            <div class="center-align">
-                <h3>{{ knp_pagination_render(orders) }}</h3>
-            </div>
-            <div class="center-align">
-                <a href="{{ path('order_site_new') }}" class="addIcon" title="create a new order"><i class="medium material-icons">add_circle</i></a>
+
+                <div class="center-align">
+                    <h3>{{ knp_pagination_render(orders) }}</h3>
+                </div>
+                <div class="center-align iconsBlock">
+                    <a href="{{ path('order_site_new') }}" class="addIcon" title="create a new order"><i
+                                class="medium material-icons">add_circle</i></a>
+                </div>
             </div>
         </div>
-
-
     </div>
 {% endblock %}

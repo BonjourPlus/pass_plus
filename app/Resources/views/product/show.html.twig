@@ -18,9 +18,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ product.id }}</td>
+                    <td class="btn-floating center-align blue-grey darken-1">{{ product.id }}</td>
                     <td>{{ product.catalog.name }}</td>
-                    <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id }}</a></td>
+                    <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn blue-grey darken-3">{{ product.orders.id }}</a></td>
                     <td>{{ product.catalog.description }}</td>
                     <td>{{ product.pretaxPrice }}</td>
                     <td>{{ product.vatRate }}</td>
@@ -30,15 +30,14 @@
             </table>
 
             <div class="iconsBlock col s12 center-align">
-                <a href="{{ path('orders_index') }}" class="iconAsLink" title="back to the list of products">
-                    <button class="grey darken-3"><i class="medium material-icons">fast_rewind</i></button>
+                <a href="{{ path('product_index') }}" title="back to the list of products">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">fast_rewind</i></button>
                 </a>
-                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="iconAsLink"
-                   title="back to this order">
-                    <button class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" title="back to this order">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
                 </a>
                 <a href="{{ path('product_edit', { 'id': product.id }) }}" class="iconAsLink">
-                    <button class="grey darken-3"><i class="medium material-icons">edit</i></button>
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">edit</i></button>
                 </a>
                 {{ form_start(delete_form) }}
                 <button type="submit" title="delete" class="deleteIcon grey darken-3"><i class="medium material-icons">delete_forever</i></button>

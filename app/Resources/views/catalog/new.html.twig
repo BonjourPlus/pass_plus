@@ -6,15 +6,18 @@
         <div class="row">
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button class="btn waves-effect waves-light" type="submit" name="action">Create
-                <i class="material-icons right">send</i>
-            </button>
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.pretaxPrice) }}
+            {{ form_row(form.activated) }}
+            {{ form_row(form.vat) }}
+            <div class="iconsBlock col s12 center-align">
+                <a href="{{ path('catalog_index') }}" title="back">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                </a>
+                <button type="submit" class="confirmIcon grey darken-3" title="confirm"><i class="medium material-icons">done</i></button>
+            </div>
             {{ form_end(form) }}
-            <ul>
-                <li>
-                    <a href="{{ path('catalog_index') }}" class="btn blue">Back to the list</a>
-                </li>
-            </ul>
         </div>
     </div>
 {% endblock %}
