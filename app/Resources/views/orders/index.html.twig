@@ -16,9 +16,9 @@
                         <th>Status</th>
                     </tr>
                     </thead>
-                {% for order in orders %}
-                    <tbody>
-                    <tr>
+                    {% for order in orders %}
+                        <tbody>
+                        <tr>
                             <td rowspan="0" class="center-align {{ order.state.color }}"><a
                                         href="{{ path('orders_show', { 'id': order.id }) }}"
                                         title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
@@ -45,17 +45,18 @@
                             </tr>
                         {% endfor %}
                         </tbody>
-                {% endfor %}
+                    {% endfor %}
                 </table>
             </div>
             <div class="center-align">
-               <h3>{{ knp_pagination_render(orders) }}</h3>
+                <h3>{{ knp_pagination_render(orders) }}</h3>
+            </div>
+            <div class="center-align">
+                <a href="{{ path('order_site_new') }}" class="iconAsLink" title="create a new order"><i
+                            class="medium material-icons">add_circle</i></a>
             </div>
         </div>
-        <ul>
-            <li>
-                <a href="{{ path('order_site_new') }}" class="btn">Create a new order</a>
-            </li>
-        </ul>
+
+
     </div>
 {% endblock %}

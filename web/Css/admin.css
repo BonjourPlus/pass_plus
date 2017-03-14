@@ -30,3 +30,11 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
     background-color: #8dbdd8;
 }
+
+.iconAsLink{
+    color: #424242;
+}
+
+body{
+    background-color: #eeeeee;
+}

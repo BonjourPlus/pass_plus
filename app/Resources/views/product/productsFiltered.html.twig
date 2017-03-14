@@ -20,15 +20,18 @@
                 <tbody>
                 {% for product in products %}
                     <tr>
-                        <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a></td>
-                        <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id}}</a></td>
+                        <td><a href="{{ path('product_show', { 'id': product.id }) }}" class="btn">{{ product.id }}</a>
+                        </td>
+                        <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}">{{ product.orders.id }}</a>
+                        </td>
                         <td>{{ product.pretaxPrice }}</td>
                         <td>{{ product.vatRate }}</td>
                         <td class="{{ product.state.color }}">{{ product.state.name }}</td>
                         <td>
                             <ul>
                                 <li>
-                                    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn indigo">edit</a>
+                                    <a href="{{ path('product_edit', { 'id': product.id }) }}"
+                                       class="btn indigo">edit</a>
                                 </li>
                             </ul>
                         </td>
@@ -36,12 +39,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-
-            <ul>
-                <li>
-                    <a href="{{ path('product_new') }}" class="btn">Create a new product</a>
-                </li>
-            </ul>
         </div>
     </div>
 {% endblock %}
