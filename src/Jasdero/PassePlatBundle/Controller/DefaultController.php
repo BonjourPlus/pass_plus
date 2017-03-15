@@ -18,11 +18,23 @@ class DefaultController extends Controller
 
     //access to the admin section
     /**
-     * @Route("/admin/index", name="admin")
+     * @Route("/admin/dashboard", name="dashboard")
      */
     public function adminIndexAction()
     {
-        return $this->render('JasderoPassePlatBundle:Admin:indexAdmin.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
+
+
+        return $this->render('JasderoPassePlatBundle:Admin:dashboard.html.twig', array(
+            'states' => $states,
+            'products' => $products,
+            'orders' => $orders,
+
+        ));
+
     }
 
 

@@ -1,0 +1,50 @@
+{% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
+{% block content %}
+    <div class="container">
+        <div class="row center-align">
+            <h4>Dashboard</h4>
+        </div>
+        <div class="row center-align">
+            <h5>Orders</h5>
+            {% for state in states %}
+                {% set nbOrders = 0 %}
+                {% for order in orders if order.state.id == state.id %}
+                    {% set nbOrders = nbOrders+1 %}
+                {% endfor %}
+                {% if nbOrders != 0 %}
+                    <div class="col s6 m4">
+                        <a href="{{ path('orders_by_status', {'id':  state.id}) }}" class="white-text linkAsBlock">
+                            <div class="card-panel {{ state.color }}">
+                                {{ nbOrders }}
+                            </div>
+                        </a>
+                        <p>{{ state.name }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row center-align">
+            <h5>Products</h5>
+            {% for state in states %}
+                {% set nbProducts = 0 %}
+                {% for product in products if product.state.id == state.id %}
+                    {% set nbProducts = nbProducts+1 %}
+                {% endfor %}
+                {% if nbProducts != 0 %}
+                    <div class="col s6 m4">
+                        <a href="{{ path('products_by_status', {'id': state.id}) }}"
+                           class="btn-floating btn-large center-align {{ state.color }} white-text">{{ nbProducts }}
+                        </a>
+                        <p>{{ state.name }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row  center-align">
+            <div class="iconsBlock">
+                <a href="{{ path('checking') }}" class="addIcon" title="create a new order"><i
+                            class="medium material-icons">add_circle</i></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
