@@ -21,8 +21,8 @@ class CatalogType extends AbstractType
             ->add('pretaxPrice')
             ->add('activated', ChoiceType::class, array(
                 'choices' =>
-                    ['Activé' => 1,
-                        'Désactivé' => 0],
+                    ['Enabled' => 1,
+                        'Disabled' => 0],
             ))
             ->add('vat', EntityType::class, array(
                 'class' => Vat::class,

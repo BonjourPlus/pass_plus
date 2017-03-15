@@ -5,47 +5,73 @@
         <h2 class="center-align">Orders list</h2>
         <div class="row">
             <div class="col s12">
-                <table class="bordered">
+                <table class="bordered tablesorter">
                     <thead>
                     <tr>
-                        <th>Id order</th>
-                        <th>Created on</th>
-                        <th>Last update</th>
+                        <th>Order Id</th>
                         <th>Product Id</th>
                         <th>Product</th>
-                        <th>Status</th>
+                        <th>Owner</th>
+                        <th>Created on</th>
+                        <th>Last update</th>
                     </tr>
                     </thead>
+                    <tbody>
+
                     {% for order in orders %}
-                        <tbody>
-                        <tr>
-                            <td rowspan="0" class="center-align {{ order.state.color }}"><a
-                                        href="{{ path('orders_show', { 'id': order.id }) }}"
-                                        title="see detail"><h3 style="color: black">{{ order.id }}</h3></a>
-                            </td>
-                            <td rowspan="0">
-                                {{ order.dateCreation|date('d-m-Y') }}
-                            </td>
-                            <td rowspan="0">
-                                {{ order.lastUpdate|date('d-m-Y') }}
-                            </td>
-                        </tr>
+                        {% set pid = '' %}
+                        {% set puser ='' %}
+                        {% set pcreation ='' %}
+                        {% set pupdate ='' %}
                         {% for product in products if product.orders.id == order.id %}
+
                             <tr>
+                                {% if pid != order.id %}
+                                    {% set pid = order.id %}
+                                    <td><a href="{{ path('orders_show', { 'id': order.id }) }}" title="see detail"
+                                           class="{{ order.state.color }}-text linkAsBlock"><i class="material-icons left">stop</i>{{ order.id }}</a>
+                                    </td>
+                                {% else %}
+                                    <td><p hidden>{{ order.id }}</p>
+                                    </td>
+                                {% endif %}
                                 <td>
                                     <a href="{{ path('product_show', {'id':product.id}) }}"
-                                       title="see detail" >{{ product.id }}</a>
+                                       title="see detail" class="{{ product.state.color }}-text linkAsBlock"><i class="material-icons left">fiber_manual_record</i>{{ product.id }}</a>
                                 </td>
                                 <td>
                                     {{ product.catalog.name }}
                                 </td>
-                                <td class="{{ product.state.color }}">
-                                    {{ product.state.name }}
-                                </td>
+                                {% if puser != order.user.username %}
+                                    {% set puser = order.user.username %}
+                                    <td>
+                                        {{ order.user.username }}
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <p hidden>{{ order.user.username }}</p>
+                                    </td>
+                                {% endif %}
+                                {% if pcreation != order.dateCreation %}
+                                    {% set pcreation = order.dateCreation %}
+                                    <td>
+                                        {{ order.dateCreation|date('d-m-Y') }}
+                                    </td>
+                                {% else %}
+                                    <td><p hidden>{{ order.dateCreation|date('d-m-Y') }}</p></td>
+                                {% endif %}
+                                {% if pupdate != order.lastUpdate %}
+                                    {% set pupdate = order.lastUpdate %}
+                                    <td>
+                                        {{ order.lastUpdate|date('d-m-Y') }}
+                                    </td>
+                                {% else %}
+                                    <td><p hidden>{{ order.lastUpdate|date('d-m-Y') }}</p></td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
-                        </tbody>
                     {% endfor %}
+                    </tbody>
                 </table>
 
                 <div class="center-align">

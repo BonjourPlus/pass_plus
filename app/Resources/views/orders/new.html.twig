@@ -9,10 +9,12 @@
                 {{ form_errors(form) }}
                 {{ form_row(form.catalogs) }}
                 {{ form_row(form.user) }}
-                <div class="center-align">
-                    <button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Create
-                        <i class="material-icons right">send</i>
-                    </button>
+                <div class="center-align col s12 iconsBlock">
+                    <a href="{{ path('orders_index') }}" title="back">
+                        <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i>
+                        </button>
+                    </a>
+                    <button type="submit" class="confirmIcon grey darken-3" title="confirm"><i class="medium material-icons">done</i></button>
                 </div>
                 {{ form_end(form) }}
             </div>

@@ -24,6 +24,8 @@ class OrdersController extends Controller
      *
      * @Route("/admin/orders/", name="orders_index")
      * @Method("GET")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request)
     {

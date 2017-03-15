@@ -36,8 +36,8 @@ class StateType extends AbstractType
             ))
             ->add('activated', ChoiceType::class, array(
                 'choices' =>
-                    ['Activé' => 1,
-                    'Désactivé' => 0],
+                    ['Enabled' => 1,
+                    'Disabled' => 0],
             ));
     }
 
