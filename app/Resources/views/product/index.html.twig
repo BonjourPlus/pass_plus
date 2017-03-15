@@ -1,9 +1,9 @@
 {% extends '@JasderoPassePlat/Admin/adminLayout.html.twig' %}
 
 {% block content %}
-    <h3 class="center-align">Products list</h3>
     <div class="container">
         <div class="row">
+            <h4 class="center-align">Products list</h4>
             <div class="col s12">
                 <table class="tablesorter responsive-table bordered" id="productstable">
                     <thead>
@@ -33,9 +33,11 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {% block pagination %}
                 <div class="center-align">
                     <h3>{{ knp_pagination_render(products) }}</h3>
                 </div>
+                {% endblock %}
             </div>
         </div>
     </div>
