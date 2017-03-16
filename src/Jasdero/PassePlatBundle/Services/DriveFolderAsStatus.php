@@ -4,6 +4,7 @@
 namespace Jasdero\PassePlatBundle\Services;
 
 
+use Doctrine\ORM\EntityManager;
 use Google_Service_Drive_DriveFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -15,11 +16,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DriveFolderAsStatus extends Controller
 {
     private $drive;
+    private $em;
 
-    public function __construct(DriveConnection $drive)
+    /**
+     * DriveFolderAsStatus constructor.
+     * @param DriveConnection $drive
+     * @param EntityManager $em
+     */
+    public function __construct(DriveConnection $drive, EntityManager $em)
     {
         $this->drive = $drive;
+        $this->em = $em;
     }
+
     /**
      * @param $statusName
      * @param $orderId
@@ -79,6 +88,8 @@ class DriveFolderAsStatus extends Controller
                 }
             }
 
+            //checking the file exists
+
             //retrieving file corresponding to order
             $optParamsForFile = array(
                 'pageToken' => $pageToken,
@@ -88,26 +99,63 @@ class DriveFolderAsStatus extends Controller
 
             //recovering the file id
             $results = $drive->files->listFiles($optParamsForFile);
-
             $fileId = '';
             foreach ($results->getFiles() as $file) {
                 $fileId = ($file->getId());
             }
-            //moving file
-            $emptyFileMetadata = new Google_Service_Drive_DriveFile();
-            // Retrieve the existing parents to remove
-            $file = $drive->files->get($fileId, array('fields' => 'parents'));
-            $previousParents = join(',', $file->parents);
 
-            // Move the file to the new folder
-            $drive->files->update($fileId, $emptyFileMetadata, array(
-                'addParents' => $folderId,
-                'removeParents' => $previousParents,
-                'fields' => 'id, parents'));
+            //if file exists
+            if ($fileId) {
+                //moving file
+                $emptyFileMetadata = new Google_Service_Drive_DriveFile();
+                // Retrieve the existing parents to remove
+                $file = $drive->files->get($fileId, array('fields' => 'parents'));
+                $previousParents = join(',', $file->parents);
 
+                // Move the file to the new folder
+                $drive->files->update($fileId, $emptyFileMetadata, array(
+                    'addParents' => $folderId,
+                    'removeParents' => $previousParents,
+                    'fields' => 'id, parents'));
+
+                //else need to create it
+            } else {
+                $orderAsCsv = [];
+                $completeOrder = $this->em->getRepository('JasderoPassePlatBundle:Product')->findBy(['orders' => $orderId]);
+
+                //formatting order to create csv file
+                foreach ($completeOrder as $key => $order) {
+                    $orderAsCsv[0][0] = 'user';
+                    $orderAsCsv[0][1] = 'products';
+                    $orderAsCsv[$key + 1][] = $order->getOrders()->getUser()->getEmail();
+                    $orderAsCsv[$key + 1][] = $order->getId();
+                }
+                $newFile = fopen('orderToCsv.csv', 'w+');
+                foreach ($orderAsCsv as $files) {
+                    fputcsv($newFile, $files);
+                }
+                fclose($newFile);
+
+                //getting data to create file on drive
+                $data = file_get_contents('orderToCsv.csv');
+
+                $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                    'name' => 'Custom Order '.$orderId,
+                    'mimeType' => 'application/vnd.google-apps.spreadsheet',
+                    'parents' => array($folderId),
+                    "appProperties" => [
+                        "customID" => $orderId,
+                    ]));
+                $drive->files->create($fileMetadata, array(
+                    'data' => $data,
+                    'mimeType' => 'text/csv',
+                    'uploadType' => 'multipart',
+                    'fields' => 'id, parents, appProperties'));
+            }
         } else {
             //if not authenticated restart for token
             return $this->drive->authCheckedAction();
         }
     }
+
 }

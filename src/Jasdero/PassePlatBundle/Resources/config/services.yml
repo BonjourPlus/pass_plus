@@ -8,6 +8,6 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
     drivefolderasstatus:
         class:    Jasdero\PassePlatBundle\Services\DriveFolderAsStatus
-        arguments: ['@driveconnection']
+        arguments: ['@driveconnection','@doctrine.orm.entity_manager']
     driveconnection:
         class:    Jasdero\PassePlatBundle\Services\DriveConnection
