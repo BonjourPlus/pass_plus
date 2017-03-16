@@ -128,7 +128,7 @@ class DriveFolderAsStatus extends Controller
                     $orderAsCsv[0][0] = 'user';
                     $orderAsCsv[0][1] = 'products';
                     $orderAsCsv[$key + 1][] = $order->getOrders()->getUser()->getEmail();
-                    $orderAsCsv[$key + 1][] = $order->getId();
+                    $orderAsCsv[$key + 1][] = $order->getCatalog()->getId();
                 }
                 $newFile = fopen('orderToCsv.csv', 'w+');
                 foreach ($orderAsCsv as $files) {

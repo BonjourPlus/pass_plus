@@ -36,6 +36,12 @@ class OrdersFromSiteController extends Controller
                 'products' => $products
             ))->getContent();
 
+            //retrieving order and creating file on Drive
+            $em = $this->getDoctrine()->getManager();
+            $order = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneBy(['id'=>$orderId]);
+            $status = $order->getState()->getName();
+            $this->get('drivefolderasstatus')->driveFolder($status, $orderId);
+
             //displaying the new order
             return $this->redirectToRoute('orders_show', array('id' => $orderId));
         }
