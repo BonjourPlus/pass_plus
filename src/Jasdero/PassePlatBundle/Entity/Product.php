@@ -57,11 +57,8 @@ class Product
 
     /**
      * @var Orders
-     *
-     * @ORM\ManyToOne(targetEntity="Orders")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="orders_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="products")
+     * @ORM\JoinColumn(name="orders_id", referencedColumnName="id")
      */
     private $orders;
 

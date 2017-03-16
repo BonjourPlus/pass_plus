@@ -60,6 +60,11 @@ class Orders
      */
     private $source;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="orders", cascade={"remove"})
+     */
+    private $products;
+
 
 
     /**
@@ -199,5 +204,46 @@ class Orders
     public function getSource()
     {
         return $this->source;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add product
+     *
+     * @param \Jasdero\PassePlatBundle\Entity\Product $product
+     *
+     * @return Orders
+     */
+    public function addProduct(\Jasdero\PassePlatBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \Jasdero\PassePlatBundle\Entity\Product $product
+     */
+    public function removeProduct(\Jasdero\PassePlatBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }
