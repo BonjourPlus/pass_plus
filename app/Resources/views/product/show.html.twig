@@ -13,6 +13,7 @@
                     <th>Description</th>
                     <th>Pretax Price</th>
                     <th>Vat Rate</th>
+                    <th>Customer</th>
                     <th>Status</th>
                 </tr>
                 </thead>
@@ -20,10 +21,19 @@
                 <tr>
                     <td class="btn-floating center-align blue-grey darken-1">{{ product.id }}</td>
                     <td>{{ product.catalog.name }}</td>
-                    <td><a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn blue-grey darken-3">{{ product.orders.id }}</a></td>
+                    <td>
+                        <a href="{{ path('orders_show', {'id': product.orders.id}) }}" class="btn blue-grey darken-3" title="view order">
+                            {{ product.orders.id }}
+                        </a>
+                    </td>
                     <td>{{ product.catalog.description }}</td>
                     <td>{{ product.pretaxPrice }}</td>
                     <td>{{ product.vatRate }}</td>
+                    <td>
+                        <a href="{{ path('user_detail', {id : product.orders.user.id}) }}">
+                            {{ product.orders.user.username }}
+                        </a>
+                    </td>
                     <td class="{{ product.state.color }}">{{ product.state.name }}</td>
                 </tr>
                 </tbody>
@@ -31,12 +41,12 @@
 
             <div class="iconsBlock col s12 center-align">
                 <a href="{{ path('product_index') }}" title="back to the list of products">
-                    <button type="button" class="grey darken-3"><i class="medium material-icons">fast_rewind</i></button>
-                </a>
-                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" title="back to this order">
                     <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
                 </a>
-                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="iconAsLink">
+                <a href="{{ path('orders_show', {'id': product.orders.id}) }}" title="view order">
+                    <button type="button" class="grey darken-3"><i class="medium material-icons">storage</i></button>
+                </a>
+                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="iconAsLink" title="edit">
                     <button type="button" class="grey darken-3"><i class="medium material-icons">edit</i></button>
                 </a>
                 {{ form_start(delete_form) }}

@@ -16,7 +16,10 @@
                     <tbody>
                     {% for vat in vats %}
                         <tr>
-                            <td><a href="{{ path('vat_show', { 'id': vat.id }) }}" class="btn grey darken-3">{{ vat.id }}</a></td>
+                            <td>
+                                <a href="{{ path('vat_show', { 'id': vat.id }) }}" class="btn grey darken-3" title="view detail">{{ vat.id }}
+                                </a>
+                            </td>
                             <td>{{ vat.rate }}</td>
                             <td>
                                 <a href="{{ path('vat_edit', { 'id': vat.id }) }}" class="btn grey darken-3" title="edit"><i class="material-icons">edit</i></a>

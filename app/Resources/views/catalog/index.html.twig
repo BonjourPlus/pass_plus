@@ -21,7 +21,9 @@
                 <tbody>
                 {% for catalog in catalogs %}
                     <tr>
-                        <td><a href="{{ path('catalog_show', { 'id': catalog.id }) }}" class="btn grey darken-3">{{ catalog.id }}</a></td>
+                        <td>
+                            <a href="{{ path('catalog_show', { 'id': catalog.id }) }}" class="btn grey darken-3" title="view detail">{{ catalog.id }}</a>
+                        </td>
                         <td>{{ catalog.name }}</td>
                         <td>{{ catalog.description }}</td>
                         <td>{{ catalog.pretaxPrice }}</td>
@@ -33,10 +35,12 @@
                             {% for product in products if product.catalog.id == catalog.id %}
                                 {% set nbProducts = nbProducts+1 %}
                             {% endfor %}
-                            <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn-floating center-align blue-grey darken-1">{{ nbProducts }}/{{ totalProducts }}</a>
+                            <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn-floating center-align blue-grey darken-1" title="view products">
+                                {{ nbProducts }}/{{ totalProducts }}
+                            </a>
                         </td>
                         <td>
-                            <a href="{{ path('orders_by_catalog', {'id': catalog.id}) }}" class="btn blue-grey darken-3">
+                            <a href="{{ path('orders_by_catalog', {'id': catalog.id}) }}" class="btn blue-grey darken-3" title="view orders">
                                 {{ render(controller('JasderoPassePlatBundle:Catalog:catalogInOrders', {'catalog': catalog.id})) }}/{{ totalOrders }}</a>
                         </td>
                         <td>

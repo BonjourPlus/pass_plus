@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <h4 class="center-align">Status</h4>
+            <h4 class="center-align">Status detail</h4>
             <table>
                 <tbody>
                 <tr>
@@ -34,7 +34,7 @@
                     <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
                 </a>
                 <a href="{{ path('state_edit', { 'id': state.id }) }}" class="iconAsLink">
-                    <button type="button" class="grey darken-3"><i class="medium material-icons">edit</i></button>
+                    <button type="button" class="grey darken-3" title="edit"><i class="medium material-icons">edit</i></button>
                 </a>
                 {{ form_start(delete_form) }}
                 <button type="submit" title="delete" class="deleteIcon grey darken-3"><i class="medium material-icons">delete_forever</i></button>

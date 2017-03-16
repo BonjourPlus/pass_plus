@@ -11,7 +11,7 @@
                         <th>Order Id</th>
                         <th>Product Id</th>
                         <th>Product</th>
-                        <th>Owner</th>
+                        <th>Customer</th>
                         <th>Created on</th>
                         <th>Last update</th>
                     </tr>
@@ -28,7 +28,7 @@
                             <tr>
                                 {% if pid != order.id %}
                                     {% set pid = order.id %}
-                                    <td><a href="{{ path('orders_show', { 'id': order.id }) }}" title="see detail"
+                                    <td><a href="{{ path('orders_show', { 'id': order.id }) }}" title="view order detail"
                                            class="{{ order.state.color }}-text linkAsBlock"><i class="material-icons left">stop</i>{{ order.id }}</a>
                                     </td>
                                 {% else %}
@@ -37,7 +37,7 @@
                                 {% endif %}
                                 <td>
                                     <a href="{{ path('product_show', {'id':product.id}) }}"
-                                       title="see detail" class="{{ product.state.color }}-text linkAsBlock"><i class="material-icons left">fiber_manual_record</i>{{ product.id }}</a>
+                                       title="view product detail" class="{{ product.state.color }}-text linkAsBlock"><i class="material-icons left">fiber_manual_record</i>{{ product.id }}</a>
                                 </td>
                                 <td>
                                     {{ product.catalog.name }}
@@ -45,7 +45,9 @@
                                 {% if puser != order.user.username %}
                                     {% set puser = order.user.username %}
                                     <td>
+                                        <a href="{{ path('user_detail', {id : order.user.id}) }}" title="view detail">
                                         {{ order.user.username }}
+                                        </a>
                                     </td>
                                 {% else %}
                                     <td>

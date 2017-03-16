@@ -181,8 +181,9 @@ class OrdersController extends Controller
 
     /**
      * orders sorted by status from the status page
-     *
      * @Route("/admin/orders/status/{id}", name="orders_by_status")
+     * @param State $state
+     * @return Response
      */
     public function ordersByStatusAction(State $state)
     {
@@ -221,4 +222,25 @@ class OrdersController extends Controller
         ));
     }
 
+    /**
+     * orders filtered by user
+     * @Route("/admin/orders/user/{id}",name = "orders_by_user")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+    public function ordersByUserAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['user'=>$user]);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
+
+
+
+        return $this->render('orders/ordersFiltered.html.twig', array(
+            'orders' => $orders,
+            'products' => $products,
+        ));
+
+    }
 }

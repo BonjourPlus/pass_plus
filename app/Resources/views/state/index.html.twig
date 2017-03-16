@@ -5,7 +5,7 @@
         <div class="row center-align">
             <h4>Statuses list</h4>
             <div class="col s12">
-                <p>Use your mouse to sort statuses by order of importance</p>
+                <p class="notice">Drag and drop to sort statuses by order of importance</p>
                 <table id="table-status" class="bordered tablesorter">
                     <thead>
                     <tr>
@@ -22,7 +22,7 @@
                     <tbody>
                     {% for state in states %}
                         <tr id="{{ state.id }}">
-                            <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn grey darken-3">{{ state.id }}</a>
+                            <td><a href="{{ path('state_show', { 'id': state.id }) }}" class="btn grey darken-3" title="view detail">{{ state.id }}</a>
                             </td>
                             <td class="sorter">{{ state.name }}</td>
                             <td>{{ state.description }}</td>
@@ -33,7 +33,7 @@
                                     {% set nbProducts = nbProducts+1 %}
                                 {% endfor %}
                                 <a href="{{ path('products_by_status', {'id': state.id}) }}"
-                                   class="btn-floating center-align blue-grey darken-1">{{ nbProducts }}
+                                   class="btn-floating center-align blue-grey darken-1" title="view products">{{ nbProducts }}
                                     / {{ totalProducts }}</a>
                             </td>
                             <td>
@@ -43,7 +43,7 @@
                                     {% set nbOrders = nbOrders+1 %}
                                 {% endfor %}
                                 <a href="{{ path('orders_by_status', {'id':  state.id}) }}"
-                                   class="btn blue-grey darken-3">{{ nbOrders }} / {{ totalOrders }}</a>
+                                   class="btn blue-grey darken-3" title="view orders">{{ nbOrders }} / {{ totalOrders }}</a>
                             </td>
                             <td class="{{ state.color }}">{{ state.color }}</td>
                             <td>{% if state.activated %}Yes{% else %}No{% endif %}</td>
