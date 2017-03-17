@@ -10,7 +10,7 @@
                     {% set nbOrders = nbOrders+1 %}
                 {% endfor %}
                 {% if nbOrders != 0 %}
-                    <div class="col s6 m4">
+                    <div class="col s4 m2">
                         <a href="{{ path('orders_by_status', {'id':  state.id}) }}" class="white-text linkAsBlock" title="view list of orders">
                             <div class="card-panel {{ state.color }}">
                                 {{ nbOrders }}
@@ -30,7 +30,7 @@
                     {% set nbProducts = nbProducts+1 %}
                 {% endfor %}
                 {% if nbProducts != 0 %}
-                    <div class="col s6 m4">
+                    <div class="col s4 m2">
                         <a href="{{ path('products_by_status', {'id': state.id}) }}"
                            class="btn-floating btn-large center-align {{ state.color }} white-text" title="view list of products">{{ nbProducts }}
                         </a>
