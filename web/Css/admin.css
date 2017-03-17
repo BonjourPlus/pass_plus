@@ -58,13 +58,14 @@ h5{
 }
 
 .nav-wrapper .brand-logo img {
-    height: 64px;
+    height: 48px;
     margin-left: 10px;
+    margin-top: 15%;
 }
 
 @media screen and (max-width: 600px) {
     .nav-wrapper .brand-logo img {
-        height: 56px;
+        height: 43px;
 
     }
 }

@@ -41,16 +41,16 @@
 
             <div class="iconsBlock col s12 center-align">
                 <a href="{{ path('product_index') }}" title="back to the list of products">
-                    <button type="button" class="grey darken-3"><i class="medium material-icons">skip_previous</i></button>
+                    <button type="button" class="btn-floating grey darken-3"><i class="material-icons">skip_previous</i></button>
                 </a>
                 <a href="{{ path('orders_show', {'id': product.orders.id}) }}" title="view order">
-                    <button type="button" class="grey darken-3"><i class="medium material-icons">storage</i></button>
+                    <button type="button" class="btn-floating grey darken-3"><i class="material-icons">storage</i></button>
                 </a>
                 <a href="{{ path('product_edit', { 'id': product.id }) }}" class="iconAsLink" title="edit">
-                    <button type="button" class="grey darken-3"><i class="medium material-icons">edit</i></button>
+                    <button type="button" class="btn-floating grey darken-3"><i class="material-icons">edit</i></button>
                 </a>
                 {{ form_start(delete_form) }}
-                <button type="submit" title="delete" class="deleteIcon grey darken-3"><i class="medium material-icons">delete_forever</i></button>
+                <button type="submit" title="delete" class="btn-floating grey darken-3"><i class="material-icons">delete_forever</i></button>
                 {{ form_end(delete_form) }}
             </div>
         </div>
