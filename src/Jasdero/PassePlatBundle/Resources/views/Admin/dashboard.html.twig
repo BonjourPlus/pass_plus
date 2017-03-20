@@ -11,9 +11,17 @@
                 {% endfor %}
                 {% if nbOrders != 0 %}
                     <div class="col s4 m2">
-                        <a href="{{ path('orders_by_status', {'id':  state.id}) }}" class="white-text linkAsBlock" title="view list of orders">
+                        <a href="{{ path('orders_by_status', {'id':  state.id}) }}" class="white-text linkAsBlock"
+                           title="view list of orders">
                             <div class="card-panel {{ state.color }}">
-                                {{ nbOrders }}
+                                {% set length = nbOrders|length %}
+                                {% if length > 3 and lg <=6 %}
+                                    {{ nbOrders|truncate(length-3, false, 'K') }}
+                                {% elseif length>6 %}
+                                    {{ nbOrders|truncate(length-6, false, 'M') }}
+                                {% else %}
+                                    {{ nbOrders }}
+                                {% endif %}
                             </div>
                         </a>
                         <p>{{ state.name }}</p>
@@ -32,7 +40,16 @@
                 {% if nbProducts != 0 %}
                     <div class="col s4 m2">
                         <a href="{{ path('products_by_status', {'id': state.id}) }}"
-                           class="btn-floating btn-large center-align {{ state.color }} white-text" title="view list of products">{{ nbProducts }}
+                           class="btn-floating btn-large center-align {{ state.color }} white-text"
+                           title="view list of products">
+                            {% set length = nbProducts|length %}
+                            {% if length>3 and length<6 %}
+                                {{ nbProducts|truncate(length-3, false, 'K') }}
+                            {% elseif length>6 %}
+                                {{ nbProducts|truncate(length-6, false, 'M') }}
+                            {% else %}
+                                {{ nbProducts }}
+                            {% endif %}
                         </a>
                         <p>{{ state.name }}</p>
                     </div>

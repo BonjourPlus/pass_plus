@@ -11,3 +11,8 @@ services:
         arguments: ['@driveconnection','@doctrine.orm.entity_manager']
     driveconnection:
         class:    Jasdero\PassePlatBundle\Services\DriveConnection
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension}
