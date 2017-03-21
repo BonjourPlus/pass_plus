@@ -25,14 +25,11 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
-        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
+
 
 
         return $this->render('JasderoPassePlatBundle:Admin:dashboard.html.twig', array(
             'states' => $states,
-            'products' => $products,
-            'orders' => $orders,
 
         ));
 

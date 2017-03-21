@@ -19,9 +19,10 @@ abstract class CheckingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email' => $email]);
-        $response = $user;
         if (!$user) {
             $response = false;
+        } else {
+            $response = $user;
         }
 
         return ($response);

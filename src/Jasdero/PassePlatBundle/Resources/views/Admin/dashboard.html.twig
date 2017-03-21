@@ -6,7 +6,7 @@
             <hr>
             {% for state in states %}
                 {% set nbOrders = 0 %}
-                {% for order in orders if order.state.id == state.id %}
+                {% for order in state.orders %}
                     {% set nbOrders = nbOrders+1 %}
                 {% endfor %}
                 {% if nbOrders != 0 %}
@@ -34,7 +34,7 @@
             <hr>
             {% for state in states %}
                 {% set nbProducts = 0 %}
-                {% for product in products if product.state.id == state.id %}
+                {% for product in state.products %}
                     {% set nbProducts = nbProducts+1 %}
                 {% endfor %}
                 {% if nbProducts != 0 %}
