@@ -38,7 +38,7 @@ class Product
     /**
      * @var State
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="State", inversedBy="products")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * })
@@ -48,7 +48,7 @@ class Product
     /**
      * @var Catalog
      *
-     * @ORM\ManyToOne(targetEntity="Catalog")
+     * @ORM\ManyToOne(targetEntity="Catalog", inversedBy="products")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="catalog_id", referencedColumnName="id")
      * })

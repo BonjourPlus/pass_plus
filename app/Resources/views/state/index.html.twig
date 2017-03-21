@@ -29,7 +29,7 @@
                             <td class="center-align">
                                 {# counting  products affected by this state#}
                                 {% set nbProducts = 0 %}
-                                {% for product in products if product.state.id == state.id %}
+                                {% for product in state.products %}
                                     {% set nbProducts = nbProducts+1 %}
                                 {% endfor %}
                                 <a href="{{ path('products_by_status', {'id': state.id}) }}"
@@ -39,7 +39,7 @@
                             <td>
                                 {# counting  orders affected by this state#}
                                 {% set nbOrders = 0 %}
-                                {% for order in orders if order.state.id == state.id %}
+                                {% for order in state.orders %}
                                     {% set nbOrders = nbOrders+1 %}
                                 {% endfor %}
                                 <a href="{{ path('orders_by_status', {'id':  state.id}) }}"

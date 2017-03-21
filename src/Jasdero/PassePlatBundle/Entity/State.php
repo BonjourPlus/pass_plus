@@ -62,9 +62,15 @@ class State
      */
     private $orders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="state")
+     */
+    private $products;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
 
@@ -230,5 +236,39 @@ class State
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \Jasdero\PassePlatBundle\Entity\Product $product
+     *
+     * @return State
+     */
+    public function addProduct(\Jasdero\PassePlatBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \Jasdero\PassePlatBundle\Entity\Product $product
+     */
+    public function removeProduct(\Jasdero\PassePlatBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

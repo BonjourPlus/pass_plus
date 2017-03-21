@@ -42,11 +42,9 @@ class OrdersController extends Controller
             $request->query->getInt('limit', 10)/*limit per page*/
         );
 
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
 
         return $this->render('orders/index.html.twig', array(
             'orders' => $orders,
-            'products' => $products,
         ));
     }
 
@@ -103,18 +101,17 @@ class OrdersController extends Controller
      *
      * @Route("/admin/orders/{id}", name="orders_show")
      * @Method("GET")
+     * @param Orders $order
+     * @return Response
      */
     public function showAction(Orders $order)
     {
         $deleteForm = $this->createDeleteForm($order);
 
         //getting products contained inside the order
-        $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['orders' => $order->getId()]);
 
         return $this->render('orders/show.html.twig', array(
             'order' => $order,
-            'products' => $products,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -124,6 +121,9 @@ class OrdersController extends Controller
      *
      * @Route("/admin/orders/{id}/edit", name="orders_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Orders $order
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, Orders $order)
     {
@@ -189,11 +189,9 @@ class OrdersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['state' => $state->getId()]);
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
 
         return $this->render(':orders:ordersFiltered.html.twig', array(
             'orders' => $orders,
-            'products' => $products,
         ));
     }
 
@@ -206,7 +204,6 @@ class OrdersController extends Controller
     public function ordersByCatalogAction(Catalog $catalog)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
 
         //getting Orders Id
         $ordersId = $em->getRepository('JasderoPassePlatBundle:Product')->findOrderByCatalog($catalog);
@@ -218,7 +215,6 @@ class OrdersController extends Controller
 
         return $this->render('orders/ordersFiltered.html.twig', array(
             'orders' => $orders,
-            'products' => $products,
         ));
     }
 
@@ -233,13 +229,11 @@ class OrdersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['user'=>$user]);
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
 
 
 
         return $this->render('orders/ordersFiltered.html.twig', array(
             'orders' => $orders,
-            'products' => $products,
         ));
 
     }

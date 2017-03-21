@@ -71,8 +71,6 @@ class StateController extends Controller
 
         return $this->render('state/index.html.twig', array(
             'states' => $states,
-            'products' => $products,
-            'orders' => $orders,
             'totalOrders' => $totalOrders,
             'totalProducts' => $totalProducts,
             'token' => $this->get('session')->get('bjp_token'),

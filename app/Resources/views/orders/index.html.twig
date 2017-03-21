@@ -23,7 +23,7 @@
                         {% set puser ='' %}
                         {% set pcreation ='' %}
                         {% set pupdate ='' %}
-                        {% for product in products if product.orders.id == order.id %}
+                        {% for product in order.products %}
 
                             <tr>
                                 {% if pid != order.id %}

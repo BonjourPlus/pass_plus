@@ -32,7 +32,7 @@
                         <td class="center-align">
                             {# counting  products with this catalog entry#}
                             {% set nbProducts = 0 %}
-                            {% for product in products if product.catalog.id == catalog.id %}
+                            {% for product in catalog.products %}
                                 {% set nbProducts = nbProducts+1 %}
                             {% endfor %}
                             <a href="{{ path('products_by_catalog', {'id': catalog.id}) }}" class="btn-floating center-align blue-grey darken-1" title="view products">
