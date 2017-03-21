@@ -49,8 +49,6 @@ class CatalogController extends Controller
 
         return $this->render('catalog/index.html.twig', array(
             'catalogs' => $catalogs,
-            'products' => $products,
-            'orders' => $orders,
             'totalOrders' => $totalOrders,
             'totalProducts' => $totalProducts,
         ));
