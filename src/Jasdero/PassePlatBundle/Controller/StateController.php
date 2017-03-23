@@ -64,10 +64,8 @@ class StateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $states = $em->getRepository('JasderoPassePlatBundle:State')->findAllStatesWithAssociations();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
-        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
-        $totalOrders = count($orders);
-        $totalProducts = count($products);
+        $totalProducts = $em->getRepository('JasderoPassePlatBundle:Product')->countProducts();
+        $totalOrders = $em->getRepository('JasderoPassePlatBundle:Orders')->countOrders();
 
         return $this->render('state/index.html.twig', array(
             'states' => $states,

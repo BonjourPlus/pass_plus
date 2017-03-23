@@ -85,6 +85,8 @@ class CatalogController extends Controller
      *
      * @Route("/{id}", name="catalog_show")
      * @Method("GET")
+     * @param Catalog $catalog
+     * @return Response
      */
     public function showAction(Catalog $catalog)
     {
@@ -101,6 +103,9 @@ class CatalogController extends Controller
      *
      * @Route("/{id}/edit", name="catalog_edit")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Catalog $catalog
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, Catalog $catalog)
     {
@@ -126,6 +131,9 @@ class CatalogController extends Controller
      *
      * @Route("/{id}", name="catalog_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param Catalog $catalog
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Catalog $catalog)
     {

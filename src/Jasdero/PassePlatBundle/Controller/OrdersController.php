@@ -34,6 +34,15 @@ class OrdersController extends Controller
 
 
         $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Orders')->createQueryBuilder('o');
+        $queryBuilder
+            ->leftJoin('o.products', 'p')
+            ->addSelect('p')
+            ->leftJoin('p.catalog', 'c')
+            ->addSelect('c')
+            ->leftJoin('o.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('o.state', 's')
+            ->addSelect('s');
         $query = $queryBuilder->getQuery();
 
         $orders = $paginator->paginate(
@@ -84,8 +93,9 @@ class OrdersController extends Controller
             $newProductLine->setPretaxPrice($catalog->getPretaxPrice());
             $newProductLine->setVatRate($catalog->getVat()->getRate());
             $em->persist($newProductLine);
-            $em->flush();
         }
+        $em->flush();
+
 
         //setting order status
         $this->get('orderstatus')->orderStatusAction($order);
@@ -97,7 +107,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Finds and displays a order entity with its associated products
+     * Finds and displays an order entity with its associated products
      *
      * @Route("/admin/orders/{id}", name="orders_show")
      * @Method("GET")
@@ -145,7 +155,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Deletes a order entity.
+     * Deletes an order entity.
      *
      * @Route("/admin/orders/{id}", name="orders_delete")
      * @Method("DELETE")
@@ -188,7 +198,7 @@ class OrdersController extends Controller
     public function ordersByStatusAction(State $state)
     {
         $em = $this->getDoctrine()->getManager();
-        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['state' => $state->getId()]);
+        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findByStateWithAssociations($state->getId());
 
         return $this->render(':orders:ordersFiltered.html.twig', array(
             'orders' => $orders,
@@ -210,7 +220,7 @@ class OrdersController extends Controller
         //getting Orders
         $orders = [];
         foreach ($ordersId as $order) {
-            $orders[] = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneBy(['id' => $order]);
+            $orders[] = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneByIdWithAssociations($order['id']);
         }
 
         return $this->render('orders/ordersFiltered.html.twig', array(
@@ -229,8 +239,6 @@ class OrdersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['user'=>$user]);
-
-
 
         return $this->render('orders/ordersFiltered.html.twig', array(
             'orders' => $orders,

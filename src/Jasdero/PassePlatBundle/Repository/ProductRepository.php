@@ -11,15 +11,15 @@ class ProductRepository extends EntityRepository
 {
     public function findOrderByCatalog($id)
     {
-        $dq = $this->createQueryBuilder('p');
-        $dq ->select('orders.id')
-            ->join('p.orders', 'orders')
-            ->join('p.catalog', 'c')
+        $qb = $this->createQueryBuilder('p');
+        $qb ->select('orders.id')
+            ->leftJoin('p.orders', 'orders')
+            ->leftJoin('p.catalog', 'c')
             ->where('c.id = :id')
             ->setParameter('id', $id)
             ->groupBy('orders.id');
 
-        return $dq->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function countProducts()

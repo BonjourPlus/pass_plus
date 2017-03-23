@@ -30,7 +30,14 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Product')->createQueryBuilder('q');
+        $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Product')->createQueryBuilder('c');
+        $queryBuilder
+            ->leftJoin('c.catalog', 'q')
+            ->addSelect('q')
+            ->leftJoin('c.orders', 'o')
+            ->addSelect('o')
+            ->leftJoin('c.state', 's')
+            ->addSelect('s');
         $query = $queryBuilder->getQuery();
 
         $products = $paginator->paginate(
@@ -166,7 +173,7 @@ class ProductController extends Controller
 
     /**
      * products sorted by statuses
-     * @Route("/products/status/{id}", name="products_by_status")
+     * @Route("/status/{id}", name="products_by_status")
      * @param State $state
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -183,7 +190,7 @@ class ProductController extends Controller
 
     /**
      * products sorted by catalog
-     * @Route("/products/catalog/{id}", name="products_by_catalog")
+     * @Route("/catalog/{id}", name="products_by_catalog")
      * @param Catalog $catalog
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -197,6 +204,5 @@ class ProductController extends Controller
             'products' => $products,
         ));
     }
-
 
 }

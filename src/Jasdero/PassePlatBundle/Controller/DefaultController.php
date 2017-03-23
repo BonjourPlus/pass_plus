@@ -28,7 +28,6 @@ class DefaultController extends Controller
 
         return $this->render('JasderoPassePlatBundle:Admin:dashboard.html.twig', array(
             'states' => $states,
-
         ));
 
     }
