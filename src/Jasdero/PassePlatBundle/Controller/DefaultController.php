@@ -24,9 +24,7 @@ class DefaultController extends Controller
     public function adminIndexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
-
-
+        $states = $em->getRepository('JasderoPassePlatBundle:State')->findAllStatesWithAssociations();
 
         return $this->render('JasderoPassePlatBundle:Admin:dashboard.html.twig', array(
             'states' => $states,

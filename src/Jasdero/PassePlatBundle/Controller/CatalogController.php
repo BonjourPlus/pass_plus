@@ -41,11 +41,9 @@ class CatalogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $catalogs = $em->getRepository('JasderoPassePlatBundle:Catalog')->findAll();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
-        $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
-        $totalProducts = count($products);
-        $totalOrders = count($orders);
+        $catalogs = $em->getRepository('JasderoPassePlatBundle:Catalog')->findAllCatalogsWithAssociations();
+        $totalOrders = $em->getRepository('JasderoPassePlatBundle:Orders')->countOrders();
+        $totalProducts = $em->getRepository('JasderoPassePlatBundle:Product')->countProducts();
 
         return $this->render('catalog/index.html.twig', array(
             'catalogs' => $catalogs,

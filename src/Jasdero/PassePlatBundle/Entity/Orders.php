@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  *
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Jasdero\PassePlatBundle\Repository\OrdersRepository")
  */
 class Orders
 {

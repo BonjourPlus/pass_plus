@@ -63,7 +63,7 @@ class StateController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $states = $em->getRepository('JasderoPassePlatBundle:State')->findBy([], ['weight' => 'DESC']);
+        $states = $em->getRepository('JasderoPassePlatBundle:State')->findAllStatesWithAssociations();
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findAll();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
         $totalOrders = count($orders);

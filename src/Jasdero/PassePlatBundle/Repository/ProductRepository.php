@@ -5,6 +5,7 @@ namespace Jasdero\PassePlatBundle\Repository;
 
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 
 class ProductRepository extends EntityRepository
 {
@@ -19,6 +20,14 @@ class ProductRepository extends EntityRepository
             ->groupBy('orders.id');
 
         return $dq->getQuery()->getResult();
+    }
+
+    public function countProducts()
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('count(p.id)');
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 }

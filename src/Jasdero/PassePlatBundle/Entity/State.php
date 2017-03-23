@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * State
  *
  * @ORM\Table(name="state")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Jasdero\PassePlatBundle\Repository\StateRepository")
  */
 class State
 {
