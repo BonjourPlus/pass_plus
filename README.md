@@ -10,7 +10,7 @@ Features :
   * automatic import and creation of orders from Google Drive
   * self-creating and organizing orders on Google Drive 
   
-###Status oriented management
+### Status oriented management
 
 ####Principle
 The Passe-Plat bundle is built on the principle that an order's status (i.e. on hold, ready etc...)
