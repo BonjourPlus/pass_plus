@@ -7,7 +7,7 @@ rules and is coupled with Google Drive.
 Features :
   * creation and edition of statuses
   * real-time status changes update your orders
-  * automatic import and creation of orders from Google Drive
+  * automatic import and creation of orders from/to Google Drive
   * self-creating and organizing orders on Google Drive 
   
 ### Status oriented management
@@ -42,7 +42,3 @@ After that you need to [create credentials](https://console.developers.google.co
 and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 
 to put your domain ).
 
-After getting your client secret, you need to put the path to it in both methods of the DriveConnection 
-class (in $client->setAuthConfig).
-You also need to determine a path to refresh token in both methods (something like $pathTorefreshToken = 
-'vendor\refresh_token.json).
