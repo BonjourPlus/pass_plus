@@ -15,7 +15,6 @@ class OrderStatus
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-
     }
 
     /**
@@ -24,8 +23,7 @@ class OrderStatus
      */
     public function orderStatusAction(Orders $order)
     {
-
-
+        //Getting max weight of products in order
         $maxWeight = $this->em->getRepository('JasderoPassePlatBundle:Orders')->findMaxWeightInOrder($order);
 
         //Finding corresponding status

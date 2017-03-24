@@ -3,6 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\State;
+use Jasdero\PassePlatBundle\Form\StateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -86,7 +87,7 @@ class StateController extends Controller
     public function newAction(Request $request)
     {
         $state = new State();
-        $form = $this->createForm('Jasdero\PassePlatBundle\Form\StateType', $state);
+        $form = $this->createForm(StateType::class, $state);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -133,7 +134,7 @@ class StateController extends Controller
     public function editAction(Request $request, State $state)
     {
         $deleteForm = $this->createDeleteForm($state);
-        $editForm = $this->createForm('Jasdero\PassePlatBundle\Form\StateType', $state);
+        $editForm = $this->createForm(StateType::class, $state);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -231,8 +232,8 @@ class StateController extends Controller
             //updating orders statuses and drive folders
             $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
             foreach ($orders as $order) {
-                $this->get('orderstatus')->orderStatusAction($order);
-                $this->get('drivefolderasstatus')->driveFolder($order->getState()->getName(), $order->getId());
+                $this->get('jh_passeplat.orderstatus')->orderStatusAction($order);
+                $this->get('jh_passeplat.drivefolderasstatus')->driveFolder($order->getState()->getName(), $order->getId());
             }
             return new Response();
         }

@@ -65,6 +65,13 @@ class Orders
      */
     private $products;
 
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+
+    }
+
 
 
     /**
@@ -204,13 +211,6 @@ class Orders
     public function getSource()
     {
         return $this->source;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

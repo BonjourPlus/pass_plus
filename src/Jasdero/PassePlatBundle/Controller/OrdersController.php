@@ -7,6 +7,7 @@ use Jasdero\PassePlatBundle\Entity\Orders;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
 use Jasdero\PassePlatBundle\Entity\User;
+use Jasdero\PassePlatBundle\Form\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,7 +77,6 @@ class OrdersController extends Controller
 
 
         //setting orders data
-        $order->setDateCreation(new \DateTime());
         $order->setUser($user);
         $em->persist($order);
         $em->flush();
@@ -98,7 +98,7 @@ class OrdersController extends Controller
 
 
         //setting order status
-        $this->get('orderstatus')->orderStatusAction($order);
+        $this->get('jh_passeplat.orderstatus')->orderStatusAction($order);
 
 
         //give back the new order id
@@ -138,7 +138,7 @@ class OrdersController extends Controller
     public function editAction(Request $request, Orders $order)
     {
         $deleteForm = $this->createDeleteForm($order);
-        $editForm = $this->createForm('Jasdero\PassePlatBundle\Form\OrdersType', $order);
+        $editForm = $this->createForm(OrdersType::class, $order);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -159,6 +159,9 @@ class OrdersController extends Controller
      *
      * @Route("/admin/orders/{id}", name="orders_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param Orders $order
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Orders $order)
     {

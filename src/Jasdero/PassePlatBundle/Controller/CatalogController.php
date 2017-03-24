@@ -3,6 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\Catalog;
+use Jasdero\PassePlatBundle\Form\CatalogType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CatalogController extends Controller
 {
-
 
     /**
      * function to display how many orders include given catalog
@@ -63,7 +63,7 @@ class CatalogController extends Controller
     public function newAction(Request $request)
     {
         $catalog = new Catalog();
-        $form = $this->createForm('Jasdero\PassePlatBundle\Form\CatalogType', $catalog);
+        $form = $this->createForm(CatalogType::class, $catalog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -110,7 +110,7 @@ class CatalogController extends Controller
     public function editAction(Request $request, Catalog $catalog)
     {
         $deleteForm = $this->createDeleteForm($catalog);
-        $editForm = $this->createForm('Jasdero\PassePlatBundle\Form\CatalogType', $catalog);
+        $editForm = $this->createForm(CatalogType::class, $catalog);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

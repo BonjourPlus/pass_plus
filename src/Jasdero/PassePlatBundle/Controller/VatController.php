@@ -3,6 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\Vat;
+use Jasdero\PassePlatBundle\Form\VatType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -43,7 +44,7 @@ class VatController extends Controller
     public function newAction(Request $request)
     {
         $vat = new Vat();
-        $form = $this->createForm('Jasdero\PassePlatBundle\Form\VatType', $vat);
+        $form = $this->createForm(VatType::class, $vat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,7 +91,7 @@ class VatController extends Controller
     public function editAction(Request $request, Vat $vat)
     {
         $deleteForm = $this->createDeleteForm($vat);
-        $editForm = $this->createForm('Jasdero\PassePlatBundle\Form\VatType', $vat);
+        $editForm = $this->createForm(VatType::class, $vat);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

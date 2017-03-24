@@ -2,6 +2,7 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
+use Jasdero\PassePlatBundle\Form\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -19,7 +20,7 @@ class OrdersFromSiteController extends Controller
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm('Jasdero\PassePlatBundle\Form\OrdersType');
+        $form = $this->createForm(OrdersType::class);
         $form->handleRequest($request);
         $products = [];
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,7 +41,7 @@ class OrdersFromSiteController extends Controller
             $em = $this->getDoctrine()->getManager();
             $order = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneBy(['id'=>$orderId]);
             $status = $order->getState()->getName();
-            $this->get('drivefolderasstatus')->driveFolder($status, $orderId);
+            $this->get('jh_passeplat.drivefolderasstatus')->driveFolder($status, $orderId);
 
             //displaying the new order
             return $this->redirectToRoute('orders_show', array('id' => $orderId));

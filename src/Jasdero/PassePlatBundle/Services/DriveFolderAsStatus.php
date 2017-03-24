@@ -6,14 +6,13 @@ namespace Jasdero\PassePlatBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Google_Service_Drive_DriveFile;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class DriveFolderAsStatus
  * @package Jasdero\PassePlatBundle\Services
  * Used to move files to a drive folder named after the order's status
  */
-class DriveFolderAsStatus extends Controller
+class DriveFolderAsStatus
 {
     private $drive;
     private $em;

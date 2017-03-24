@@ -2,8 +2,7 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
-use Google_Client;
-use Google_Service_Drive;
+
 use Google_Service_Drive_DriveFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,12 +16,14 @@ class OrderFromDriveController extends CheckingController
      * Reading the drive folder sheets and turning it into new orders
      * @Route("/admin/checking/{action}", name="checking")
      * @Method({"GET", "POST"})
+     * @param bool $action
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
 
     public function scanDriveFolderAction($action = false)
     {
         //initializing Client
-        $drive = $this->get('driveconnection')->connectToDriveApi();
+        $drive = $this->get('jh_passeplat.driveconnection')->connectToDriveApi();
         // getting the files if the OAuth flow has been validated
         $numberOfNewOrders = null;
         $errorsOnOrders = [];
@@ -151,7 +152,7 @@ class OrderFromDriveController extends CheckingController
                         } else {
 
                             // Move the file to the in Progress folder
-                            $file = $drive->files->update($fileId, $extraFileMetadata, array(
+                                 $drive->files->update($fileId, $extraFileMetadata, array(
                                 'addParents' => $inProgressFolderId,
                                 'removeParents' => $previousParents,
                                 'fields' => 'id, parents, appProperties'));
@@ -180,7 +181,7 @@ class OrderFromDriveController extends CheckingController
      */
     public function authCheckedAction()
     {
-        return $this->get('driveconnection')->authCheckedAction();
+        return $this->get('jh_passeplat.driveconnection')->authCheckedAction();
 
     }
 

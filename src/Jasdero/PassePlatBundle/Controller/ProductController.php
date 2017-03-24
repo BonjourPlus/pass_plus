@@ -5,6 +5,7 @@ namespace Jasdero\PassePlatBundle\Controller;
 use Jasdero\PassePlatBundle\Entity\Catalog;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
+use Jasdero\PassePlatBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,7 +64,7 @@ class ProductController extends Controller
     public function newAction(Request $request)
     {
         $product = new Product();
-        $form = $this->createForm('Jasdero\PassePlatBundle\Form\ProductType', $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,15 +113,15 @@ class ProductController extends Controller
     public function editAction(Request $request, Product $product)
     {
         $deleteForm = $this->createDeleteForm($product);
-        $editForm = $this->createForm('Jasdero\PassePlatBundle\Form\ProductType', $product);
+        $editForm = $this->createForm(ProductType::class, $product);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             //updating order status
-            $this->get('orderstatus')->orderStatusAction($product->getOrders());
-            $this->get('drivefolderasstatus')->driveFolder($product->getState()->getName(), $product->getOrders()->getId());
+            $this->get('jh_passeplat.orderstatus')->orderStatusAction($product->getOrders());
+            $this->get('jh_passeplat.drivefolderasstatus')->driveFolder($product->getState()->getName(), $product->getOrders()->getId());
 
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));

@@ -38,7 +38,7 @@ are moved to the right folders (if the folder doesn't exist it is created).
 
 First step is to create a Google Account if you dont have one yet.
 Then you [activate the Drive API](https://console.developers.google.com/apis/library) for your application.
-After the you need to [create credentials](https://console.developers.google.com/projectselector/apis/credentials) and
+After that you need to [create credentials](https://console.developers.google.com/projectselector/apis/credentials) and
 and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 
 to put your domain ).
 

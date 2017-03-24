@@ -5,7 +5,7 @@ namespace Jasdero\PassePlatBundle\Services;
 
 use Google_Client;
 use Google_Service_Drive;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class DriveConnection
@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * This class was written following the principles of :
  * https://developers.google.com/api-client-library/php/auth/web-app
  */
-class DriveConnection extends Controller
+class DriveConnection
 {
     /**
      * @return Google_Service_Drive|null
@@ -60,7 +60,7 @@ class DriveConnection extends Controller
 
         if (!isset($_GET['code'])) {
             $auth_url = $client->createAuthUrl();
-            return $this->redirect(filter_var($auth_url, FILTER_SANITIZE_URL));
+            return new RedirectResponse(filter_var($auth_url, FILTER_SANITIZE_URL));
         } else {
             $client->authenticate($_GET['code']);
             $_SESSION['access_token'] = $client->getAccessToken();
@@ -71,7 +71,7 @@ class DriveConnection extends Controller
                 fclose($refreshToken);
             }
             $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/app_dev.php/admin/checking';
-            return $this->redirect(filter_var($redirect_uri, FILTER_SANITIZE_URL));
+            return new RedirectResponse(filter_var($redirect_uri, FILTER_SANITIZE_URL));
         }
     }
 }
