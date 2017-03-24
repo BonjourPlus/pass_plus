@@ -28,6 +28,11 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('auth_config')->end()
                     ->end()
                 ->end()
+                ->arrayNode('drive_folder_as_status')
+                    ->children()
+                        ->scalarNode('root_folder')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

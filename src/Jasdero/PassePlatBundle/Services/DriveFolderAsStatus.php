@@ -16,16 +16,18 @@ class DriveFolderAsStatus
 {
     private $drive;
     private $em;
+    private $rootFolder;
 
     /**
      * DriveFolderAsStatus constructor.
      * @param DriveConnection $drive
      * @param EntityManager $em
      */
-    public function __construct(DriveConnection $drive, EntityManager $em)
+    public function __construct(DriveConnection $drive, EntityManager $em, $rootFolder)
     {
         $this->drive = $drive;
         $this->em = $em;
+        $this->rootFolder = $rootFolder;
     }
 
     /**
@@ -46,7 +48,7 @@ class DriveFolderAsStatus
             $pageToken = null;
             $optParamsForFolder = array(
                 'pageToken' => $pageToken,
-                'q' => "name contains 'b+'",
+                'q' => "name contains '$this->rootFolder'",
                 'fields' => 'nextPageToken, files(id)'
             );
 

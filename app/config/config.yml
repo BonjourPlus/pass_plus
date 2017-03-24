@@ -94,3 +94,5 @@ jasdero_passe_plat:
     drive_connection:
         path_to_refresh_token: "%path_to_refresh_token%"
         auth_config: "%auth_config%"
+    drive_folder_as_status:
+        root_folder: "%root_folder%"
