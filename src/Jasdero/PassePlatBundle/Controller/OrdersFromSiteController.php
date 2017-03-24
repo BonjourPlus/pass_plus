@@ -41,7 +41,7 @@ class OrdersFromSiteController extends Controller
             $em = $this->getDoctrine()->getManager();
             $order = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneBy(['id'=>$orderId]);
             $status = $order->getState()->getName();
-            $this->get('jasdero_passe_plat.drivefolderasstatus')->driveFolder($status, $orderId);
+            $this->get('jasdero_passe_plat.drive_folder_as_status')->driveFolder($status, $orderId);
 
             //displaying the new order
             return $this->redirectToRoute('orders_show', array('id' => $orderId));

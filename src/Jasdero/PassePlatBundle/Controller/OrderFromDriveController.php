@@ -23,7 +23,7 @@ class OrderFromDriveController extends CheckingController
     public function scanDriveFolderAction($action = false)
     {
         //initializing Client
-        $drive = $this->get('jasdero_passe_plat.driveconnection')->connectToDriveApi();
+        $drive = $this->get('jasdero_passe_plat.drive_connection')->connectToDriveApi();
         // getting the files if the OAuth flow has been validated
         $numberOfNewOrders = null;
         $errorsOnOrders = [];
@@ -181,7 +181,7 @@ class OrderFromDriveController extends CheckingController
      */
     public function authCheckedAction()
     {
-        return $this->get('jasdero_passe_plat.driveconnection')->authCheckedAction();
+        return $this->get('jasdero_passe_plat.drive_connection')->authCheckedAction();
 
     }
 

@@ -22,7 +22,8 @@ class DriveConnection
     {
         //initializing Client
         $client = new Google_Client();
-        $client->setAuthConfig('C:\wamp64\www\order_manager\vendor\client_secret.json');
+        $authConfig = 'C:\wamp64\www\order_manager\vendor\client_secret.json';
+        $client->setAuthConfigFile($authConfig);
         $client->setAccessType('offline');
         $client->addScope(Google_Service_Drive::DRIVE);
         $pathToRefreshToken = 'C:\wamp64\www\order_manager\vendor\refresh_token.json';
@@ -51,7 +52,8 @@ class DriveConnection
     public function authCheckedAction()
     {
         $client = new Google_Client();
-        $client->setAuthConfigFile('C:\wamp64\www\order_manager\vendor\client_secret.json');
+        $authConfig = 'C:\wamp64\www\order_manager\vendor\client_secret.json';
+        $client->setAuthConfigFile($authConfig);
         $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/app_dev.php/checked');
         $client->setAccessType('offline');
         $client->addScope(Google_Service_Drive::DRIVE);
