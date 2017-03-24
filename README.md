@@ -11,6 +11,7 @@ Features :
   * self-creating and organizing orders on Google Drive 
   
 ###Status oriented management
+
 ####Principle
 The Passe-Plat bundle is built on the principle that an order's status (i.e. on hold, ready etc...)
 depends on the statuses of the products its made of. This is achieved through different weights given to 
