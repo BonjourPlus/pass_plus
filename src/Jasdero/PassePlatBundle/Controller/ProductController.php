@@ -120,8 +120,8 @@ class ProductController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             //updating order status
-            $this->get('jh_passeplat.orderstatus')->orderStatusAction($product->getOrders());
-            $this->get('jh_passeplat.drivefolderasstatus')->driveFolder($product->getState()->getName(), $product->getOrders()->getId());
+            $this->get('jasdero_passe_plat.orderstatus')->orderStatusAction($product->getOrders());
+            $this->get('jasdero_passe_plat.drivefolderasstatus')->driveFolder($product->getState()->getName(), $product->getOrders()->getId());
 
 
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));

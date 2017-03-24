@@ -98,7 +98,7 @@ class OrdersController extends Controller
 
 
         //setting order status
-        $this->get('jh_passeplat.orderstatus')->orderStatusAction($order);
+        $this->get('jasdero_passe_plat.orderstatus')->orderStatusAction($order);
 
 
         //give back the new order id

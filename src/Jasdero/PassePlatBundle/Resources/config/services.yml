@@ -3,13 +3,13 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    jh_passeplat.orderstatus:
+    jasdero_passe_plat.orderstatus:
         class:      Jasdero\PassePlatBundle\Services\OrderStatus
         arguments: ['@doctrine.orm.entity_manager']
-    jh_passeplat.drivefolderasstatus:
+    jasdero_passe_plat.drivefolderasstatus:
         class:    Jasdero\PassePlatBundle\Services\DriveFolderAsStatus
         arguments: ['@jh_passeplat.driveconnection','@doctrine.orm.entity_manager']
-    jh_passeplat.driveconnection:
+    jasdero_passe_plat.driveconnection:
         class:    Jasdero\PassePlatBundle\Services\DriveConnection
 
     twig.extension.text:
