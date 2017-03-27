@@ -33,7 +33,6 @@ class CatalogController extends Controller
 
     /**
      * Lists all catalog entities with stats
-     *
      * @Route("/", name="catalog_index")
      * @Method("GET")
      */
