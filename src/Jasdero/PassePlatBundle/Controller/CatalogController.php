@@ -45,7 +45,7 @@ class CatalogController extends Controller
         $totalOrders = $em->getRepository('JasderoPassePlatBundle:Orders')->countOrders();
         $totalProducts = $em->getRepository('JasderoPassePlatBundle:Product')->countProducts();
 
-        return $this->render('catalog/index.html.twig', array(
+        return $this->render('@JasderoPassePlat/catalog/index.html.twig', array(
             'catalogs' => $catalogs,
             'totalOrders' => $totalOrders,
             'totalProducts' => $totalProducts,
@@ -74,7 +74,7 @@ class CatalogController extends Controller
             return $this->redirectToRoute('catalog_show', array('id' => $catalog->getId()));
         }
 
-        return $this->render('catalog/new.html.twig', array(
+        return $this->render('@JasderoPassePlat/catalog/new.html.twig', array(
             'catalog' => $catalog,
             'form' => $form->createView(),
         ));
@@ -92,7 +92,7 @@ class CatalogController extends Controller
     {
         $deleteForm = $this->createDeleteForm($catalog);
 
-        return $this->render('catalog/show.html.twig', array(
+        return $this->render('@JasderoPassePlat/catalog/show.html.twig', array(
             'catalog' => $catalog,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -119,7 +119,7 @@ class CatalogController extends Controller
             return $this->redirectToRoute('catalog_show', array('id' => $catalog->getId()));
         }
 
-        return $this->render('catalog/edit.html.twig', array(
+        return $this->render('@JasderoPassePlat/catalog/edit.html.twig', array(
             'catalog' => $catalog,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

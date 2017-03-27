@@ -53,7 +53,7 @@ class OrdersController extends Controller
         );
 
 
-        return $this->render('orders/index.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/index.html.twig', array(
             'orders' => $orders,
         ));
     }
@@ -120,7 +120,7 @@ class OrdersController extends Controller
 
         //getting products contained inside the order
 
-        return $this->render('orders/show.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/show.html.twig', array(
             'order' => $order,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -147,7 +147,7 @@ class OrdersController extends Controller
             return $this->redirectToRoute('orders_show', array('id' => $order->getId()));
         }
 
-        return $this->render('orders/edit.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/edit.html.twig', array(
             'order' => $order,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -203,7 +203,7 @@ class OrdersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findByStateWithAssociations($state->getId());
 
-        return $this->render(':orders:ordersFiltered.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/ordersFiltered.html.twig', array(
             'orders' => $orders,
         ));
     }
@@ -226,7 +226,7 @@ class OrdersController extends Controller
             $orders[] = $em->getRepository('JasderoPassePlatBundle:Orders')->findOneByIdWithAssociations($order['id']);
         }
 
-        return $this->render('orders/ordersFiltered.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/ordersFiltered.html.twig', array(
             'orders' => $orders,
         ));
     }
@@ -243,7 +243,7 @@ class OrdersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['user'=>$user]);
 
-        return $this->render('orders/ordersFiltered.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/ordersFiltered.html.twig', array(
             'orders' => $orders,
         ));
 

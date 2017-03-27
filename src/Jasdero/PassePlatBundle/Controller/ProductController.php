@@ -47,7 +47,7 @@ class ProductController extends Controller
             $request->query->getInt('limit', 10)/*limit per page*/
         );
 
-        return $this->render('product/index.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/index.html.twig', array(
             'products' => $products,
         ));
     }
@@ -75,7 +75,7 @@ class ProductController extends Controller
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
-        return $this->render('product/new.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/new.html.twig', array(
             'product' => $product,
             'form' => $form->createView(),
         ));
@@ -94,7 +94,7 @@ class ProductController extends Controller
     {
         $deleteForm = $this->createDeleteForm($product);
 
-        return $this->render('product/show.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/show.html.twig', array(
             'product' => $product,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -127,7 +127,7 @@ class ProductController extends Controller
             return $this->redirectToRoute('product_show', array('id' => $product->getId()));
         }
 
-        return $this->render('product/edit.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/edit.html.twig', array(
             'product' => $product,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -184,7 +184,7 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state' => $state->getId()]);
 
-        return $this->render(':product:productsFiltered.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/productsFiltered.html.twig', array(
             'products' => $products,
         ));
     }
@@ -201,7 +201,7 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['catalog' => $catalog->getId()]);
 
-        return $this->render('product/productsFiltered.html.twig', array(
+        return $this->render('@JasderoPassePlat/product/productsFiltered.html.twig', array(
             'products' => $products,
         ));
     }

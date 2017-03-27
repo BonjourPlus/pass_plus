@@ -28,7 +28,7 @@ class VatController extends Controller
 
         $vats = $em->getRepository('JasderoPassePlatBundle:Vat')->findAll();
 
-        return $this->render('vat/index.html.twig', array(
+        return $this->render('@JasderoPassePlat/vat/index.html.twig', array(
             'vats' => $vats,
         ));
     }
@@ -55,7 +55,7 @@ class VatController extends Controller
             return $this->redirectToRoute('vat_show', array('id' => $vat->getId()));
         }
 
-        return $this->render('vat/new.html.twig', array(
+        return $this->render('@JasderoPassePlat/vat/new.html.twig', array(
             'vat' => $vat,
             'form' => $form->createView(),
         ));
@@ -73,7 +73,7 @@ class VatController extends Controller
     {
         $deleteForm = $this->createDeleteForm($vat);
 
-        return $this->render('vat/show.html.twig', array(
+        return $this->render('@JasderoPassePlat/vat/show.html.twig', array(
             'vat' => $vat,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -100,7 +100,7 @@ class VatController extends Controller
             return $this->redirectToRoute('vat_show', array('id' => $vat->getId()));
         }
 
-        return $this->render('vat/edit.html.twig', array(
+        return $this->render('@JasderoPassePlat/vat/edit.html.twig', array(
             'vat' => $vat,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

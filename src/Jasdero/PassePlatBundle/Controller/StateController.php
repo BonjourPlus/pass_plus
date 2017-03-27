@@ -68,7 +68,7 @@ class StateController extends Controller
         $totalProducts = $em->getRepository('JasderoPassePlatBundle:Product')->countProducts();
         $totalOrders = $em->getRepository('JasderoPassePlatBundle:Orders')->countOrders();
 
-        return $this->render('state/index.html.twig', array(
+        return $this->render('@JasderoPassePlat/state/index.html.twig', array(
             'states' => $states,
             'totalOrders' => $totalOrders,
             'totalProducts' => $totalProducts,
@@ -98,7 +98,7 @@ class StateController extends Controller
             return $this->redirectToRoute('state_show', array('id' => $state->getId()));
         }
 
-        return $this->render('state/new.html.twig', array(
+        return $this->render('@JasderoPassePlat/state/new.html.twig', array(
             'state' => $state,
             'form' => $form->createView(),
         ));
@@ -116,7 +116,7 @@ class StateController extends Controller
     {
         $deleteForm = $this->createDeleteForm($state);
 
-        return $this->render('state/show.html.twig', array(
+        return $this->render('@JasderoPassePlat/state/show.html.twig', array(
             'state' => $state,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -143,7 +143,7 @@ class StateController extends Controller
             return $this->redirectToRoute('state_show', array('id' => $state->getId()));
         }
 
-        return $this->render('state/edit.html.twig', array(
+        return $this->render('@JasderoPassePlat/state/edit.html.twig', array(
             'state' => $state,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

@@ -47,7 +47,7 @@ class OrdersFromSiteController extends Controller
             return $this->redirectToRoute('orders_show', array('id' => $orderId));
         }
 
-        return $this->render('orders/new.html.twig', array(
+        return $this->render('@JasderoPassePlat/orders/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
