@@ -56,7 +56,8 @@ following command to download the latest stable version of this bundle:
 This command requires you to have Composer installed globally, as explained
 in the `installation chapter`_ of the Composer documentation.
 
-Or directly from GitHub : 
+Or directly from GitHub :
+
 Step 2 : enable the bundle
 """"""""""""""""""""""""""
 
@@ -65,22 +66,22 @@ in the ``app/AppKernel.php`` file of your project:
 
 .. code-block:: php
 
-<?php
-// app/AppKernel.php
+        <?php
+        // app/AppKernel.php
 
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Jasdero\PassePlatBundle\JasderoPassePlatBundle(),
-        );
         // ...
-    }
-    // ...
-}
+        class AppKernel extends Kernel
+        {
+            public function registerBundles()
+            {
+                $bundles = array(
+                    // ...
+                    new Jasdero\PassePlatBundle\JasderoPassePlatBundle(),
+                );
+                // ...
+            }
+            // ...
+        }
 
 
 Step 3 : configure the bundle
@@ -88,34 +89,36 @@ Step 3 : configure the bundle
 
 Open the ``config.yml`` file of your project and put the following lines with your values corresponding to the folders on the drive
 (see next section):
+
 .. code-block:: yml
 
-# app/config/config.yml
+        # app/config/config.yml
 
-parameters:
-    # other parameters
-    jasdero_passe_plat.folder_to_scan: yourValue # i.e. RepoFolder
-    jasdero_passe_plat.new_orders_folder: yourValue i.e. NewOrders
-    jasdero_passe_plat.errors_folder: yourValue i.e. Errors
-    
+        parameters:
+            # other parameters
+            jasdero_passe_plat.folder_to_scan: yourValue # i.e. RepoFolder
+            jasdero_passe_plat.new_orders_folder: yourValue i.e. NewOrders
+            jasdero_passe_plat.errors_folder: yourValue i.e. Errors
 
-jasdero_passe_plat:
-    drive_connection:
-        path_to_refresh_token: "%path_to_refresh_token%"
-        auth_config: "%auth_config%"
-    drive_folder_as_status:
-        root_folder: "%root_folder%"
+
+        jasdero_passe_plat:
+            drive_connection:
+                path_to_refresh_token: "%path_to_refresh_token%"
+                auth_config: "%auth_config%"
+            drive_folder_as_status:
+                root_folder: "%root_folder%"
 
 
 Update your ``parameters.yml`` accordingly :
+
 .. code-block:: yml
 
-# app/config/parameters.yml
-    # other parameters
-    
-    path_to_refresh_token: yourPath # i.e. myProject/vendor/refreshToken.json
-    auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
-    root_folder: yourValue # i.e. MyApp
+        # app/config/parameters.yml
+            # other parameters
+
+            path_to_refresh_token: yourPath # i.e. myProject/vendor/refreshToken.json
+            auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
+            root_folder: yourValue # i.e. MyApp
 
 For security purposes, it is strongly advised that your ``path_to_refresh_token`` and ``auth_config`` parameters point to a non-shared location
  (in your ``Vendor`` folder for example).
