@@ -22,8 +22,11 @@ class OrderFromDriveController extends CheckingController
 
     public function scanDriveFolderAction($action = false)
     {
+        //retrieving folders parameters
         $newOrdersFolder = $this->get('service_container')->getParameter('jasdero_passe_plat.new_orders_folder');
         $folderToScan = $this->get('service_container')->getParameter('jasdero_passe_plat.folder_to_scan');
+        $errorsFolder = $this->get('service_container')->getParameter('jasdero_passe_plat.errors_folder');
+
         //initializing Client
         $drive = $this->get('jasdero_passe_plat.drive_connection')->connectToDriveApi();
         // getting the files if the OAuth flow has been validated
@@ -123,7 +126,7 @@ class OrderFromDriveController extends CheckingController
                     //options to get the Errors folder on the drive
                     $optParamsForFolder = array(
                         'pageToken' => $pageToken,
-                        'q' => "name contains 'Errors'",
+                        'q' => "name contains '$errorsFolder'",
                         'fields' => 'nextPageToken, files(id)'
                     );
                     //recovering the folder id

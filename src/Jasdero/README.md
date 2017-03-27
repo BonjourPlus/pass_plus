@@ -35,17 +35,18 @@ are moved to the right folders (if the folder doesn't exist it is created).
 ### Configuration
 #### Bundle
 
-#####Step 1 : download the bundle
+##### Step 1 : download the bundle
 
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 ```console
-$ composer require <package-name> "~1"
+$ composer require jasdero/passe-plat-bundle
 ```
 This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
+Or directly from GitHub : 
 ##### Step 2 : enable the bundle
 
 Then, enable the bundle by adding it to the list of registered bundles
@@ -72,12 +73,13 @@ class AppKernel extends Kernel
 
 ##### Step 3 : configure the bundle
 
-Open the `config.yml` file of your project and put the following lines with your values :
+Open the `config.yml` file of your project and put the following lines with your values corresponding to the folders on the drive
+(see next section):
 ```yml
 # app/config/config.yml
 
 parameters:
-##
+    # other parameters
     jasdero_passe_plat.folder_to_scan: yourValue
     jasdero_passe_plat.new_orders_folder: yourValue
     jasdero_passe_plat.errors_folder: yourValue
@@ -94,12 +96,15 @@ jasdero_passe_plat:
 Update your `parameters.yml` accordingly :
 ```yml
 # app/config/parameters.yml
-
-...
+    # other parameters
+    
     path_to_refresh_token: yourPath
     auth_config: yourPath
     root_folder: yourValue
 ```
+For security purposes, it is strongly advised that your `path_to_refresh_token` and `auth_config` parameters point to a non-shared location
+ (in your Vendor folder for example).
+
 #### Google Drive
 [Reference](https://developers.google.com/api-client-library/php/auth/web-app)
 
