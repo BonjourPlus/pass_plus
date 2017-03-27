@@ -97,8 +97,8 @@ Open the ``config.yml`` file of your project and put the following lines with yo
         parameters:
             # other parameters
             jasdero_passe_plat.folder_to_scan: yourValue # i.e. RepoFolder
-            jasdero_passe_plat.new_orders_folder: yourValue i.e. NewOrders
-            jasdero_passe_plat.errors_folder: yourValue i.e. Errors
+            jasdero_passe_plat.new_orders_folder: yourValue # i.e. NewOrders
+            jasdero_passe_plat.errors_folder: yourValue # i.e. Errors
 
 
         jasdero_passe_plat:
