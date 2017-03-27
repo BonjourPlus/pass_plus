@@ -120,8 +120,7 @@ Update your ``parameters.yml`` accordingly :
             auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
             root_folder: yourValue # i.e. MyApp
 
-For security purposes, it is strongly advised that your ``path_to_refresh_token`` and ``auth_config`` parameters point to a non-shared location
- (in your ``Vendor`` folder for example).
+For security purposes, it is strongly advised that your ``path_to_refresh_token`` and ``auth_config`` parameters point to a non-shared location (in your ``Vendor`` folder for example).
 
 Google Drive
 ^^^^^^^^^^^^
