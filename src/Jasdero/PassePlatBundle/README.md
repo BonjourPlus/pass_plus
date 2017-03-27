@@ -13,12 +13,10 @@ Features :
 ### Status oriented management
 
 #### Principle
-The Passe-Plat bundle is built on the principle that an order's status (i.e. on hold, ready etc...)
-depends on the statuses of the products it's made of. This is achieved through different weights given to 
-statuses, the most important being the heaviest.
-
+The Passe-Plat bundle is built on the principle that an order status (i.e. on hold, ready etc...)
+depends on the statuses of the products it's made of. The product with the most important status will define its order status.
 #### Use
-All you have to do is create some statuses and order them on the statuses main page. There you have 
+All you have to do is to create some statuses and order them on the statuses main page. There you have 
 a table which rows you can drag'n'drop in the order you want.
 Know that through this actions all concerned orders will be updated on your platform as well as moved to the right
 folders on Google Drive.
@@ -80,9 +78,9 @@ Open the `config.yml` file of your project and put the following lines with your
 
 parameters:
     # other parameters
-    jasdero_passe_plat.folder_to_scan: yourValue
-    jasdero_passe_plat.new_orders_folder: yourValue
-    jasdero_passe_plat.errors_folder: yourValue
+    jasdero_passe_plat.folder_to_scan: yourValue # i.e. RepoFolder
+    jasdero_passe_plat.new_orders_folder: yourValue i.e. NewOrders
+    jasdero_passe_plat.errors_folder: yourValue i.e. Errors
     
 
 jasdero_passe_plat:
@@ -98,19 +96,32 @@ Update your `parameters.yml` accordingly :
 # app/config/parameters.yml
     # other parameters
     
-    path_to_refresh_token: yourPath
-    auth_config: yourPath
-    root_folder: yourValue
+    path_to_refresh_token: yourPath # i.e. myProject/vendor/refreshToken.json
+    auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
+    root_folder: yourValue # i.e. MyApp
 ```
 For security purposes, it is strongly advised that your `path_to_refresh_token` and `auth_config` parameters point to a non-shared location
- (in your Vendor folder for example).
+ (in your `Vendor` folder for example).
 
 #### Google Drive
 [Reference](https://developers.google.com/api-client-library/php/auth/web-app)
 
-First step is to create a Google Account if you don't have one yet.
+##### Step 1 : Google configuration
+
+create a Google Account if you don't have one yet.
 Then you [activate the Drive API](https://console.developers.google.com/apis/library) for your application.
 After that you need to [create credentials](https://console.developers.google.com/projectselector/apis/credentials)
 and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 
 to put your domain ).
+Once you have downloaded your credentials, put it in the path you declared as `auth_config`.
 
+##### Step 2 : Create the base folders
+
+Go to your Google Drive and create the root folder for your application.
+Inside create 3 more folders : one that will be scanned by your app (the `folder_to_scan`), another one for the newly registered
+orders (`new_orders_folder`) and lastly one for invalid orders (`errors_folder`).
+Just be sure that you enter the same values as in your `config.yml`.
+
+##### Recommendations
+Be aware that if you change anything in your Google Drive Api configuration you MUST download credentials again as those will be
+different.
