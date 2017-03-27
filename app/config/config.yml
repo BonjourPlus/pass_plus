@@ -8,6 +8,8 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    jasdero_passe_plat.folder_to_scan: newOrders
+    jasdero_passe_plat.new_orders_folder: InProgress
 
 framework:
     #esi:             ~
