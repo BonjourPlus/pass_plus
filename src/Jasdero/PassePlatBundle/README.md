@@ -108,7 +108,7 @@ For security purposes, it is strongly advised that your `path_to_refresh_token` 
 
 ##### Step 1 : Google configuration
 
-create a Google Account if you don't have one yet.
+Create a Google Account if you don't have one yet.
 Then you [activate the Drive API](https://console.developers.google.com/apis/library) for your application.
 After that you need to [create credentials](https://console.developers.google.com/projectselector/apis/credentials)
 and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 

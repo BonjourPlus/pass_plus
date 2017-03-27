@@ -129,7 +129,7 @@ Google Drive
 Step 1 : Google configuration
 """""""""""""""""""""""""""""
 
-create a Google Account if you don't have one yet.
+Create a Google Account if you don't have one yet.
 Then you `activate the Drive API`_  for your application.
 After that you need to `create credentials`_
 and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 
