@@ -15,7 +15,7 @@ abstract class CheckingController extends Controller
      * @param string $email A user mail
      * @return Response
      */
-    public function validateUser($email)
+    protected function validateUser($email)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('JasderoPassePlatBundle:User')->findOneBy(['email' => $email]);
@@ -34,7 +34,7 @@ abstract class CheckingController extends Controller
      * @param array $products
      * @return bool
      */
-    public function validateOrder(array $products)
+    protected function validateOrder(array $products)
     {
         $em = $this->getDoctrine()->getManager();
         $response = true;

@@ -93,7 +93,7 @@ class OrderFromDriveController extends CheckingController
                     //creating new orders
                     foreach ($newOrders as $newOrder) {
                         //checking order integrity and format
-                        if ($user = $this->validateUser($newOrder['user']) AND $this->validateOrder($newOrder['products'])) {
+                        if ($user = $this->validateUser($newOrder['user']) && $this->validateOrder($newOrder['products'])) {
                             $numberOfNewOrders++;
                             $ordersIds[] = $this->forward('JasderoPassePlatBundle:Orders:new', array(
                                 'user' => $user,

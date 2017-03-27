@@ -182,7 +182,7 @@ class StateController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
 
-    public function weightChange(Request $request)
+    public function weightChangeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $responseText = '';
