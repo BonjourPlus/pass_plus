@@ -6,6 +6,7 @@ namespace Jasdero\PassePlatBundle\Services;
 use Google_Client;
 use Google_Service_Drive;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class DriveConnection
@@ -16,16 +17,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class DriveConnection
 {
 
+    private $session;
     private $authConfig;
     private $pathToRefreshToken;
 
+
     /**
      * DriveConnection constructor.
+     * @param Session $session
      * @param $authConfig
      * @param $pathToRefreshToken
      */
-    public function __construct($authConfig, $pathToRefreshToken)
+    public function __construct(Session $session,$authConfig, $pathToRefreshToken)
     {
+        $this->session = $session;
         $this->authConfig = $authConfig;
         $this->pathToRefreshToken = $pathToRefreshToken;
     }
@@ -43,14 +48,14 @@ class DriveConnection
 
 
         // getting the files if the OAuth flow has been validated
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token'] && !$client->isAccessTokenExpired()) {
-            $client->setAccessToken($_SESSION['access_token']);
+        if ($this->session->has('access_token') && !$client->isAccessTokenExpired()) {
+            $client->setAccessToken($this->session->get('access_token'));
             $response = new Google_Service_Drive($client);
         } elseif ($client->isAccessTokenExpired() && file_exists($this->pathToRefreshToken)) {
             $refreshToken = json_decode(file_get_contents($this->pathToRefreshToken));
             $newToken = $client->refreshToken($refreshToken);
-            $_SESSION['access_token'] = $newToken;
-            $client->setAccessToken($_SESSION['access_token']);
+            $this->session->set('access_token', $newToken);
+            $client->setAccessToken($this->session->get('access_token'));
             $response = new Google_Service_Drive($client);
 
         } else {
@@ -76,7 +81,7 @@ class DriveConnection
             return new RedirectResponse(filter_var($auth_url, FILTER_SANITIZE_URL));
         } else {
             $client->authenticate($_GET['code']);
-            $_SESSION['access_token'] = $client->getAccessToken();
+            $this->session->set('access_token', ($client->getAccessToken()));
             if (!file_exists($this->pathToRefreshToken)) {
                 $refreshToken = fopen($this->pathToRefreshToken, 'a+');
                 $jsonToken = $client->getRefreshToken();

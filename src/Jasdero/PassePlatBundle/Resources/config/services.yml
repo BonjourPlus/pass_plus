@@ -11,7 +11,7 @@ services:
         arguments: ['@jasdero_passe_plat.drive_connection','@doctrine.orm.entity_manager','%root_folder%']
     jasdero_passe_plat.drive_connection:
         class:    Jasdero\PassePlatBundle\Services\DriveConnection
-        arguments: ["%auth_config%", "%path_to_refresh_token%"]
+        arguments: ['@session', "%auth_config%", "%path_to_refresh_token%"]
 
     twig.extension.text:
         class: Twig_Extensions_Extension_Text

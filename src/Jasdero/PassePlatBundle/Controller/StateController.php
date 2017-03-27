@@ -226,8 +226,8 @@ class StateController extends Controller
                 $state = $em->getRepository('JasderoPassePlatBundle:State')->findOneBy(['id' => $stateId]);
                 $state->setWeight(1000 - ($key * 100));
                 $em->persist($state);
-                $em->flush();
             }
+            $em->flush();
 
             //updating orders statuses and drive folders
             $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
