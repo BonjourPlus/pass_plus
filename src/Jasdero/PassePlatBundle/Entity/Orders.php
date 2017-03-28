@@ -88,7 +88,7 @@ class Orders
      * @ORM\PreUpdate
      */
 
-    public function UpdateDate()
+    public function updateDate()
     {
         $this->setLastUpdate(new \DateTime());
     }
