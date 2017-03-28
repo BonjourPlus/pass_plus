@@ -6,6 +6,7 @@ namespace Jasdero\PassePlatBundle\Services;
 use Google_Client;
 use Google_Service_Drive;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -18,6 +19,7 @@ class DriveConnection
 {
 
     private $session;
+    private $request;
     private $authConfig;
     private $pathToRefreshToken;
 
@@ -25,12 +27,14 @@ class DriveConnection
     /**
      * DriveConnection constructor.
      * @param Session $session
+     * @param RequestStack $requestStack
      * @param $authConfig
      * @param $pathToRefreshToken
      */
-    public function __construct(Session $session,$authConfig, $pathToRefreshToken)
+    public function __construct(Session $session, RequestStack $requestStack,$authConfig, $pathToRefreshToken)
     {
         $this->session = $session;
+        $this->request = $requestStack->getCurrentRequest();
         $this->authConfig = $authConfig;
         $this->pathToRefreshToken = $pathToRefreshToken;
     }
@@ -70,17 +74,18 @@ class DriveConnection
     public function authCheckedAction()
     {
         $client = new Google_Client();
+        $host = $this->request->getHttpHost();
         $client->setAuthConfigFile($this->authConfig);
-        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/app_dev.php/checked');
+        $client->setRedirectUri('http://' . $host . '/app_dev.php/checked');
         $client->setAccessType('offline');
         $client->addScope(Google_Service_Drive::DRIVE);
 
 
-        if (!isset($_GET['code'])) {
+        if (!$this->request->query->has('code')) {
             $auth_url = $client->createAuthUrl();
             return new RedirectResponse(filter_var($auth_url, FILTER_SANITIZE_URL));
         } else {
-            $client->authenticate($_GET['code']);
+            $client->authenticate($this->request->query->get('code'));
             $this->session->set('access_token', ($client->getAccessToken()));
             if (!file_exists($this->pathToRefreshToken)) {
                 $refreshToken = fopen($this->pathToRefreshToken, 'a+');
@@ -88,7 +93,7 @@ class DriveConnection
                 fwrite($refreshToken, json_encode($jsonToken));
                 fclose($refreshToken);
             }
-            $redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/app_dev.php/admin/checking';
+            $redirect_uri = 'http://' . $host . '/app_dev.php/admin/checking';
             return new RedirectResponse(filter_var($redirect_uri, FILTER_SANITIZE_URL));
         }
     }
