@@ -40,7 +40,7 @@ abstract class CheckingController extends Controller
         $response = true;
 
         foreach ($products as $product) {
-            if(!$match=$em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id'=>$product]) ){
+            if(null === $em->getRepository('JasderoPassePlatBundle:Catalog')->findOneBy(['id'=>$product]) ){
                 $response = false;
             }
         }

@@ -26,6 +26,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $states = $em->getRepository('JasderoPassePlatBundle:State')->findAllStatesWithAssociations();
 
+
         return $this->render('JasderoPassePlatBundle:Admin:dashboard.html.twig', array(
             'states' => $states,
         ));
