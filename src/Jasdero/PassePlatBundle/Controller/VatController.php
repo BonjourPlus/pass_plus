@@ -3,7 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\Vat;
-use Jasdero\PassePlatBundle\Form\VatType;
+use Jasdero\PassePlatBundle\Form\Type\VatType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

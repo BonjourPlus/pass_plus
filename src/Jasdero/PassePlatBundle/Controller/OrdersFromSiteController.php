@@ -2,7 +2,7 @@
 
 namespace Jasdero\PassePlatBundle\Controller;
 
-use Jasdero\PassePlatBundle\Form\OrdersType;
+use Jasdero\PassePlatBundle\Form\Type\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

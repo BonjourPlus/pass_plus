@@ -3,7 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\Catalog;
-use Jasdero\PassePlatBundle\Form\CatalogType;
+use Jasdero\PassePlatBundle\Form\Type\CatalogType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

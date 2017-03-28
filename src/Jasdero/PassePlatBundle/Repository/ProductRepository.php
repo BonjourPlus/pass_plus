@@ -5,7 +5,6 @@ namespace Jasdero\PassePlatBundle\Repository;
 
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
 
 class ProductRepository extends EntityRepository
 {

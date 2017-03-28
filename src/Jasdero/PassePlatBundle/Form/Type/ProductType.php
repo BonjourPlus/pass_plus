@@ -1,9 +1,8 @@
 <?php
 
-namespace Jasdero\PassePlatBundle\Form;
+namespace Jasdero\PassePlatBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
-use Jasdero\PassePlatBundle\Entity\State;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

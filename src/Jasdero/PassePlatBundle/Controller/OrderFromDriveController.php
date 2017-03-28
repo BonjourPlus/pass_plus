@@ -206,10 +206,10 @@ class OrderFromDriveController extends CheckingController
                 'products' => '',
             );
             foreach ($order as $array) {
-                if ($array['user'] != null) {
+                if ($array['user'] !== null) {
                     $formattedOrder['user'] = $array['user'];
                 }
-                if ($array['products'] != null) {
+                if ($array['products'] !== null) {
                     $formattedOrder['products'][] = (int)$array['products'];
                 }
             }

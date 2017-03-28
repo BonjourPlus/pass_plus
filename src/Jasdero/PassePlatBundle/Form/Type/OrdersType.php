@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasdero\PassePlatBundle\Form;
+namespace Jasdero\PassePlatBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ class OrdersType extends AbstractType
                 return $er->createQueryBuilder('u')
                     ->where('u.activated = true');
             },
-            'choice_label' => function ($product) {
+            'choice_label' => function (Catalog $product) {
                 return $product->getDescription() . ' Pre-tax price : ' . $product->getPretaxPrice() . '€';
             },
             'label' => 'Products',

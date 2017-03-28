@@ -5,7 +5,7 @@ namespace Jasdero\PassePlatBundle\Controller;
 use Jasdero\PassePlatBundle\Entity\Catalog;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
-use Jasdero\PassePlatBundle\Form\ProductType;
+use Jasdero\PassePlatBundle\Form\Type\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

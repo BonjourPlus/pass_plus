@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasdero\PassePlatBundle\Form;
+namespace Jasdero\PassePlatBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

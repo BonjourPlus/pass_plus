@@ -7,7 +7,7 @@ use Jasdero\PassePlatBundle\Entity\Orders;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
 use Jasdero\PassePlatBundle\Entity\User;
-use Jasdero\PassePlatBundle\Form\OrdersType;
+use Jasdero\PassePlatBundle\Form\Type\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

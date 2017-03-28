@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasdero\PassePlatBundle\Form;
+namespace Jasdero\PassePlatBundle\Form\Type;
 
 use Jasdero\PassePlatBundle\Entity\Vat;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
