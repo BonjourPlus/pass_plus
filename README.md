@@ -1,6 +1,8 @@
 Passe-Plat Bundle
 =============
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5c2963ad-8776-4d88-9efd-1b94026e7f10/mini.png)](https://insight.sensiolabs.com/projects/5c2963ad-8776-4d88-9efd-1b94026e7f10)
+
 The Passe-Plat Bundle is an order management system for Symfony 3 based on status oriented management 
 rules and coupled with Google Drive.
 
@@ -9,6 +11,8 @@ Features :
   * real-time status changes update your orders
   * automatic import and creation of orders from/to Google Drive
   * self-creating and organizing orders on Google Drive 
+  
+  
   
 ### Status oriented management
 
@@ -30,10 +34,27 @@ Create orders directly on the drive or directly from your platform. There is a b
 from the drive in the bundle. Whenever you update your statuses or your products, corresponding sheets
 are moved to the right folders (if the folder doesn't exist it is created).
 
+### Requirements
+* [Jquery](http://code.jquery.com/)
+* [Table Sorter plugin](http://tablesorter.com/docs/#Download)
+* [Row Sorter plugin](http://www.jqueryscript.net/table/jQuery-Plugin-For-Drag-n-Drop-Sortable-Table-RowSorter-js.html)
+* The templates were built using [Materialize](http://materializecss.com/getting-started.html)
+
+Don't forget to put the scripts in your `base.html.twig` as it is extended by the bundle and make sure to have a `{% block body %}` inside.
+
+
 ### Configuration
 #### Bundle
 
 ##### Step 1 : download the bundle
+
+Begin by adding the following line to ``composer.json`` : 
+```json
+            "minimum-stability" : "dev",
+```
+
+This is required to allow the latest version of FOSUserBundle.
+
 
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
@@ -44,7 +65,7 @@ This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
-Or directly from GitHub : 
+Or directly from GitHub : [Source code](https://github.com/Jasdero/JasderoPassePlatBundle)
 ##### Step 2 : enable the bundle
 
 Then, enable the bundle by adding it to the list of registered bundles
@@ -102,17 +123,47 @@ Update your `parameters.yml` accordingly :
 ```
 For security purposes, it is strongly advised that your `path_to_refresh_token` and `auth_config` parameters point to a non-shared location
  (in your `Vendor` folder for example).
+ 
+ Since the bundle uses `FOSUserBundle`_
+ you also need to configure your app accordingly.
+ Please note that this bundle provides a User table if you don't want/need to create a custom one . To extend it, just put the following line while
+ configuring FOSUser.
+ 
+```yml
+fos_user:
+
+        user_class: Jasdero\PassePlatBundle\Entity\User #this is the passe-plat basic user class
+```
+
+##### Step 4 : importing routes
+Open your `app/config/routing.yml` and copy the following lines :
+
+```yml
+passe-plat-bundle:
+    resource: "@JasderoPassePlatBundle/Controller"
+    type:     annotation
+```
+Please note that all routes are under the ``/admin`` prefix so you will need the according rights to access it.
+
+
+##### Step 5 : Generate the tables
+
+Generate the tables for the bundle :
+
+ ```console
+ $ php bin/console doctrine:schema:update --force
+ ```
 
 #### Google Drive
 [Reference](https://developers.google.com/api-client-library/php/auth/web-app)
 
 ##### Step 1 : Google configuration
 
-create a Google Account if you don't have one yet.
+Create a Google Account if you don't have one yet.
 Then you [activate the Drive API](https://console.developers.google.com/apis/library) for your application.
 After that you need to [create credentials](https://console.developers.google.com/projectselector/apis/credentials)
-and configure the redirect URI. By defaults it is the "/auth/checked" route in the bundle (don't forget 
-to put your domain ).
+and configure the redirect URI. By defaults it is the "/checked" and "/admin/checking" routes in the bundle (for example during dev it is "http://localhost:8000/app_dev.php/admin/checking" 
+AND "http://localhost:8000/app_dev.php/checked").
 Once you have downloaded your credentials, put it in the path you declared as `auth_config`.
 
 ##### Step 2 : Create the base folders
