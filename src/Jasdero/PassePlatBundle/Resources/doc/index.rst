@@ -9,6 +9,8 @@ Features :
   - real-time status changes update your orders
   - automatic import and creation of orders from/to Google Drive
   - self-creating and organizing orders on Google Drive
+
+
   
 Status oriented management
 --------------------------
@@ -38,6 +40,16 @@ Create orders directly on the drive or directly from your platform. There is a b
 from the drive in the bundle. Whenever you update your statuses or your products, corresponding sheets
 are moved to the right folders (if the folder doesn't exist it is created).
 
+Requirements
+------------
+ - `Jquery`_
+ - `Table Sorter plugin`_
+ - `Row Sorter plugin`_
+ - The templates were built using `Materialize`_
+
+Don't forget to put the scripts in your ``base.html.twig`` as it is extended by the bundle.
+
+
 Configuration
 -------------
 Bundle
@@ -45,6 +57,15 @@ Bundle
 
 Step 1 : download the bundle
 """"""""""""""""""""""""""""
+
+Begin by adding the following line to ``composer.json`` :
+
+ .. code-block:: json
+
+            "minimum-stability" : "dev",
+
+
+This is required to allow the latest version of FOSUserBundle.
 
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
@@ -56,7 +77,7 @@ following command to download the latest stable version of this bundle:
 This command requires you to have Composer installed globally, as explained
 in the `installation chapter`_ of the Composer documentation.
 
-Or directly from GitHub :
+Or directly from GitHub : `Source code`_
 
 Step 2 : enable the bundle
 """"""""""""""""""""""""""
@@ -120,7 +141,29 @@ Update your ``parameters.yml`` accordingly :
             auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
             root_folder: yourValue # i.e. MyApp
 
-For security purposes, it is strongly advised that your ``path_to_refresh_token`` and ``auth_config`` parameters point to a non-shared location (in your ``Vendor`` folder for example).
+For security purposes, it is strongly advised that your ``path_to_refresh_token`` and ``auth_config`` parameters point to a
+non-shared location (in your ``Vendor`` folder for example).
+
+Since the bundle uses `FOSUserBundle`_
+you also need to configure your app accordingly.
+Please note that this bundle provides a User table if you don't want/need to create a custom one . To extend it, just put the following line while
+configuring FOSUser.
+
+.. code-block:: yml
+
+        fos_user:
+
+            user_class: Jasdero\PassePlatBundle\Entity\User #this is the passe-plat basic user class
+
+
+Step 4 : generate the tables
+""""""""""""""""""""""""""""
+
+Generate the tables for the bundle :
+
+.. code-block:: terminal
+
+        $ php bin/console doctrine:schema:update --force
 
 Google Drive
 ^^^^^^^^^^^^
@@ -153,3 +196,10 @@ different.
 .. _`Reference`: https://developers.google.com/api-client-library/php/auth/web-app
 .. _`activate the Drive API`: https://console.developers.google.com/apis/library
 .. _`create credentials`: https://console.developers.google.com/projectselector/apis/credentials
+.. _`Jquery`: http://code.jquery.com/
+.. _`Table Sorter plugin`: http://tablesorter.com/docs/#Download
+.. _`Row Sorter plugin`: http://www.jqueryscript.net/table/jQuery-Plugin-For-Drag-n-Drop-Sortable-Table-RowSorter-js.html
+.. _`Materialize`: http://materializecss.com/getting-started.html
+.. _`FOSUserBundle`: https://symfony.com/doc/master/bundles/FOSUserBundle/index.html
+.. _`Source code` : https://github.com/Jasdero/JasderoPassePlatBundle
+
