@@ -149,6 +149,9 @@ you also need to configure your app accordingly.
 Please note that this bundle provides a User table if you don't want/need to create a custom one . To extend it, just put the following line while
 configuring FOSUser.
 
+ You also need to activate the `Knp Paginator Bundle`_
+
+
 .. code-block:: yml
 
         fos_user:
@@ -161,6 +164,7 @@ Step 4 : importing routes
 Open your ``app/config/routing.yml`` and copy the following lines :
 
 .. code-block:: yml
+
         passe-plat-bundle:
             resource: "@JasderoPassePlatBundle/Controller"
             type:     annotation
@@ -175,6 +179,26 @@ Generate the tables for the bundle :
 .. code-block:: terminal
 
         $ php bin/console doctrine:schema:update --force
+
+
+Step 6 : Installing assets
+""""""""""""""""""""""""""
+
+To install assets, type the following command :
+
+.. code-block:: console
+
+        $ php bin/console assets:install
+
+
+Then activate it in your base layout :
+
+.. code-block:: html
+
+        <link rel="stylesheet" href="{{ asset('bundles/jasderopasseplat/css/admin.css') }}">
+        <script src="{{ asset('bundles/jasderopasseplat/js/main.js') }}"></script>
+
+
 
 Google Drive
 ^^^^^^^^^^^^
@@ -198,6 +222,13 @@ Inside create 3 more folders : one that will be scanned by your app (the ``folde
 orders (``new_orders_folder``) and lastly one for invalid orders (``errors_folder``).
 Just be sure that you enter the same values as in your ``config.yml``.
 
+Step 3 : Order format
+"""""""""""""""""""""
+
+On the first row as column titles : user | products.
+On following rows : the user mail | catalog ID.
+The user needs to be registered in your platform so that the order is valid.
+
 Recommendations
 """""""""""""""
 Be aware that if you change anything in your Google Drive Api configuration you MUST download credentials again as those will be
@@ -213,4 +244,4 @@ different.
 .. _`Materialize`: http://materializecss.com/getting-started.html
 .. _`FOSUserBundle`: https://symfony.com/doc/master/bundles/FOSUserBundle/index.html
 .. _`Source code` : https://github.com/Jasdero/JasderoPassePlatBundle
-
+.. _`Knp Paginator Bundle` : https://github.com/KnpLabs/KnpPaginatorBundle

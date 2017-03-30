@@ -166,7 +166,7 @@ class OrderFromDriveController extends CheckingController
                 }
             }
 
-            return $this->render('@JasderoPassePlat/Admin/indexAdmin.html.twig', array(
+            return $this->render('@JasderoPassePlat/main/indexAdmin.html.twig', array(
                 'newOrders' => $numberOfNewOrders,
                 'errors' => $errorsOnOrders
             ));
@@ -206,7 +206,7 @@ class OrderFromDriveController extends CheckingController
                 'products' => '',
             );
             foreach ($order as $array) {
-                if ($array['user'] !== null) {
+                if ($array['user'] !== '') {
                     $formattedOrder['user'] = $array['user'];
                 }
                 if ($array['products'] !== null) {
