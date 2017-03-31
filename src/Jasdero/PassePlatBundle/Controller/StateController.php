@@ -214,7 +214,7 @@ class StateController extends Controller
 
         //redirect to home if something wrong
         if ($responseText == 'ERROR') {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('state_index');
         } else {
             //doing the changes if everything is OK
 
@@ -231,10 +231,8 @@ class StateController extends Controller
 
             //updating orders statuses and drive folders
             $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
-            foreach ($orders as $order) {
-                $this->get('jasdero_passe_plat.order_status')->orderStatusAction($order);
-                $this->get('jasdero_passe_plat.drive_folder_as_status')->driveFolder($order->getState()->getName(), $order->getId());
-            }
+            $this->get('jasdero_passe_plat.order_status')->multipleOrdersStatus($orders);
+
             return new Response();
         }
     }
