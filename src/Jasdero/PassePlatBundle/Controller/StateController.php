@@ -222,15 +222,22 @@ class StateController extends Controller
             array_shift($newOrder);
 
             //setting statuses weights
+            $modifiedStates = [];
             foreach ($newOrder as $key => $stateId) {
                 $state = $em->getRepository('JasderoPassePlatBundle:State')->findOneBy(['id' => $stateId]);
-                $state->setWeight(1000 - ($key * 100));
-                $em->persist($state);
+                $newWeight = 1000 - ($key * 100);
+                $currentWeight = $state->getWeight();
+                    if ($newWeight !== $currentWeight){
+                        $modifiedStates[] = $state->getId();
+                        $state->setWeight($newWeight);
+                        $em->persist($state);
+                    }
             }
             $em->flush();
 
             //updating orders statuses and drive folders
-            $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findAll();
+            $orders = $em->getRepository('JasderoPassePlatBundle:Orders')->findByMultipleStates($modifiedStates);
+
             $this->get('jasdero_passe_plat.order_status')->multipleOrdersStatus($orders);
 
             return new Response();
