@@ -124,10 +124,11 @@ Update your `parameters.yml` accordingly :
 For security purposes, it is strongly advised that your `path_to_refresh_token` and `auth_config` parameters point to a non-shared location
  (in your `Vendor` folder for example).
  
- Since the bundle uses `FOSUserBundle`_
+ Since the bundle uses [FOSUserBundle](https://symfony.com/doc/master/bundles/FOSUserBundle/index.html)
  you also need to configure your app accordingly.
  Please note that this bundle provides a User table if you don't want/need to create a custom one . To extend it, just put the following line while
  configuring FOSUser.
+ 
  
 ```yml
 fos_user:
@@ -135,7 +136,11 @@ fos_user:
         user_class: Jasdero\PassePlatBundle\Entity\User #this is the passe-plat basic user class
 ```
 
+ You also need to activate the [Knp Paginator Bundle](https://github.com/KnpLabs/KnpPaginatorBundle)
+
+
 ##### Step 4 : importing routes
+
 Open your `app/config/routing.yml` and copy the following lines :
 
 ```yml
@@ -153,6 +158,20 @@ Generate the tables for the bundle :
  ```console
  $ php bin/console doctrine:schema:update --force
  ```
+ 
+##### Step 6 : Installing assets
+
+to install assets, type the following command :
+ ```console
+ $ php bin/console assets:install
+ ```
+ 
+Then activate it in your base layout :
+```html
+    <link rel="stylesheet" href="{{ asset('bundles/jasderopasseplat/css/admin.css') }}">
+    <script src="{{ asset('bundles/jasderopasseplat/js/main.js') }}"></script>
+
+```
 
 #### Google Drive
 [Reference](https://developers.google.com/api-client-library/php/auth/web-app)
@@ -172,6 +191,20 @@ Go to your Google Drive and create the root folder for your application.
 Inside create 3 more folders : one that will be scanned by your app (the `folder_to_scan`), another one for the newly registered
 orders (`new_orders_folder`) and lastly one for invalid orders (`errors_folder`).
 Just be sure that you enter the same values as in your `config.yml`.
+
+##### Step 3 : Order format
+
+On the first row as column titles : user | products and eventually comments.
+On following rows : the user mail | catalog ID and eventually comments.
+The user needs to be registered in your platform so that the order is valid.
+
+Example :
+
+user | products | comments
+--- | --- | ---
+mail@mail.com | 1 | something
+ <empty> | 2 | <empty>
+ <empty> | 4 | <empty>
 
 ##### Recommendations
 Be aware that if you change anything in your Google Drive Api configuration you MUST download credentials again as those will be
