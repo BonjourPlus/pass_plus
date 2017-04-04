@@ -236,9 +236,9 @@ Example :
        =============  ========= =========
             User       Products Comments
        =============  ========= =========
-       mail@mail.com       1    something
-                            2
-                            4
+       mail@mail.com      1     something
+                          2
+                          4
        =============  ========= =========
 
 Recommendations
