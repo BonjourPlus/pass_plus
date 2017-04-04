@@ -203,7 +203,7 @@ Example :
 user | products | comments
 --- | --- | ---
 mail@mail.com | 1 | something
- [comment]: <rfzeliv> | 2 | [//]
+ <rfzeliv> | 2 | [//]
  [//] | 4 | [//]
 
 ##### Recommendations
