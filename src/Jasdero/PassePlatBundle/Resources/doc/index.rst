@@ -231,9 +231,7 @@ The user needs to be registered in your platform so that the order is valid.
 
 Example :
 
-.. table:: Truth table for "not"
 
-       :widths: auto
 
        =============  ========= =========
             User       Products Comments
