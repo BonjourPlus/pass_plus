@@ -12,6 +12,7 @@ parameters:
     jasdero_passe_plat.new_orders_folder: InProgress
     jasdero_passe_plat.errors_folder: Errors
 
+
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
@@ -42,6 +43,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        container: Orders
+        content: Dishes
 
 # Doctrine Configuration
 doctrine:
