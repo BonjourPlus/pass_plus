@@ -203,8 +203,8 @@ Example :
 user | products | comments
 --- | --- | ---
 mail@mail.com | 1 | something
-    | 2 |   
-     | 4 |  
+ - | 2 | -
+ - | 4 | -
 
 ##### Recommendations
 Be aware that if you change anything in your Google Drive Api configuration you MUST download credentials again as those will be

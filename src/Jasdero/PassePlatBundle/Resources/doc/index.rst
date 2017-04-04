@@ -229,6 +229,20 @@ On the first row as column titles : user | products and eventually comments.
 On following rows : the user mail | catalog ID and eventually comments.
 The user needs to be registered in your platform so that the order is valid.
 
+Example :
+
+.. table:: Truth table for "not"
+
+   :widths: auto
+
+   =============  ========= =========
+        User       Products Comments
+   =============  ========= =========
+   mail@mail.com       1    something
+                        2
+                        4
+   =============  ========= =========
+
 Recommendations
 """""""""""""""
 Be aware that if you change anything in your Google Drive Api configuration you MUST download credentials again as those will be
