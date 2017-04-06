@@ -8,9 +8,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    jasdero_passe_plat.folder_to_scan: newOrders
-    jasdero_passe_plat.new_orders_folder: InProgress
-    jasdero_passe_plat.errors_folder: Errors
+
 
 
 framework:
@@ -98,8 +96,9 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig                         # sort link template
 
 jasdero_passe_plat:
-    drive_connection:
-        path_to_refresh_token: "%path_to_refresh_token%"
-        auth_config: "%auth_config%"
+    folders :
+        to_scan: newOrders
+        new_orders: InProgress
+        errors: Errors
     drive_folder_as_status:
-        root_folder: "%root_folder%"
+        root_folder: b+

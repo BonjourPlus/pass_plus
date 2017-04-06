@@ -23,9 +23,9 @@ class OrderFromDriveController extends CheckingController
     public function scanDriveFolderAction($action = false)
     {
         //retrieving folders parameters
-        $newOrdersFolder = $this->get('service_container')->getParameter('jasdero_passe_plat.new_orders_folder');
-        $folderToScan = $this->get('service_container')->getParameter('jasdero_passe_plat.folder_to_scan');
-        $errorsFolder = $this->get('service_container')->getParameter('jasdero_passe_plat.errors_folder');
+        $newOrdersFolder = $this->get('service_container')->getParameter('new_orders_folder');
+        $folderToScan = $this->get('service_container')->getParameter('folder_to_scan');
+        $errorsFolder = $this->get('service_container')->getParameter('errors_folder');
 
         //initializing Client
         $drive = $this->get('jasdero_passe_plat.drive_connection')->connectToDriveApi();

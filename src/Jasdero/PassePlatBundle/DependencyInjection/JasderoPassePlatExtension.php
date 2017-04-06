@@ -20,7 +20,12 @@ class JasderoPassePlatExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        $processedConfig = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter( 'root_folder', $processedConfig['drive_folder_as_status'][ 'root_folder' ] );
+        $container->setParameter( 'folder_to_scan', $processedConfig['folders']['to_scan'] );
+        $container->setParameter( 'new_orders_folder', $processedConfig['folders']['new_orders'] );
+        $container->setParameter( 'errors_folder', $processedConfig['folders']['errors'] );
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
