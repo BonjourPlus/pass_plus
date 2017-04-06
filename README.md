@@ -4,7 +4,7 @@ Passe-Plat Bundle
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5c2963ad-8776-4d88-9efd-1b94026e7f10/mini.png)](https://insight.sensiolabs.com/projects/5c2963ad-8776-4d88-9efd-1b94026e7f10)
 
 The Passe-Plat Bundle is an order management system for Symfony 3 based on status oriented management 
-rules and coupled with Google Drive.
+rules and coupled with Google Drive (optional).
 
 Features :
   * creation and edition of statuses
@@ -24,7 +24,7 @@ All you have to do is to create some statuses and order them on the statuses mai
 a table which rows you can drag'n'drop in the order you want.
 
 
-### Google Drive 
+### Google Drive (optional)
 #### Principle
 Google Drive sheets are used to create orders and as a way to keep track of it.
 
@@ -96,12 +96,19 @@ Open the `config.yml` file of your project and put the following lines with your
 # app/config/config.yml
 
 jasdero_passe_plat:
+    activation: true  # mandatory, determines if you want to use Google Drive (other option is 'false')
+    
+    # necessary if you set activation to true
+    
     folders :
-        to_scan: yourValue  # where new orders will be put 
+        to_scan: yourValue  # where new orders will be put
         new_orders: yourValue  # transition folder for new orders
         errors: yourValue  # where invalid orders will be redirected
     drive_folder_as_status:
         root_folder: yourValue  # base folder from where you want to work on your Drive
+    credentials:
+        path_to_refresh_token : "%path_to_refresh_token%"
+        auth_config : "%auth_config%"
         
     # the following lines determine what name you want to give to your container and content
 twig:
@@ -110,7 +117,7 @@ twig:
         content: yourValue # i.e. Products
 ```
 
-Add to your `parameters.yml`  :
+Add to your `parameters.yml` if you activated Drive :
 ```yml
 # app/config/parameters.yml
     # other parameters
@@ -168,6 +175,8 @@ Then activate it in your base layout :
     <script src="{{ asset('bundles/jasderopasseplat/js/main.js') }}"></script>
 
 ```
+
+If you don't need Google Drive, then you're ready to start. Go to `admin/dashboard` and start with creating some statuses and catalog entries.
 
 #### Google Drive
 [Reference](https://developers.google.com/api-client-library/php/auth/web-app)
