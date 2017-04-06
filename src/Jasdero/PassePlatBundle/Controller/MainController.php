@@ -52,7 +52,14 @@ class MainController extends Controller
      */
     public function showDriveAction()
     {
-        return $this->render('@JasderoPassePlat/main/syncWithDrive.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $affectedOrders = $em->getRepository('JasderoPassePlatBundle:Orders')->findBy(['driveSynchro' => false]);
+        //used to display how much remaining
+        $totalOrders = count($affectedOrders);
+
+        return $this->render('@JasderoPassePlat/main/syncWithDrive.html.twig', array(
+            'totalOrders' => $totalOrders,
+        ));
     }
 
     /**
