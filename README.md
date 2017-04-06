@@ -99,7 +99,7 @@ jasdero_passe_plat:
     folders :
         to_scan: yourValue  # where new orders will be put 
         new_orders: yourValue  # transition folder for new orders
-        errors: Errors  # where invalid orders will be redirected
+        errors: yourValue  # where invalid orders will be redirected
     drive_folder_as_status:
         root_folder: yourValue  # base folder from where you want to work on your Drive
         
