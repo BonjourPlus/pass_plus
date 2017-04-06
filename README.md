@@ -95,19 +95,13 @@ Open the `config.yml` file of your project and put the following lines with your
 ```yml
 # app/config/config.yml
 
-parameters:
-    # other parameters
-    jasdero_passe_plat.folder_to_scan: yourValue # i.e. RepoFolder
-    jasdero_passe_plat.new_orders_folder: yourValue # i.e. NewOrders
-    jasdero_passe_plat.errors_folder: yourValue # i.e. Errors
-    
-
 jasdero_passe_plat:
-    drive_connection:
-        path_to_refresh_token: "%path_to_refresh_token%"
-        auth_config: "%auth_config%"
+    folders :
+        to_scan: yourValue  # where new orders will be put 
+        new_orders: yourValue  # transition folder for new orders
+        errors: Errors  # where invalid orders will be redirected
     drive_folder_as_status:
-        root_folder: "%root_folder%"
+        root_folder: yourValue  # base folder from where you want to work on your Drive
         
     # the following lines determine what name you want to give to your container and content
 twig:
@@ -116,14 +110,13 @@ twig:
         content: yourValue # i.e. Products
 ```
 
-Update your `parameters.yml` accordingly :
+Add to your `parameters.yml`  :
 ```yml
 # app/config/parameters.yml
     # other parameters
     
     path_to_refresh_token: yourPath # i.e. myProject/vendor/refreshToken.json
     auth_config: yourPath # i.e. myProject/vendor/clientSecret.json
-    root_folder: yourValue # i.e. MyApp
 ```
 For security purposes, it is strongly advised that your `path_to_refresh_token` and `auth_config` parameters point to a non-shared location
  (in your `Vendor` folder for example).
@@ -136,7 +129,7 @@ For security purposes, it is strongly advised that your `path_to_refresh_token` 
  
 ```yml
 fos_user:
-        user_class: Jasdero\PassePlatBundle\Entity\User #this is the passe-plat basic user class
+        user_class: Jasdero\PassePlatBundle\Entity\User # this is the passe-plat basic user class
 ```
 
  You also need to activate the [Knp Paginator Bundle](https://github.com/KnpLabs/KnpPaginatorBundle)
