@@ -96,5 +96,13 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig                         # sort link template
 
 jasdero_passe_plat:
-    activation : false
-
+    activation: true
+    folders:
+        to_scan: newOrders
+        new_orders: InProgress
+        errors: Errors
+    drive_folder_as_status:
+        root_folder: b+
+    credentials:
+        path_to_refresh_token : "%path_to_refresh_token%"
+        auth_config : "%auth_config%"

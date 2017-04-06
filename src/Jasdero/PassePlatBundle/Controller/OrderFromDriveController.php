@@ -170,7 +170,6 @@ class OrderFromDriveController extends CheckingController
             return $this->render('@JasderoPassePlat/main/orderManager.html.twig', array(
                 'newOrders' => $numberOfNewOrders,
                 'errors' => $errorsOnOrders,
-                'driveActivation' => $driveActivation
             ));
         } else {
 
