@@ -66,7 +66,6 @@ class OrderFromDriveController extends CheckingController
                             //catching and marking invalid orders
                             $ordersIds[] = 'error';
                             $errorsOnOrders[] = 'Something wrong with order by ' . $newOrder['user'];
-
                         }
                     }
 
