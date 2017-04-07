@@ -112,6 +112,30 @@ class OrderFromDriveController extends CheckingController
     }
 
     /**
+     * used to display number of orders waiting
+     * @Route("drive/count", name="drive_count")
+     */
+    public function countWaitingOrdersAction()
+    {
+        //retrieving folders parameters
+        $container = $this->get('service_container');
+        $folderToScan = $container->getParameter('folder_to_scan');
+        $drive = $this->get('jasdero_passe_plat.drive_connection')->connectToDriveApi();
+        $count = 'Not connected to drive';
+
+        if ($drive) {
+            $folderId = $this->findDriveFolder($drive, $folderToScan);
+            $files = $this->getFilesFromFolder($drive, $folderId);
+
+            $count = count($files);
+        }
+        return $this->render('@JasderoPassePlat/main/ordersWaiting.html.twig', array(
+            'count' => $count
+        ));
+
+    }
+
+    /**
      * @param $drive
      * @param $folder
      * @return string
