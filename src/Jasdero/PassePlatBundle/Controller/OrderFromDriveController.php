@@ -6,6 +6,7 @@ namespace Jasdero\PassePlatBundle\Controller;
 use Google_Service_Drive_DriveFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderFromDriveController extends CheckingController
@@ -30,9 +31,8 @@ class OrderFromDriveController extends CheckingController
         //initializing Client
         $drive = $this->get('jasdero_passe_plat.drive_connection')->connectToDriveApi();
 
-        // vars to display when action triggered
-        $numberOfNewOrders = 0;
-        $errorsOnOrders = 0;
+        // var to display when action triggered
+        $validOrder = null;
 
         // getting the files if the OAuth flow has been validated
         if ($drive) {
@@ -43,7 +43,7 @@ class OrderFromDriveController extends CheckingController
 
                 if ($files) {
                     //downloading files in a csv format and turning it into associative arrays
-                    $csvFiles = $this->downloadAndConvert($drive, $files);
+                    $csvFiles = $this->downloadAndConvert($drive, $files[0]);
 
                     //formatting csv files to proper order format
                     $newOrders = $this->csvToOrders($csvFiles);
@@ -54,7 +54,7 @@ class OrderFromDriveController extends CheckingController
                     foreach ($newOrders as $newOrder) {
                         //checking order integrity and format
                         if ($user = $this->validateUser($newOrder['user']) && $this->validateOrder($newOrder['products'])) {
-                            $numberOfNewOrders++;
+                            $validOrder = "valid";
                             $ordersIds[] = $this->forward('JasderoPassePlatBundle:Orders:new', array(
                                 'user' => $user,
                                 'products' => $newOrder['products'],
@@ -64,7 +64,7 @@ class OrderFromDriveController extends CheckingController
                         } else {
                             //catching and marking invalid orders
                             $ordersIds[] = 'error';
-                            $errorsOnOrders++;
+                            $validOrder = "invalid";
                         }
                     }
 
@@ -76,42 +76,39 @@ class OrderFromDriveController extends CheckingController
                     $errorsFolderId = $this->findDriveFolder($drive, $errorsFolder);
 
                     //moving files
-                    foreach ($files as $key => $fileId) {
+
                         //adding the custom order id as additional property
                         $extraFileMetadata = new Google_Service_Drive_DriveFile(array(
                             "appProperties" => [
-                                "customID" => $ordersIds[$key],
+                                "customID" => $ordersIds[0],
                             ]
                         ));
                         // Retrieve the existing parents to remove
-                        $file = $drive->files->get($fileId, array('fields' => 'parents'));
+                        $file = $drive->files->get($files[0], array('fields' => 'parents'));
                         $previousParents = join(',', $file->parents);
 
                         //if order has an error move it to errors folder
-                        if ($ordersIds[$key] == 'error') {
-                            $drive->files->update($fileId, $extraFileMetadata, array(
+                        if ($ordersIds[0] == 'error') {
+                            $drive->files->update($files[0], $extraFileMetadata, array(
                                 'addParents' => $errorsFolderId,
                                 'removeParents' => $previousParents,
                                 'fields' => 'id, parents, appProperties'));
                         } else {
 
                             // Move the file to the in Progress folder
-                                 $drive->files->update($fileId, $extraFileMetadata, array(
+                                 $drive->files->update($files[0], $extraFileMetadata, array(
                                 'addParents' => $inProgressFolderId,
                                 'removeParents' => $previousParents,
                                 'fields' => 'id, parents, appProperties'));
                         }
-                    }
+                    } else {
+                    $validOrder = 'done';
                 }
             } elseif (!$drive){
 
             return $this->redirectToRoute('auth_checked');
         }
-
-        return $this->redirectToRoute('drive_index', array(
-            'errors' => $errorsOnOrders,
-            'newOrders' => $numberOfNewOrders
-        ));
+        return new Response($validOrder);
     }
 
     /**
@@ -166,13 +163,12 @@ class OrderFromDriveController extends CheckingController
 
     /**
      * @param $drive
-     * @param array $files
+     * @param $file
      * @return array
      */
-    private function downloadAndConvert($drive, array $files)
+    private function downloadAndConvert($drive, $file)
     {
         $csvFiles = [];
-        foreach ($files as $file) {
             $response = $drive->files->export($file, 'text/csv', array(
                 'alt' => 'media',
             ));
@@ -187,7 +183,6 @@ class OrderFromDriveController extends CheckingController
             });
             array_shift($csv);
             $csvFiles[] = $csv;
-        }
 
         return $csvFiles;
     }
