@@ -39,7 +39,7 @@ class Catalog
     /**
      * @var float
      *
-     * @ORM\Column(name="pretax_price", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="pretax_price", type="float", precision=10, scale=0, nullable=true)
      */
     private $pretaxPrice;
 
@@ -159,7 +159,7 @@ class Catalog
      *
      * @return Catalog
      */
-    public function setPretaxPrice($pretaxPrice)
+    public function setPretaxPrice($pretaxPrice = null)
     {
         $this->pretaxPrice = $pretaxPrice;
 

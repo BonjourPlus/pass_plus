@@ -46,7 +46,10 @@ class OrdersController extends Controller
             ->leftJoin('o.user', 'u')
             ->addSelect('u')
             ->leftJoin('o.state', 's')
-            ->addSelect('s');
+            ->addSelect('s')
+            ->leftJoin('c.category', 'k')
+            ->addSelect('k');
+
         $query = $queryBuilder->getQuery();
 
         $orders = $paginator->paginate(
@@ -125,7 +128,6 @@ class OrdersController extends Controller
     {
         $deleteForm = $this->createDeleteForm($order);
 
-        //getting products contained inside the order
 
         return $this->render('@JasderoPassePlat/orders/show.html.twig', array(
             'order' => $order,

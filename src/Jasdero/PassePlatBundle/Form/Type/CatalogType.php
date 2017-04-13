@@ -21,8 +21,12 @@ class CatalogType extends AbstractType
     {
         $builder->add('name', TextType::class)
             ->add('description', TextType::class)
-            ->add('pretaxPrice', NumberType::class)
+            ->add('pretaxPrice', NumberType::class, array(
+                'label' => 'Pretax-price (optional)',
+                'required' => false,
+            ))
             ->add('activated', ChoiceType::class, array(
+                'label' => false,
                 'choices' =>
                     ['Enabled' => 1,
                         'Disabled' => 0],

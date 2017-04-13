@@ -33,6 +33,9 @@
                     <th>{{ content }} Id</th>
                     <th>{{ content }} Name</th>
                     <th>{{ content }} Description</th>
+                    <th>Branch</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -47,6 +50,21 @@
                         </td>
                         <td>{{ product.catalog.name }}</td>
                         <td>{{ product.catalog.description }}</td>
+                        <td>
+                            {% if product.catalog.branch %}
+                                {{ product.catalog.branch.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if product.catalog.category %}
+                                {{ product.catalog.category.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if product.catalog.subcategory %}
+                                {{ product.catalog.subcategory.name }}
+                            {% endif %}
+                        </td>
                         {% if product.state %}
                             <td class="{{ product.state.color }}">{{ product.state.name }}</td>
                         {% endif %}
