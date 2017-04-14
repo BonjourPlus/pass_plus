@@ -58,9 +58,11 @@ class OrdersType extends AbstractType
                 'label' => 'Owner',
                 'mapped' => 'false'
             ))
-            ->add('comments', TextareaType::class, array(
+            ->add('comment',CommentType::class, array(
                 'required' => false,
-            ));
+                'label' => false
+            ))
+            ;
     }
 
     /**

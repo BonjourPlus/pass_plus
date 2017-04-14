@@ -3,6 +3,7 @@
 namespace Jasdero\PassePlatBundle\Controller;
 
 use Jasdero\PassePlatBundle\Entity\Catalog;
+use Jasdero\PassePlatBundle\Entity\Comment;
 use Jasdero\PassePlatBundle\Entity\Orders;
 use Jasdero\PassePlatBundle\Entity\Product;
 use Jasdero\PassePlatBundle\Entity\State;
@@ -71,11 +72,11 @@ class OrdersController extends Controller
      * @Method({"GET", "POST"})
      * @param User $user an authenticated user
      * @param array $products an array of ordered products
-     * @param string|null $comments
+     * @param Comment|null $comments
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
 
-    public function newAction(User $user, array $products, string $comments = null)
+    public function newAction(User $user, array $products, Comment $comments = null)
     {
         $order = new Orders();
 
@@ -87,7 +88,7 @@ class OrdersController extends Controller
         //setting orders data
         $order->setUser($user);
         if($comments){
-            $order->setComments($comments);
+            $order->setComment($comments);
         }
         $em->persist($order);
         $em->flush();

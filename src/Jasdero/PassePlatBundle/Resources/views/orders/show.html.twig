@@ -80,14 +80,15 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <table>
-                    <thead>
-                    <th>Comments</th>
-                    </thead>
-                    <tbody>
-                    <td>{{ order.comments }}</td>
-                    </tbody>
-                </table>
+                <p><strong>Comment</strong></p>
+                <hr>
+                {% if order.comment %}<p>{{ order.comment.content }}</p>
+                    <div class="right-align">
+                        <button type="button" id="delete_comment" class="btn-floating grey darken-3" title="delete this comment">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                {% endif %}
             </div>
         </div>
 
@@ -103,4 +104,29 @@
             {{ form_end(delete_form) }}
         </div>
     </div>
+{% endblock %}
+{% block passe_plat_javascripts %}
+    {% if order.comment %}
+        <script>
+            $(function () {
+                var button = $("#delete_comment");
+
+                function deleteComment(){
+                    $.ajax({
+                        type : "DELETE",
+                        url : "{{ path('comment_delete_from_order', { 'id' : order.comment.id }) }}",
+                        success: function () {
+                            location.reload(true);
+                        }
+                    })
+                }
+                button.click(function () {
+                    var confirmation = confirm("Are you sure ?");
+                    if (confirmation === true){
+                        deleteComment();
+                    }
+                });
+            })
+        </script>
+    {% endif %}
 {% endblock %}
