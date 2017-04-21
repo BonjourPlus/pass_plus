@@ -43,7 +43,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         container: Orders
-        content: Dishes
+        content: Products
 
 # Doctrine Configuration
 doctrine:
