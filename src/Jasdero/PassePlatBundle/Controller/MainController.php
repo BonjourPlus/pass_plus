@@ -5,7 +5,6 @@ namespace Jasdero\PassePlatBundle\Controller;
 use Jasdero\PassePlatBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {

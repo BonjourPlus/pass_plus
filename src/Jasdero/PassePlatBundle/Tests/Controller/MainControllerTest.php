@@ -4,14 +4,14 @@ namespace Jasdero\PassePlatBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class MainControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/dashboard');
 
-        $this->assertContains('Hello World', $client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 }
