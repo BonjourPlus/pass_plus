@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * State controller.
  *
- * @Route("admin/state")
+ * @Route("state")
  */
 class StateController extends Controller
 {

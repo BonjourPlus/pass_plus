@@ -12,9 +12,9 @@ class MainController extends Controller
 
     /**
      * access and display of dashboard
-     * @Route("/admin/dashboard", name="dashboard")
+     * @Route("/dashboard", name="dashboard")
      */
-    public function adminIndexAction()
+    public function dashboardAction()
     {
         $driveActivation = $this->get('service_container')->getParameter('drive_activation');
         $em = $this->getDoctrine()->getManager();
@@ -30,7 +30,7 @@ class MainController extends Controller
 
     /**
      * access and display user info
-     * @Route("/admin/user/{id}", name = "user_detail")
+     * @Route("/user/{id}", name = "user_detail")
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -50,7 +50,7 @@ class MainController extends Controller
 
     /**
      * access to command for sync with drive
-     * @Route("admin/drive/action", name="drive_action")
+     * @Route("drive/action", name="drive_action")
      */
     public function showDriveAction()
     {
@@ -87,7 +87,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/admin/drive/index", name="drive_index")
+     * @Route("/drive/index", name="drive_index")
      * @return Response
      */
     public function driveIndexAction()

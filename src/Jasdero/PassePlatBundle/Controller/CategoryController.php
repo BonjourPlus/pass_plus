@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Category controller.
  *
- * @Route("admin/category")
+ * @Route("category")
  */
 class CategoryController extends Controller
 {

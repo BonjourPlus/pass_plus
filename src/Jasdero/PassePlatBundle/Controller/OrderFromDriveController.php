@@ -14,7 +14,7 @@ class OrderFromDriveController extends CheckingController
 
     /**
      * Reading the drive folder sheets and turning it into new orders
-     * @Route("/admin/checking/", name="checking")
+     * @Route("/checking", name="checking")
      * @Method({"GET", "POST"})
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
