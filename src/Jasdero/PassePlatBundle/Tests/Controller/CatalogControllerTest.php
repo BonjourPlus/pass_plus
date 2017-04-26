@@ -5,7 +5,7 @@ namespace Jasdero\PassePlatBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class StateControllerTest extends WebTestCase
+class CatalogControllerTest extends WebTestCase
 {
     /**
      * @runInSeparateProcess
@@ -17,16 +17,15 @@ class StateControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/state/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /state/");
+        $crawler = $client->request('GET', '/catalog/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /catalog/");
         $crawler = $client->click($crawler->selectLink('add_circle')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('done')->form(array(
-            'jasderopasseplatbundle_state[name]'  => 'Test',
-            'jasderopasseplatbundle_state[color]'  => 'grey',
-            'jasderopasseplatbundle_state[activated]'  => '1',
-            'jasderopasseplatbundle_state[description]'  => 'Test',
+            'jasderopasseplatbundle_catalog[name]'  => 'Test',
+            'jasderopasseplatbundle_catalog[description]'  => 'Unit fonctionnel',
+            'jasderopasseplatbundle_catalog[activated]'  => '1',
             // ... other fields to fill
         ));
 
@@ -40,7 +39,7 @@ class StateControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('edit')->link());
 
         $form = $crawler->selectButton('done')->form(array(
-            'jasderopasseplatbundle_state[name]'  => 'Foo',
+            'jasderopasseplatbundle_catalog[name]'  => 'Foo',
             // ... other fields to fill
         ));
 
