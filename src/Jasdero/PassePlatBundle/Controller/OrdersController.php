@@ -72,11 +72,11 @@ class OrdersController extends Controller
      * @Method({"GET", "POST"})
      * @param User $user an authenticated user
      * @param array $products an array of ordered products
-     * @param Comment|null $comments
+     * @param null $comments
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
 
-    public function newAction(User $user, array $products, Comment $comments = null)
+    public function newAction(User $user, array $products, $comments = null)
     {
         $order = new Orders();
 

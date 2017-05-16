@@ -130,10 +130,10 @@
         {# buttons section #}
         <div class="iconsBlock col s12 center-align">
             <a href="{{ path('orders_index') }}" title="back to the list">
-                <button type="button" class="btn-floating grey darken-3"><i class="material-icons">skip_previous</i></button>
+                <button type="button" class="btn-floating grey darken-3 col s2"><i class="material-icons">skip_previous</i></button>
             </a>
             <a href="{{ path('orders_edit', { 'id': order.id }) }}" class="iconAsLink" title="edit">
-                <button type="button" class="btn-floating grey darken-3"><i class="material-icons">edit</i></button>
+                <button type="button" class="btn-floating grey darken-3 col s2"><i class="material-icons">edit</i></button>
             </a>
             {{ form_start(delete_form) }}
             <button type="submit" title="delete" class="btn-floating grey darken-3"><i class="material-icons">delete_forever</i></button>

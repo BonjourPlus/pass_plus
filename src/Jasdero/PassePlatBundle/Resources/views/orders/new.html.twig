@@ -9,15 +9,16 @@
             {{ form_start(form) }}
             {{ form_errors(form) }}
             <div class="col s12 offset-m3 m6 left-align">
-            {{ form_row(form.catalogs) }}
+                {{ form_row(form.catalogs) }}
             </div>
             <div class="col s12">
-            {{ form_row(form.user) }}
+                {{ form_row(form.user) }}
             </div>
-            <div class="col s12 input-field">
-            {{ form_row(form.comment) }}
+            <div class="col s12 charactersCount">
+                {{ form_label(form.comments, 'comment (200 characters max)') }}
+                {{ form_widget(form.comments) }}
+                <p class="liveCount center-align blue-text"></p>
             </div>
-
             {# buttons section #}
             <div class="center-align col s12 iconsBlock">
                 <a href="{{ path('orders_index') }}" title="back">
@@ -30,4 +31,21 @@
 
         </div>
     </div>
+{% endblock %}
+{% block passe_plat_javascripts %}
+    <script>
+        $(function () {
+
+            var fieldToCount = $('.charactersCount');
+            var fieldToDisplay  = $('.liveCount');
+            $(document).on('keyup', fieldToCount, (function (event) {
+                var remainingChars = 200 - ($(event.target).val().length);
+                if (remainingChars >= 0) {
+                    fieldToDisplay.text(remainingChars + ' characters left');
+                } else {
+                    fieldToDisplay.text('Too many characters !');
+                }
+            }))
+        })
+    </script>
 {% endblock %}
