@@ -13,6 +13,7 @@
                     <th>Date creation</th>
                     <th>Customer</th>
                     <th>Status</th>
+                    <th class="center-align">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,19 @@
                         </a>
                     </td>
                     <td class="{{ order.state.color }}">{{ order.state.name }}</td>
+                    {% if order.archive %}
+                        <td class="center-align">
+                            <button class="btn grey darken-3 removeFromArchive" title="Remove from archives" id="{{ order.id }}">
+                                <i class="material-icons">unarchive</i>
+                            </button>
+                        </td>
+                    {% else %}
+                        <td class="center-align">
+                            <button class="btn grey darken-3 addToArchive" title="Place into archives" id="{{ order.id }}">
+                                <i class="material-icons">archive</i>
+                            </button>
+                        </td>
+                    {% endif %}
                 </tr>
                 </tbody>
             </table>
@@ -156,12 +170,50 @@
                         $.ajax({
                             type : "DELETE",
                             url : url,
-                            success: function () {
+                            success: function (e) {
+                                alert(e);
                                 location.reload(true);
                             }
                         })
                     }
                 });
+
+                var addArchive = $(".addToArchive");
+                var urlToArchive  = "{{ path('add_order_to_archive', { 'id' : "target" }) }}";
+
+                addArchive.on('click', function (event) {
+                    var confirmation = confirm("Are you sure you want to place into archive ?");
+                    if (confirmation){
+                        urlToArchive =  urlToArchive.replace("target",$(event.target).attr('id'));
+                        $.ajax({
+                            type : "POST",
+                            url : urlToArchive,
+                            success: function (e) {
+                                alert(e);
+                                location.reload(true);
+                            }
+                        })
+                    }
+                });
+
+                var removeFromArchive = $(".removeFromArchive");
+                var urlFromArchive  = "{{ path('remove_order_from_archive', { 'id' : "target" }) }}";
+
+                removeFromArchive.on('click', function (event) {
+                    var confirmation = confirm("Are you sure you want to remove from archive ?");
+                    if (confirmation){
+                        urlFromArchive =  urlFromArchive.replace("target",$(event.target).attr('id'));
+                        $.ajax({
+                            type : "POST",
+                            url : urlFromArchive,
+                            success: function (e) {
+                                alert(e);
+                                location.reload(true);
+                            }
+                        })
+                    }
+                });
+
             })
         </script>
     {% endif %}

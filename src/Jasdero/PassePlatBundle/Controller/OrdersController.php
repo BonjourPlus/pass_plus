@@ -24,7 +24,7 @@ class OrdersController extends Controller
 
 
     /**
-     * Lists all order entities. Uses pagination
+     * Lists all active order entities. Uses pagination
      *
      * @Route("/orders", name="orders_index")
      * @Method("GET")
@@ -40,6 +40,7 @@ class OrdersController extends Controller
 
         $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Orders')->createQueryBuilder('o');
         $queryBuilder
+            ->where('o.archive = false')
             ->leftJoin('o.products', 'p')
             ->addSelect('p')
             ->leftJoin('p.catalog', 'c')
@@ -63,6 +64,47 @@ class OrdersController extends Controller
         return $this->render('@JasderoPassePlat/orders/index.html.twig', array(
             'orders' => $orders,
             'driveActivation' => $driveActivation,
+        ));
+    }
+
+    /**
+     * Lists all active order entities. Uses pagination
+     *
+     * @Route("/orders/archives", name="orders_archives_index")
+     * @Method("GET")
+     * @param Request $request
+     * @return Response
+     */
+    public function indexArchivesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+
+        $queryBuilder = $em->getRepository('JasderoPassePlatBundle:Orders')->createQueryBuilder('o');
+        $queryBuilder
+            ->where('o.archive = true')
+            ->leftJoin('o.products', 'p')
+            ->addSelect('p')
+            ->leftJoin('p.catalog', 'c')
+            ->addSelect('c')
+            ->leftJoin('o.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('o.state', 's')
+            ->addSelect('s')
+            ->leftJoin('c.category', 'k')
+            ->addSelect('k');
+
+        $query = $queryBuilder->getQuery();
+
+        $orders = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $request->query->getInt('limit', 10)/*limit per page*/
+        );
+
+
+        return $this->render('@JasderoPassePlat/orders/indexArchives.html.twig', array(
+            'orders' => $orders,
         ));
     }
 
@@ -258,7 +300,6 @@ class OrdersController extends Controller
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\Response
      */
-
     public function ordersByUserAction(User $user)
     {
         $em = $this->getDoctrine()->getManager();
@@ -271,4 +312,36 @@ class OrdersController extends Controller
         ));
 
     }
+
+    /**
+     * puts an order in archive
+     * @Route("orders/{id}/add_archive", name="add_order_to_archive")
+     * @param Orders $order
+     * @return Response
+     */
+    public function addOrderToArchive(Orders $order)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $order->setArchive(true);
+        $em->flush();
+
+        return new Response("Placed into archives");
+    }
+
+    /**
+     * removes an order in archive
+     * @Route("orders/{id}/remove_archive", name="remove_order_from_archive")
+     * @param Orders $order
+     * @return Response
+     */
+    public function removeOrderFromArchive(Orders $order)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $order->setArchive(false);
+        $em->flush();
+
+        return new Response("Removed from archives");
+    }
+
+
 }

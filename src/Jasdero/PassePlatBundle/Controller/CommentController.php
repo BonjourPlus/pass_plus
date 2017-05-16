@@ -39,7 +39,7 @@ class CommentController extends Controller
             $em->remove($comment);
             $em->flush();
 
-        return new Response();
+        return new Response("The comment was deleted");
     }
 
     /**
@@ -59,7 +59,7 @@ class CommentController extends Controller
         $em->remove($comment);
         $em->flush();
 
-        return new Response();
+        return new Response("The comment was deleted");
     }
 
     /**

@@ -78,4 +78,19 @@ class OrdersRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findOrdersToArchive($state)
+    {
+        //retrieving orders with bottom status and older than 90 days
+
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->select('o')
+            ->where('o.archive = false')
+            ->andWhere('DATE_DIFF(CURRENT_DATE(), o.lastUpdate) >= 90')
+            ->andWhere('o.state = :state' )
+            ->setParameter('state', $state);
+
+        return $qb->getQuery()->getResult();
+    }
 }

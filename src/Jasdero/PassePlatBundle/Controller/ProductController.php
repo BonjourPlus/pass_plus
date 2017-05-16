@@ -37,6 +37,7 @@ class ProductController extends Controller
             ->addSelect('c')
             ->leftJoin('p.orders', 'o')
             ->addSelect('o')
+            ->where('o.archive = false')
             ->leftJoin('p.state', 's')
             ->addSelect('s')
             ->leftJoin('c.category', 'k')

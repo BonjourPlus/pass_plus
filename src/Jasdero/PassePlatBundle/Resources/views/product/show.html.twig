@@ -166,7 +166,8 @@
                         $.ajax({
                             type : "DELETE",
                             url : urlOrder,
-                            success: function () {
+                            success: function (e) {
+                                alert(e);
                                 location.reload(true);
                             }
                         })
@@ -180,7 +181,8 @@
                         $.ajax({
                             type : "DELETE",
                             url : urlProduct,
-                            success: function () {
+                            success: function (e) {
+                                alert(e);
                                 location.reload(true);
                             }
                         })

@@ -112,12 +112,15 @@
             {% endblock %}
 
             {# buttons section #}
+            {% block newOrdersButton %}
             <div class="row">
                 <div class="center-align iconsBlock">
                     <a href={% if driveActivation %}"{{ path('drive_index') }}"{% else %}"{{ path('order_site_new') }}"{% endif %}
-                    class="addIcon" title="create a new {{ container }}"><i class="medium material-icons">add_circle</i></a>
+                    class="addIcon" title="create a new {{ container }}"><i class="medium material-icons">add_circle</i>
+                    </a>
                 </div>
             </div>
+            {% endblock %}
 
         </div>
     </div>
