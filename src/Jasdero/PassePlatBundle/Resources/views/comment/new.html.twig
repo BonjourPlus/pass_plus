@@ -1,0 +1,53 @@
+{% extends '@JasderoPassePlat/main/adminLayout.html.twig' %}
+
+{% block passe_plat_content %}
+    <div class="container">
+        <h5 class="center-align">New comment</h5>
+
+        {# form section #}
+        <div class="row">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="col s12 charactersCount">
+                {{ form_label(form.content, 'comment (200 characters max)') }}
+                {{ form_row(form.content) }}
+            </div>
+            <div class="center-align">
+                <p class="liveCount center-align blue-text"></p>
+            </div>
+            {# buttons section #}
+            <div class="iconsBlock center-align col s12">
+                {% if order is not null %}
+                    <a href="{{ path('orders_show', {'id' : order.id}) }}" title="back">
+                        <button type="button" class="btn-floating grey darken-3"><i class="material-icons">skip_previous</i>
+                        </button>
+                    </a>
+                {% elseif product %}
+                    <a href="{{ path('product_show', {'id' : product.id}) }}" title="back">
+                        <button type="button" class="btn-floating grey darken-3"><i class="material-icons">skip_previous</i>
+                        </button>
+                    </a>
+                {% endif %}
+                <button type="submit" class="btn-floating grey darken-3" title="confirm"><i class="material-icons">done</i></button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+{% block passe_plat_javascripts %}
+    <script>
+        $(function () {
+
+            var fieldToCount = $('.charactersCount');
+            var fieldToDisplay  = $('.liveCount');
+            $(document).on('keyup', fieldToCount, (function (event) {
+                var remainingChars = 200 - ($(event.target).val().length);
+                if (remainingChars >= 0) {
+                    fieldToDisplay.text(remainingChars + ' characters left');
+                } else {
+                    fieldToDisplay.text('Too many characters !');
+                }
+            }))
+        })
+    </script>
+{% endblock %}

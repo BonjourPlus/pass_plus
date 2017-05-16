@@ -88,7 +88,12 @@ class OrdersController extends Controller
         //setting orders data
         $order->setUser($user);
         if($comments){
-            $order->setComment($comments);
+            $comment = new Comment();
+            $comment->setContent($comments);
+            $comment->setAuthor($user->getUsername());
+            $em->persist($comment);
+            $em->flush();
+            $order->addComment($comment);
         }
         $em->persist($order);
         $em->flush();
@@ -151,19 +156,8 @@ class OrdersController extends Controller
         $deleteForm = $this->createDeleteForm($order);
         $editForm = $this->createForm(OrdersEditType::class, $order);
         $editForm->handleRequest($request);
-        $user = $this->getUser();
-
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            //setting the author for each comment
-            foreach ($editForm->get('comments')->getData() as $comment){
-                if($user === null){
-                    $comment->setAuthor('Anonymous');
-                } else {
-                    $comment->setAuthor($user->getUsername());
-                }
-            }
 
             $this->getDoctrine()->getManager()->flush();
 

@@ -87,24 +87,38 @@
         {# comments section #}
         <div class="row">
             <div class="col s12">
-                <p><strong>Comment</strong></p>
+                <div class="valign-wrapper">
+                    <p><strong>Comment</strong></p>
+                    <a href="{{ path('new_comment_on_order', {'id' : order.id}) }}" class="add-another-comment addIcon col s1" title="Add a comment">
+                        <i class="small material-icons">add_circle</i>
+                    </a>
+                </div>
                 <hr>
                 {% if comments %}
                     {% for comment in comments %}
-                        <div class="valign-wrapper">
-                            <p class="col s8">{{ comment.content }}</p>
-                            <p class="col s2">{{ comment.lastUpdate|date('d-m-y') }}</p>
-                            <button type="button" id="{{ comment.id }}" class="btn-flat col s1 addIcon deleteButton" title="delete this comment">
-                                <i class="small material-icons">remove_circle</i>
-                            </button>
+                        <div class="valign-wrapper commentLine">
+                            <p class="col s8">{{ comment.content|truncate(75) }}</p>
+                            <p class="col s2">{{ comment.lastUpdate|date('d-m-y H\\hi') }}</p>
 
-                            {# modal to show author #}
-                            <button type="button" data-target="modal{{ comment.id }}" class="btn-flat col s1 addIcon" title="view author">
+                            {# modal to show full content, author and actions #}
+                            <a href="#" data-target="modal{{ comment.id }}" class="col s1 addIcon" title="view detail">
                                 <i class="small material-icons">remove_red_eye</i>
-                            </button>
+                            </a>
                             <div id="modal{{ comment.id }}" class="modal s3 center-align">
                                 <div class="modal-content center-align">
-                                    <p>{{ comment.author }}</p>
+                                    <div class="row">
+                                    <p class="col s12">{{ comment.content }}</p>
+                                    <p>Author : {{ comment.author }}</p>
+                                    </div>
+                                    <div class="row">
+                                        <a type="button" href="{{ path('comment_edit', {'id' : comment.id}) }}" class="btn-flat col s4 addIcon btn-flat" title="edit this comment">
+                                            <i class="small material-icons">edit</i>
+                                        </a>
+                                        <button type="button" class="modal-action modal-close btn-flat col s4" title="close"><i class="small material-icons">close</i></button>
+                                        <button type="button" id="{{ comment.id }}" class="btn-flat col s4 addIcon deleteButton" title="delete this comment">
+                                            <i class="small material-icons">delete_forever</i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

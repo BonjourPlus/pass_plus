@@ -1,6 +1,6 @@
 table.tablesorter {
     background-color: #CDCDCD;
-    margin:10px 0px 15px;
+    margin:10px 0 15px;
     width: 100%;
     text-align: left;
 }
@@ -79,3 +79,10 @@ h5{
     width: 100%;
 }
 
+.commentLine{
+    margin-bottom: -25px;
+}
+
+.commentsIcons{
+    float: none;
+}

@@ -1,0 +1,42 @@
+{% extends '@JasderoPassePlat/main/adminLayout.html.twig' %}
+
+{% block passe_plat_content %}
+    <div class="container">
+        <h5 class="center-align">Comment edit</h5>
+
+        {# form section #}
+        <div class="row">
+            {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            <div class="col s12 charactersCount">
+                {{ form_label(edit_form.content, 'comment (200 characters max)') }}
+                {{ form_row(edit_form.content) }}
+            </div>
+            <div class="center-align">
+                <p class="liveCount center-align blue-text"></p>
+            </div>
+            {# buttons section#}
+            <div class="col s12 iconsBlock center-align">
+                <button type="submit" class="btn-floating grey darken-3" title="confirm"><i class="material-icons">done</i></button>
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block passe_plat_javascripts %}
+    <script>
+        $(function () {
+
+            var fieldToCount = $('.charactersCount');
+            var fieldToDisplay  = $('.liveCount');
+            $(document).on('keyup', fieldToCount, (function (event) {
+                var remainingChars = 200 - ($(event.target).val().length);
+                if (remainingChars >= 0) {
+                    fieldToDisplay.text(remainingChars + ' characters left');
+                } else {
+                    fieldToDisplay.text('Too many characters !');
+                }
+            }))
+        })
+    </script>
+{% endblock %}

@@ -69,10 +69,12 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($product);
         $comments = $em->getRepository('JasderoPassePlatBundle:Comment')->findBy(['product'=>$product->getId()], ['lastUpdate' => 'DESC']);
+        $orderComments = $em->getRepository('JasderoPassePlatBundle:Comment')->findBy(['order'=>$product->getOrders()->getId()], ['lastUpdate' => 'DESC']);
 
         return $this->render('@JasderoPassePlat/product/show.html.twig', array(
             'product' => $product,
             'comments' => $comments,
+            'orderComments' => $orderComments,
             'delete_form' => $deleteForm->createView(),
         ));
     }
