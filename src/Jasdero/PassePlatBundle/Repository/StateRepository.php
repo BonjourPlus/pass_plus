@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityRepository;
 
 class StateRepository extends EntityRepository
 {
+
+    //request to retrieve orders and products not archived and display them in the dashboard
     public function findAllStatesWithAssociations()
     {
         $qb = $this->createQueryBuilder('s');
@@ -16,8 +18,11 @@ class StateRepository extends EntityRepository
             ->leftJoin('s.orders', 'o')
             ->addSelect('o')
             ->where('o.archive = false')
+            ->orWhere('o.archive is null')
             ->leftJoin('s.products', 'p')
             ->addSelect('p')
+            ->leftJoin('p.orders', 'po')
+            ->andWhere('po.archive = false')
             ->orderBy('s.weight', 'DESC');
 
         return $qb->getQuery()->getResult();

@@ -96,18 +96,9 @@ class ProductController extends Controller
         $editForm = $this->createForm(ProductEditType::class, $product);
         $editForm->handleRequest($request);
         $driveActivation = $this->get('service_container')->getParameter('drive_activation');
-        $user = $this->getUser();
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            //setting the author for each comment
-            foreach ($editForm->get('comments')->getData() as $comment){
-                if($user === null){
-                    $comment->setAuthor('Anonymous');
-                } else {
-                    $comment->setAuthor($user->getUsername());
-                }
-            }
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -176,7 +167,7 @@ class ProductController extends Controller
     public function productsByStatusAction(State $state)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findBy(['state' => $state->getId()]);
+        $products = $em->getRepository('JasderoPassePlatBundle:Product')->findByStateWithAssociations($state);
 
         return $this->render('@JasderoPassePlat/product/productsFiltered.html.twig', array(
             'products' => $products,
